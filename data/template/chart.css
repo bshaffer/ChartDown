@@ -1,0 +1,13 @@
+.bar { 
+  float: left;
+  width: 25%;
+  margin-top: 10px;
+}
+
+.chord {
+  font-weight: bold;
+}
+
+hr {
+  clear:both;
+}
