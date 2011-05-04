@@ -42,7 +42,9 @@ class ChartDown_Lexer_Chord extends ChartDown_Lexer_Base
   {
       $pos = $this->end;
       
-      
+      if ($match = $this->needle->match(self::CHORD_REGEX)) {
+        # code...
+      }
       if (false !== ($tmpPos = strpos($this->code, $this->options['bar_line'], $this->cursor))  && $tmpPos < $pos) {
           $pos = $tmpPos;
           $token = $this->options['bar_line'];

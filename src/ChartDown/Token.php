@@ -24,13 +24,17 @@ class ChartDown_Token
 
     const EOF_TYPE            = -1;
     const CHORD_TYPE          = 1;
+    const CHORD_GROUP_START_TYPE = 8;
+    const CHORD_GROUP_END_TYPE   = 9;
+    const LINE_START          = 10;
+    const LINE_END            = 11;
     const LYRIC_TYPE          = 2;
     const BAR_LINE            = 3;
     const METADATA_KEY_TYPE   = 4;
     const METADATA_VALUE_TYPE = 5;
     const LABEL_TYPE          = 6;
     const END_ROW_TYPE        = 7;
-    
+
     /**
      * Constructor.
      *
@@ -52,7 +56,7 @@ class ChartDown_Token
      */
     public function __toString()
     {
-        return sprintf('%s(%s)', self::typeToString($this->type, true, $this->lineno), $this->value);
+        return sprintf('%s(%s)', self::typeToString($this->type, true, $this->lineno), self::valueToString($this->type, $this->value));
     }
 
     /**
@@ -112,6 +116,16 @@ class ChartDown_Token
         return $this->value;
     }
 
+    static public function valueToString($type, $value)
+    {
+        switch ($type) {
+            case self::LINE_START:
+                return ChartDown_Lexer::stateToString($value);
+        }
+        
+        return (string) $value;
+    }
+
     /**
      * Returns the constant representation (internal) of a given type.
      *
@@ -143,6 +157,12 @@ class ChartDown_Token
                 break;
             case self::BAR_LINE:
                 $name = 'BAR_LINE';
+                break;
+            case self::LINE_START:
+                $name = 'LINE_START';
+                break;
+            case self::LINE_END:
+                $name = 'LINE_END';
                 break;
             case self::END_ROW_TYPE:
                 $name = 'END_ROW_TYPE';
