@@ -51,8 +51,10 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
         $this->env = $env;
 
         $this->options = array_merge(array(
-            'bar_line'    => '|',
-            'chord_group' => array('[', ']'),
+            'bar_delimiter'        => '|',
+            'chord_group'          => array('[', ']'),
+            'row_delimiter'        => '--',
+            'lines_in_row_default' => 3,
         ), $options);
     }
 
@@ -73,17 +75,18 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
             mb_internal_encoding('ASCII');
         }
 
-        $code = str_replace(array("\r\n", "\r"), "\n", $code);
-        $this->linesInRow = 2;
         $this->filename = $filename;
         $this->lineno = 1;
-        $this->end = count($this->lines);
+        $this->linesInRow = $this->options['lines_in_row_default'];
         $this->tokens = array();
 
         while ($line = $this->needle->getNextLine()) {
 
-            $this->state = $this->determineState($line);
-            
+            if(is_null($this->state = $this->determineState($line))) {
+                // Skip this line - row break
+                continue;
+            }
+
             $this->pushToken(ChartDown_Token::LINE_START, $this->state);
 
             // dispatch to the lexing functions depending
@@ -110,7 +113,7 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
                     break;
 
                 default:
-                    throw new ChartDown_Runtime_Exception('Unsupported state "%s" - cannot tokenize', $this->state);
+                    throw new ChartDown_Error_Runtime(sprintf('Unsupported state "%s" - cannot tokenize', $this->state));
 
             }
 
@@ -128,7 +131,7 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
 
     public function lexChord($line)
     {
-        foreach ($line->split($this->options['bar_line']) as $i => $bar) {
+        foreach ($line->split($this->options['bar_delimiter']) as $i => $bar) {
 
             while (!$bar->isEOF()) {
                 if (false !== ($data = $bar->moveToFirst(array(self::REGEX_CHORD, $this->options['chord_group'][0], $this->options['chord_group'][1])))) {
@@ -165,7 +168,7 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
 
     protected function lexLyric($line)
     {
-        foreach ($line->split($this->options['bar_line']) as $bar) {
+        foreach ($line->split($this->options['bar_delimiter']) as $bar) {
             $this->pushToken(ChartDown_Token::LYRIC_TYPE, $bar->getText());
 
             $this->pushToken(ChartDown_Token::BAR_LINE);
@@ -176,7 +179,7 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
 
     protected function lexLabel($line)
     {
-        foreach ($line->split($this->options['bar_line']) as $bar) {
+        foreach ($line->split($this->options['bar_delimiter']) as $bar) {
             $this->pushToken(ChartDown_Token::LABEL_TYPE, $bar->getText());
 
             $this->pushToken(ChartDown_Token::BAR_LINE);
@@ -205,9 +208,15 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
           return self::STATE_METADATA;
         }
       }
+      
+      if (trim($text) == $this->options['row_delimiter']) {
+          $this->pushToken(ChartDown_Token::END_ROW_TYPE);
+          return null;
+      }
 
       // The line is new, start from first position in line defaults
       if ($this->state === null || $this->state === self::STATE_METADATA) {
+        $this->linesInRow = $this->determineLinesInRow();
         return $this->lineOrderDefaults[$this->linesInRow][0];
       }
 
@@ -218,8 +227,29 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
           $this->pushToken(ChartDown_Token::END_ROW_TYPE);
           return $this->lineOrderDefaults[$this->linesInRow][0];
       }
-      
+
       return $this->lineOrderDefaults[$this->linesInRow][$pos+1];
+    }
+
+    protected function determineLinesInRow()
+    {
+        $pos = $this->needle->nextMatch(sprintf('/\n?%s/', $this->options['row_delimiter']));
+
+        if ($pos === false) {
+            // Number of lines remaining (plus 1, to account for the current line)
+            $numLines = $this->needle->getNumLines() + 1;
+        } else {
+            // Grab number of lines between this line and the next line marker (plus 2, to account for the current line and final line)
+            $cursor = $this->needle->getCursor();
+            $numLines = substr_count(substr($this->needle->getText(), $cursor, $pos - $cursor), "\n") + 2;
+        }
+
+        if($numLines > count($this->lineOrderDefaults) || $numLines == 0) {
+            // numLines is invalid - too many lines
+            $numLines = $this->options['lines_in_row_default'];
+        }
+
+        return $numLines;
     }
 
     protected function pushToken($type, $value = '')

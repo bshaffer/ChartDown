@@ -24,7 +24,7 @@ class ChartDown_LexerNeedle
 
   public function __construct($text, $cursor = 0)
   {
-    $this->text   = $text;
+    $this->text   = str_replace(array("\r\n", "\r"), "\n", $text);
     $this->end    = strlen($this->text);
     $this->cursor = $cursor;
   }
@@ -180,5 +180,10 @@ class ChartDown_LexerNeedle
   public function getNextLine()
   {
       return $this->isEOF() ? null : new self($this->hasNext("\n") ? $this->getNext("\n") : $this->rest());
+  }
+  
+  public function getNumLines()
+  {
+      return substr_count(substr($this->text, $this->cursor), "\n") + 1;
   }
 }

@@ -99,24 +99,35 @@ class ChartDown_Parser implements ChartDown_ParserInterface
     public function subparse($test, $dropNeedle = false)
     {
         $lineno = $this->getCurrentToken()->getLine();
-        $rv = array();
         $elements = array();
+        $bars = array();
+        $barIndex = 0;
 
         while (!$this->stream->isEOF()) {
             switch ($this->getCurrentToken()->getType()) {
+                case ChartDown_Token::LINE_START:
+                    $token = $this->stream->next();
+                    $lineType = $token->getValue();
+                    break;
+
+                case ChartDown_Token::LINE_END:
+                    $this->stream->next();
+                    $barIndex = 0;
+                    break;
+
                 case ChartDown_Token::CHORD_TYPE:
                     $token = $this->stream->next();
-                    $rv[] = new ChartDown_Node_Chord($token->getValue(), $token->getLine());
+                    $bars[$barIndex][] = new ChartDown_Node_Chord($token->getValue(), $token->getLine());
                     break;
 
                 case ChartDown_Token::LYRIC_TYPE:
                     $token = $this->stream->next();
-                    $rv[] = new ChartDown_Node_Lyric($token->getValue(), $token->getLine());
+                    $bars[$barIndex][] = new ChartDown_Node_Lyric($token->getValue(), $token->getLine());
                     break;
 
                 case ChartDown_Token::LABEL_TYPE:
                     $token = $this->stream->next();
-                    $rv[] = new ChartDown_Node_Label($token->getValue(), $token->getLine());
+                    $bars[$barIndex][] = new ChartDown_Node_Label($token->getValue(), $token->getLine());
                     break;
 
                 case ChartDown_Token::METADATA_KEY_TYPE:
@@ -127,25 +138,29 @@ class ChartDown_Parser implements ChartDown_ParserInterface
                     break;
 
                 case ChartDown_Token::BAR_LINE:
+                    $barIndex++;
                     $this->stream->next();
-                    $elements[] = new ChartDown_Node_Bar($rv);
-                    $rv = array();
                     break;
 
                 case ChartDown_Token::END_ROW_TYPE:
-                    $this->stream->next();
-                    $elements[] = new ChartDown_Node_Bar($rv);
+                    foreach ($bars as $bar) {
+                        $elements[] = new ChartDown_Node_Bar($bar);
+                    }
+
                     $elements[] = new ChartDown_Node_EndRow();
-                    $rv = array();
+                    $this->stream->next();
+                    $bars = array();
                     break;
 
                 default:
                     throw new ChartDown_Error_Syntax('Lexer or parser ended up in unsupported state.');
             }
         }
-        
-        if (count($rv) > 0) {
-          $elements[] = new ChartDown_Node_Bar($rv);
+
+        if (count($bars) > 0) {
+            foreach ($bars as $bar) {
+                $elements[] = new ChartDown_Node_Bar($bar);
+            }
         }
 
         return new ChartDown_Node($elements, array(), $lineno);

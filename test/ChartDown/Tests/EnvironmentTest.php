@@ -9,7 +9,7 @@ class ChartDown_Tests_EnvironmentTest extends PHPUnit_Framework_TestCase
   
   public function testRenderEmptyString()
   {
-    $chart = $this->chartdown->loadChart('Here Comes The Sun');
-    $this->assertEquals('Here Comes The Sun', $chart->getChartName());
+    $chart = $this->chartdown->loadChart("\nHere Comes The Sun");
+    $this->assertEquals("\nHere Comes The Sun", $chart->getChartName());
   }
 }

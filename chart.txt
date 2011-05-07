@@ -1,5 +1,5 @@
 # title: Graces
-# author: Brent Shaffer
+# author: More Hazards More Heroes
 # key: G
 # time_signature: 3/4
 Verse 1
