@@ -26,6 +26,11 @@ class ChartDown_Chart_Tempo
   
   public function __toString()
   {
-    return $this->tempo ? $this->tempo . 'bpm' : '';
+    return (string) $this->tempo;
+  }
+  
+  public function getTempo()
+  {
+    return $this->tempo;
   }
 }

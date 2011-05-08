@@ -10,6 +10,10 @@ h2 {
   padding: 0;
 }
 
+h3 {
+  margin: 0;
+}
+
 .bar { 
   float: left;
   width: 25%;
@@ -20,8 +24,16 @@ h2 {
   font-weight: bold;
 }
 
+.row {
+  clear: both;
+}
+
 hr {
   clear:both;
+}
+
+#content {
+  width: 700px;
 }
 
 .chart-info {
@@ -31,4 +43,19 @@ hr {
 .chart-info dt{
   float:left;
   font-weight:bold;
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/*** Articulations ***/
+
+.repeat-start .chord, .repeat-start .lyric{
+  padding-left: 20px;
+}
+.repeat-end .chord, .repeat-end .lyric{
+  padding-right: 20px;
 }

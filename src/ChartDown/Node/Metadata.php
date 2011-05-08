@@ -88,6 +88,16 @@ class ChartDown_Node_Metadata extends ChartDown_Node implements ChartDown_NodeOu
 
             break;
 
+          case 'tempo':
+
+            $compiler
+              ->raw('new ChartDown_Chart_Tempo(')
+              ->string($value)
+              ->raw(')')
+            ;
+
+            break;
+
           default:
             $compiler->string($value);
             break;
