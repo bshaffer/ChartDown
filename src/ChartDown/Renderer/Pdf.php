@@ -22,9 +22,11 @@ class ChartDown_Renderer_Pdf implements ChartDown_RendererInterface
     $this->renderer = $renderer;
   }
   
-  public function render(ChartDown_Chart $chart, $path = null)
+  public function render(ChartDown_Chart $chart, $path = null, $html = null)
   {
-    $html = $this->renderer->render($chart);
+    if (is_null($html)) {
+        $html = $this->renderer->render($chart);
+    }
     
     return $path ? $this->pdf->save($html, $path) : $this->pdf->get($html);
   }
