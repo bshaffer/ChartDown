@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+if (!isset($argv[1])) {
+	exit("Usage: chartdown infile [outfile]");
+}
+
+// Autoload
+include_once(dirname(__FILE__).'/../src/ChartDown/Autoloader.php');
+ChartDown_Autoloader::register();
+
+$infile = $argv[1];
+$outfile = isset($argv[2]) ? $argv[2] : basename(substr($infile, 0, strrpos($infile, '.'))).'.pdf';
+
+// Create chart object
+$chartdown = new ChartDown_Environment();
+$chart = $chartdown->loadChart(file_get_contents($infile));
+
+// Create the PDF
+$renderer = new ChartDown_Renderer_Pdf();
+if ($renderer->render($chart, $outfile)) {
+	echo "\nRendered File to $outfile";
+} else {
+	echo "\n Rendering failed!";
+}
+

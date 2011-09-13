@@ -40,7 +40,7 @@ class ChartDown_Tests_ParserTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($node->getNode('body')->getNode(0)->count(), 2);
     $this->assertEquals($node->getNode('body')->getNode(0)->getNode(1)->getAttribute('data'), 'That old dusty wind');
   }
-  
+
   public function testParseTokenStreamMetadata()
   {
     // Every country song ever written
@@ -55,5 +55,19 @@ class ChartDown_Tests_ParserTest extends PHPUnit_Framework_TestCase
     $this->assertTrue($node->hasNode('body'));
     $this->assertEquals($node->getNode('body')->getNode(0)->getAttribute('name'), 'title');
     $this->assertEquals($node->getNode('body')->getNode(0)->getAttribute('value'), 'My Old Kentucky Clone');
+  }
+
+
+  /**
+  * @expectedException ChartDown_Error_Syntax
+  */
+  public function testChordGroupWithNoChordsThrowException()
+  {
+    $stream = new ChartDown_TokenStream(array(
+      new ChartDown_Token(ChartDown_Token::CHORD_GROUP_START_TYPE, '[', -1),
+      new ChartDown_Token(ChartDown_Token::CHORD_GROUP_END_TYPE, ']', -1),
+    ));
+
+    $this->parser->parse($stream);
   }
 }

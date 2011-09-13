@@ -101,6 +101,7 @@ class ChartDown_Parser implements ChartDown_ParserInterface
         $lineno = $this->getCurrentToken()->getLine();
         $elements = array();
         $bars = array();
+        $group = null;
         $barIndex = 0;
 
         while (!$this->stream->isEOF()) {
@@ -117,7 +118,36 @@ class ChartDown_Parser implements ChartDown_ParserInterface
 
                 case ChartDown_Token::CHORD_TYPE:
                     $token = $this->stream->next();
-                    $bars[$barIndex][] = new ChartDown_Node_Chord($token->getValue(), $token->getLine());
+                    $chordNode = new ChartDown_Node_Chord($token->getValue(), $token->getLine());
+                    if ($group) {
+                        $group->addChordNode($chordNode);
+                    } else {
+                        $bars[$barIndex][] = $chordNode;
+                    }
+                    break;
+
+                case ChartDown_Token::CHORD_GROUP_START_TYPE:
+                    $token = $this->stream->next();
+                    $group = new ChartDown_Node_ChordGroup(array(), $token->getLine());
+                    break;
+
+                case ChartDown_Token::CHORD_GROUP_END_TYPE:
+                    if ($group->getNumChords() == 0) {
+                        throw new ChartDown_Error_Syntax('Empty Chord Group');
+                    }
+                    $this->stream->next();
+                    $bars[$barIndex][] = $group;
+                    $group = null;
+                    break;
+
+                case ChartDown_Token::EXPRESSION_TYPE:
+                    $token = $this->stream->next();
+                    $expressionNode = new ChartDown_Node_Expression($token->getValue(), $token->getLine());
+                    if ($group) {
+                        $group->addChordNode($expressionNode);
+                    } else {
+                        $bars[$barIndex][] = $expressionNode;
+                    }
                     break;
 
                 case ChartDown_Token::LYRIC_TYPE:

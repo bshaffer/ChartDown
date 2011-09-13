@@ -8,8 +8,8 @@
 
 You can render the chart as follows:
 
-    $chartdown = new ChartDown();
-    $chart = $chartdown->loadChart('my_chart.txt');
+    $chartdown = new ChartDown_Environment();
+    $chart = $chartdown->loadChart(file_get_contents('my_chart.txt'));
     $renderer = new ChartDown_Renderer_Pdf();
     $renderer->render($chart, 'my_chart.pdf');
     
@@ -19,18 +19,39 @@ Another renderer which may be useful is `ChartDown_Renderer_Html`, which renders
 HTML document which you can modify and then render to PDF, if tweaking is required.
 
     // render your chart into html...
-    $chartdown = new ChartDown();
-    $chart = $chartdown->loadChart('my_chart.txt');
+    $chartdown = new ChartDown_Environment();
+    $chart = $chartdown->loadChart(file_get_contents('my_chart.txt'));
     $renderer = new ChartDown_Renderer_Html();
-    $html = $renderer->render($chart, 'my_chart.html');
+    file_put_contents('my_chart.html', $renderer->render($chart));
+    
+    /** do your customization here... **/
 
-    // do your customization here...
-
-    // and then get your PDF...
-    $renderer = new ChartDown_Renderer_Pdf();   
+    // and then generate your PDF...
+    $renderer = new ChartDown_Renderer_Pdf();
     $renderer->render($chart, 'my_chart.pdf', file_get_contents('my_chart.html'));
 
 ## Syntax Guide
+
+Expressions
+-----------
+
+The following expressions are valid:
+
+  * **^**: Accent
+  * **_**: Tenudo
+  * **\***: Diamond
+  * **>**: Anticipation
+  * **(**...**)**: Separates articulation from chord
+  * **[**...**]**: Group two or more chords into one beat
+  * **%**: Repeat a bar
+  * **{: :}**: Repeat start and repeat end
+  * **{1}**, **{2}**...: First ending, second ending
+  * **$**: Coda
+  * **&**: Segno
+  * **!**: Fermata
+  * **.**: Rhymic Separation (explained below)
+
+These can go before or after the chord, as long as they are contiguous.
 
 Rhythm
 ------
@@ -50,60 +71,64 @@ There are no restrictions, so *nine*, *ten*, or even *thirteen* subsections is a
 although the rhythm should be kept in mind, as *thirteen* is not a valid beat division in
 most time signatures.
 
-**Note**: `Beat Notation` can be devised from `Dot Notation`, so it is recommended to use 
-a subdivision of your time signature for the number of divisions.  For a *3/4* time signature,
-subdivisions of *three*, *six*, *nine*, and *twelve* are encouraged.
-
-Expressions
------------
-
-The following expressions are valid:
-
-  * **^**: accent
-  * **_**: tenudo
-  * *****: Diamond
-  * **>**: Anticipation
-  * **()**: Separates articulation from chord
-  * **{:**: Repeat start
-  * **:}**: Repeat end
-  * **{1}, {2}...**: First ending, second ending
-  * **$**: Coda
-  * **&**: Signa
-  * **!**: Fermata
-  * **.**: Rhymic Separation
-
-these can go before or after the chord, as long as they are contiguous.
-
-Labels and Annotations
-----------------------
-
-Labels and annotations are created using markdown. The following is an example of a label:
-
-    label: Chorus
-    G C | D G | C G | G*
-    
-Annotations happen below the staff.  They are created by prefixing a line with **t:**
-
-    label: Chorus
-    G C | D G | C G | G*
-    text: There once was a man | with a fork in his hand | who wanted | to eat
+**Note**: `Rhythmic Notation` can be devised from `Dot Notation`, so it is recommended to use 
+a subdivision of your time signature for the number of divisions.  For a `3/4` time signature,
+subdivisions of *three*, *six*, *nine*, or *twelve* are encouraged.
 
 Page Characters 
 ---------------
 
- * **--**: Line Break
+The following characters are important, as they determine basic page functionality.  The Metadata
+and comment character is used to determine your chart's *title*, *key*, *time signature*. etc.  It
+can also be used to change the key or time signature for any line of the song.  The double 
+dash is for separating lines, and will be used often.  The double equals is for separating
+pages, and will be used only in the rare case where the default page break is not good enough.
+
+ * **#**: Metadata
+ * **--** (double dash): Line Break
  * **==**: Page Break
- * **#**: Metadata / Comment
+
+Labels and Annotations
+----------------------
+
+Labels and annotations are created using textile. They can be added above or below the chord lines, 
+and are created by prefixing a line with **text:**.  Here is an example of a **Chorus** header:
+
+    text: h2. Chorus    
+    G C | D G | C G | G*
+
+The following is an example of how one might add lyrics:
+
+    G C | D G | C G | G*
+    text: There once was a man | with a fork in his hand | who wanted | to eat
+
+These are not phenomenal lyrics, but the technical requirements for better poetry are the same.
+Below is a more complex example of how text can be used to create complex chart requirements:
+
+    --
+    text: h1. Chorus
+    {: G C | D G | & C G | G*
+    text: There once was a man | with a fork in his hand | who wanted | to eat
+    --
+    text: | | | p>. *D.S. Al Coda*
+    G C | D G $ | C G | G* :}
+    text: The poor man cried | when the food arrived | and it smelled like feet
+    
+In this example, not only are the poor lyrics continued, but a D.S. Al Coda is added.  The text
+for the coda will appear above the final bar and be aligned right, so that it will be directly over the 
+repeat, as is appropriate in a chord chart.  Read more on 
+[http://www.redmine.org/projects/redmine/wiki/RedmineTextFormatting#Headings](Textile Syntax),
+I assure you it's easier than you might think.
 
 Chords
 ------
 
- * **|**: Bar Break
+ * **|** (pipe): Bar Break
  * **Numbers 1 through 7**: Chord Value
  * **Letters A through G**: Chord Value
  * **b**: flat
  * **#**: sharp
- * **-**: minor
+ * **-** (dash): minor
  * **dim**: diminished
  * **aug**: augmented
 

@@ -108,4 +108,29 @@ class ChartDown_Tests_CompilerTest extends PHPUnit_Framework_TestCase
     $this->assertContains('->addChord("G")', $source);
     $this->assertContains('->addLyric("That old dusty wind")', $source);
   }
+  
+  public function testCompileChordGroupNodes()
+  {
+    // Every country song ever written
+    $node = new ChartDown_Node_Module(
+      new ChartDown_Node(array(
+          new ChartDown_Node_Bar(array(
+              new ChartDown_Node_ChordGroup(array(
+                  new ChartDown_Node_Chord('C', -1),
+                  new ChartDown_Node_Chord('D', -1),
+              ), -1),
+          ))
+      )),
+     null,
+     new ChartDown_Node(),
+     new ChartDown_Node(),
+     null);
+
+    $this->compiler->compile($node);
+    
+    $source = $this->compiler->getSource();
+    
+    $this->assertContains('->addChordGroup()', $source);
+    $this->assertContains('->addChord("C")', $source);
+  }
 }

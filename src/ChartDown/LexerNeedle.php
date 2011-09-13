@@ -186,4 +186,12 @@ class ChartDown_LexerNeedle
   {
       return substr_count(substr($this->text, $this->cursor), "\n") + 1;
   }
+  
+  public function trim()
+  {
+    $text = ltrim($this->text);
+    $this->end -= (strlen($this->text) - strlen($text));
+    $this->text = $text;
+    return $this;
+  }
 }

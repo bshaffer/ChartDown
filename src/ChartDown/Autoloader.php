@@ -38,6 +38,10 @@ class ChartDown_Autoloader
         if (0 === strpos($class, 'Knplabs\\Snappy') && file_exists($file = dirname(__FILE__).'/../../vendor/snappy/src/'.str_replace('\\', '/', $class).'.php')) {
             require $file;
         }
+
+        if ($class == 'Textile' && file_exists($file = dirname(__FILE__).'/../../vendor/textile/Textile.php')) {
+            require $file;
+        }
         
         if (0 !== strpos($class, 'ChartDown')) {
             return;

@@ -19,7 +19,7 @@ class ChartDown_Chart_Tempo
 {
   protected $tempo;
 
-  public function __construct($tempo)
+  public function __construct($tempo = 120)
   {
     $this->tempo = $tempo;
   }

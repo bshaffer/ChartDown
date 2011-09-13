@@ -25,7 +25,9 @@ class ChartDown_Tests_RendererTest extends PHPUnit_Framework_TestCase
     $filename = tempnam(sys_get_temp_dir(), 'chartdown') . '.pdf';
     $renderer->render($chart, $filename);
     
-    $this->assertTrue($filename !== null);
+    $this->assertTrue(file_exists($filename));
+    
+    unlink($filename);
   }
 }
 

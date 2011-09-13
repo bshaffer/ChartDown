@@ -11,7 +11,7 @@ class ChartDown_Renderer_Pdf implements ChartDown_RendererInterface
   public function __construct($pdf = null, $renderer = null)
   {
     if (is_null($pdf)) {
-      $pdf = new Knplabs\Snappy\Pdf('env wkhtmltopdf');
+      $pdf = new Knplabs\Snappy\Pdf('wkhtmltopdf');
     }
     
     if (is_null($renderer)) {
@@ -25,9 +25,9 @@ class ChartDown_Renderer_Pdf implements ChartDown_RendererInterface
   public function render(ChartDown_Chart $chart, $path = null, $html = null)
   {
     if (is_null($html)) {
-        $html = $this->renderer->render($chart);
+      $html = $this->renderer->render($chart);
     }
-    
+
     return $path ? $this->pdf->save($html, $path) : $this->pdf->get($html);
   }
 }

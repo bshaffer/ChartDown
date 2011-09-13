@@ -23,28 +23,19 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
     protected $code;
     protected $state;
     protected $lines;
-    protected $linesInRow;
-    protected $lineOrderDefaults = array(
-      1 => array(self::STATE_CHORD),
-      2 => array(self::STATE_CHORD, self::STATE_LYRIC),
-      3 => array(self::STATE_LABEL, self::STATE_CHORD, self::STATE_LYRIC),
-      4 => array(self::STATE_LABEL, self::STATE_EXPRESSION, self::STATE_CHORD, self::STATE_LYRIC),
-      5 => array(self::STATE_LABEL, self::STATE_RHYTHM, self::STATE_EXPRESSION, self::STATE_CHORD, self::STATE_LYRIC)
-    );
 
     protected $env;
     protected $filename;
     protected $options;
 
     const STATE_CHORD       = 0;
-    const STATE_LYRIC       = 1;
-    const STATE_EXPRESSION  = 2;
+    const STATE_TEXT        = 1;
     const STATE_METADATA    = 4;
-    const STATE_LABEL       = 5;
-    const STATE_RHYTHM      = 6;
 
-    const REGEX_CHORD       = '/[a-gA-G1-7][\w\-]*/';
+    const REGEX_CHORD       = '/[a-gA-G1-7][A-G|m|M|b|#|+|2|7|9|11|13|sus|dim|\/]*/';
     const REGEX_METADATA    = '/#*(.*):(.*)/';
+    const REGEX_EXPRESSION  = '/(\.|~|\*|_|\^|>|\{:|:\}|\{\d
+        +\}|%)/';
 
     public function __construct(ChartDown_Environment $env, array $options = array())
     {
@@ -54,7 +45,6 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
             'bar_delimiter'        => '|',
             'chord_group'          => array('[', ']'),
             'row_delimiter'        => '--',
-            'lines_in_row_default' => 3,
         ), $options);
     }
 
@@ -77,7 +67,6 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
 
         $this->filename = $filename;
         $this->lineno = 1;
-        $this->linesInRow = $this->options['lines_in_row_default'];
         $this->tokens = array();
 
         while ($line = $this->needle->getNextLine()) {
@@ -97,13 +86,8 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
                     $this->lineno++;
                     break;
 
-                case self::STATE_LYRIC:
-                    $this->lexLyric($line);
-                    $this->lineno++;
-                    break;
-
-                case self::STATE_LABEL:
-                    $this->lexLabel($line);
+                case self::STATE_TEXT:
+                    $this->lexText($line);
                     $this->lineno++;
                     break;
 
@@ -132,9 +116,9 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
     public function lexChord($line)
     {
         foreach ($line->split($this->options['bar_delimiter']) as $i => $bar) {
-
+            $bar->trim();
             while (!$bar->isEOF()) {
-                if (false !== ($data = $bar->moveToFirst(array(self::REGEX_CHORD, $this->options['chord_group'][0], $this->options['chord_group'][1])))) {
+                if (false !== ($data = $bar->moveToFirst(array(self::REGEX_CHORD, self::REGEX_EXPRESSION, $this->options['chord_group'][0], $this->options['chord_group'][1])))) {
                     $token = $data[0];
                     $text  = $data[1];
 
@@ -152,6 +136,8 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
 
                         $this->pushToken(ChartDown_Token::CHORD_GROUP_END_TYPE);
 
+                    } elseif( $token == self::REGEX_EXPRESSION ) {
+                        $this->pushToken(ChartDown_Token::EXPRESSION_TYPE, trim($text));
                     } else {
                         $this->pushToken(ChartDown_Token::CHORD_TYPE, trim($text));
                     }
@@ -166,21 +152,10 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
         $this->popToken();
     }
 
-    protected function lexLyric($line)
+    protected function lexText($line)
     {
         foreach ($line->split($this->options['bar_delimiter']) as $bar) {
-            $this->pushToken(ChartDown_Token::LYRIC_TYPE, $bar->getText());
-
-            $this->pushToken(ChartDown_Token::BAR_LINE);
-        }
-
-        $this->popToken();
-    }
-
-    protected function lexLabel($line)
-    {
-        foreach ($line->split($this->options['bar_delimiter']) as $bar) {
-            $this->pushToken(ChartDown_Token::LABEL_TYPE, $bar->getText());
+            $this->pushToken(ChartDown_Token::TEXT_TYPE, $bar->getText());
 
             $this->pushToken(ChartDown_Token::BAR_LINE);
         }
@@ -202,56 +177,27 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
     {
       $text = $line->getText();
 
+      if(trim($text) == '') {
+        return null;
+      }
+
       // Determine using the line itself
-      if (strlen($text) > 0) {
-        if($text[0] === '#') {
-          return self::STATE_METADATA;
-        }
+      if(0 === strpos($text, '#')) {
+        return self::STATE_METADATA;
+      }
+        
+      if(0 === strpos($text, 'text:')) {
+        return self::STATE_TEXT;
       }
       
       if (trim($text) == $this->options['row_delimiter']) {
           $this->pushToken(ChartDown_Token::END_ROW_TYPE);
           return null;
       }
-
-      // The line is new, start from first position in line defaults
-      if ($this->state === null || $this->state === self::STATE_METADATA) {
-        $this->linesInRow = $this->determineLinesInRow();
-        return $this->lineOrderDefaults[$this->linesInRow][0];
-      }
-
-      // Move to the next line in the order
-      $pos = array_search($this->state, $this->lineOrderDefaults[$this->linesInRow]);
-
-      if (!isset($this->lineOrderDefaults[$this->linesInRow][$pos+1])) {
-          $this->pushToken(ChartDown_Token::END_ROW_TYPE);
-          return $this->lineOrderDefaults[$this->linesInRow][0];
-      }
-
-      return $this->lineOrderDefaults[$this->linesInRow][$pos+1];
+      
+      return self::STATE_CHORD;
     }
-
-    protected function determineLinesInRow()
-    {
-        $pos = $this->needle->nextMatch(sprintf('/\n?%s/', $this->options['row_delimiter']));
-
-        if ($pos === false) {
-            // Number of lines remaining (plus 1, to account for the current line)
-            $numLines = $this->needle->getNumLines() + 1;
-        } else {
-            // Grab number of lines between this line and the next line marker (plus 2, to account for the current line and final line)
-            $cursor = $this->needle->getCursor();
-            $numLines = substr_count(substr($this->needle->getText(), $cursor, $pos - $cursor), "\n") + 2;
-        }
-
-        if($numLines > count($this->lineOrderDefaults) || $numLines == 0) {
-            // numLines is invalid - too many lines
-            $numLines = $this->options['lines_in_row_default'];
-        }
-
-        return $numLines;
-    }
-
+    
     protected function pushToken($type, $value = '')
     {
         $this->tokens[] = new ChartDown_Token($type, $value, $this->lineno);
@@ -268,20 +214,11 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
             case self::STATE_CHORD:
                 $name = 'STATE_CHORD';
                 break;
-            case self::STATE_LYRIC:
-                $name = 'STATE_LYRIC';
-                break;
-            case self::STATE_EXPRESSION:
-                $name = 'STATE_EXPRESSION';
-                break;
             case self::STATE_METADATA:
                 $name = 'STATE_METADATA';
                 break;
-            case self::STATE_LABEL:
-                $name = 'STATE_LABEL';
-                break;
-            case self::STATE_RHYTHM:
-                $name = 'STATE_RHYTHM';
+            case self::STATE_TEXT:
+                $name = 'STATE_TEXT';
                 break;
             default:
                 throw new ChartDown_Error_Syntax(sprintf('State of type "%s" does not exist.', $state), $line);

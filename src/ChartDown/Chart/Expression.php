@@ -15,6 +15,17 @@
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart_Expression
+abstract class ChartDown_Chart_Expression implements ChartDown_Chart_ExpressionInterface
 {
+    protected $value;
+
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
 }

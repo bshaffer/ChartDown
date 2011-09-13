@@ -22,18 +22,19 @@ class ChartDown_Token
     protected $type;
     protected $lineno;
 
-    const EOF_TYPE            = -1;
-    const CHORD_TYPE          = 1;
+    const EOF_TYPE               = -1;
+    const CHORD_TYPE             = 1;
     const CHORD_GROUP_START_TYPE = 8;
     const CHORD_GROUP_END_TYPE   = 9;
-    const LINE_START          = 10;
-    const LINE_END            = 11;
-    const LYRIC_TYPE          = 2;
-    const BAR_LINE            = 3;
-    const METADATA_KEY_TYPE   = 4;
-    const METADATA_VALUE_TYPE = 5;
-    const LABEL_TYPE          = 6;
-    const END_ROW_TYPE        = 7;
+    const LINE_START             = 10;
+    const LINE_END               = 11;
+    const LYRIC_TYPE             = 2;
+    const BAR_LINE               = 3;
+    const METADATA_KEY_TYPE      = 4;
+    const METADATA_VALUE_TYPE    = 5;
+    const EXPRESSION_TYPE        = 12;
+    const LABEL_TYPE             = 6;
+    const END_ROW_TYPE           = 7;
 
     /**
      * Constructor.
@@ -143,6 +144,15 @@ class ChartDown_Token
             case self::CHORD_TYPE:
                 $name = 'CHORD_TYPE';
                 break;
+            case self::CHORD_GROUP_START_TYPE:
+                $name = 'CHORD_GROUP_START_TYPE';
+                break;
+            case self::CHORD_GROUP_END_TYPE:
+                $name = 'CHORD_GROUP_END_TYPE';
+                break;
+            case self::EXPRESSION_TYPE:
+                $name = 'EXPRESSION_TYPE';
+                break;
             case self::LYRIC_TYPE:
                 $name = 'LYRIC_TYPE';
                 break;
@@ -189,6 +199,14 @@ class ChartDown_Token
                 return 'end of template';
             case self::CHORD_TYPE:
                 return 'chord';
+            case self::CHORD_GROUP_START_TYPE:
+                $name = 'chord group start';
+                break;
+            case self::CHORD_GROUP_END_TYPE:
+                $name = 'chord group end';
+                break;
+            case self::EXPRESSION_TYPE:
+                return 'expression';
             case self::LYRIC_TYPE:
                 return 'lyric';
             case self::LABEL_TYPE:

@@ -17,7 +17,16 @@ h3 {
 .bar { 
   float: left;
   width: 25%;
-  margin-top: 10px;
+  height:100%;
+}
+
+.lyric {
+  font-size: .8em;
+}
+
+.chord-row, .lyric-row {
+  height:50%;
+  padding: 3px 0;
 }
 
 .chord {
@@ -26,6 +35,16 @@ h3 {
 
 .row {
   clear: both;
+  height:100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+table.row {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-padding: 0;
+  width:100%;
 }
 
 hr {
@@ -49,13 +68,51 @@ hr {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -1;
 }
 
 /*** Articulations ***/
 
-.repeat-start .chord, .repeat-start .lyric{
+.chord-group {
+  border: 1px solid black;
+  padding:5px 3px 5px 5px;
+  margin-right:5px;
+}
+
+.repeat-start .chord-row, .repeat-start .lyric-row{
   padding-left: 20px;
 }
-.repeat-end .chord, .repeat-end .lyric{
+.repeat-finish .chord-row, .repeat-finish .lyric-row{
   padding-right: 20px;
 }
+
+.repeat-ending .repeat-ending-number {
+  font-size: .8em;
+  padding-left: 5px;
+}
+.repeat-ending .repeat-ending-start {
+  border-left: 1px solid black;
+}
+.repeat-ending .repeat-ending-number:after {
+  font-size: .8em;
+  content:'.';
+}
+
+.repeat-ending, .repeat-ending-active {
+  border-top: 1px solid black;
+}
+
+/* Hacks */
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */

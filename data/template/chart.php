@@ -4,7 +4,9 @@
   <link href="file://<?php echo dirname(__FILE__) ?>/chart.css" media="screen" rel="stylesheet" type="text/css" />
   <script src="file://<?php echo dirname(__FILE__) ?>/jquery-1.6.min.js" type="text/javascript"></script>
   <script src="file://<?php echo dirname(__FILE__) ?>/jcanvas.min.js" type="text/javascript"></script>
+  <script src="file://<?php echo dirname(__FILE__) ?>/rafael-min.js" type="text/javascript"></script>
   <script src="file://<?php echo dirname(__FILE__) ?>/chart.js" type="text/javascript"></script>
+  <script src="file://<?php echo dirname(__FILE__) ?>/chart-raphael.js" type="text/javascript"></script>
 </head>
 <body>
   <div id="chart">
@@ -31,27 +33,47 @@
     <canvas id="canvas"></canvas>
 
     <div id="content">
-        <div class="row">
-      <?php foreach ($chart->getBars() as $i => $bar): ?>
-        <?php if ($bar === null): ?>
-         </div>
-        <div class="row">
-          <?php continue; ?>
-        <?php endif ?>
+      <?php foreach ($chart->getRows() as $row): ?>
+        <div class="row clearfix">
+          <?php foreach ($row as $bar): ?>
+             <?php if ($label = $bar->getLabel()): ?>
+               <h3><?php echo $label ?></h3>
+             <?php endif ?>
 
-        <?php if ($label = $bar->getLabel()): ?>
-            <h3><?php echo $label ?></h3>
-         <?php endif ?>
+             <div class="bar<?php echo $this->renderBarExpressions($bar) ?>">
+                 <?php if ($ending = $bar->getExpressionByType(ChartDown_Chart_Expression::REPEAT_ENDING)): ?>
+                     <div class="repeat-ending-row repeat-ending-start"><span class="repeat-ending-number"><?php echo $ending->getValue() ?></span></div>
+                 <?php endif ?>
+             <div class="chord-row">
+                 <?php if (count($bar->getChords()) > 0): ?>
+                     <?php foreach ($bar->getChords() as $chord): ?>
+                         <?php if ($chord instanceof ChartDown_Chart_ChordGroup): $group = $chord?>
+                            <span class="chord-group">
+                                <?php foreach ($group as $chord): ?>
+                                    <span class="chord<?php echo $this->renderChordExpressions($chord) ?>"><?php echo $chord ?></span>
+                                <?php endforeach ?>                               
+                            </span>
+                         <?php else: ?>
+                             <span class="chord<?php echo $this->renderChordExpressions($chord) ?>"><?php echo $chord ?></span>
+                         <?php endif ?>
+                     <?php endforeach ?>
+                 <?php else: ?>
+                     &nbsp;
+                 <?php endif ?>
+             </div>
 
-        <div class="bar">
-          <?php foreach ($bar->getChords() as $chord): ?>
-            <span class="chord"><?php echo $chord ?></span>
+             <div class="lyric-row">
+             <?php if ($lyric = $bar->getLyric()): ?>
+               <span class="lyric"><?php echo $lyric ?></span>
+             <?php else: ?>
+                 &nbsp;
+             <?php endif ?>
+             </div>
+             </div>
           <?php endforeach ?>
-          <br />
-          <span class="lyric"><?php echo $bar->getLyric() ?></span>
+          &nbsp;
         </div>
       <?php endforeach ?>
-      </div>
     </div>
   </div>
 </body>
