@@ -37,21 +37,35 @@ Expressions
 
 The following expressions are valid:
 
-  * **^**: Accent
-  * **_**: Tenudo
-  * **\***: Diamond
-  * **>**: Anticipation
-  * **(**...**)**: Separates articulation from chord
-  * **[**...**]**: Group two or more chords into one beat
-  * **%**: Repeat a bar
-  * **{: :}**: Repeat start and repeat end
-  * **{1}**, **{2}**...: First ending, second ending
-  * **$**: Coda
-  * **&**: Segno
-  * **!**: Fermata
-  * **.**: Rhymic Separation (explained below)
+ * **^**: Accent
+ * **>**: Anticipation
+ * **$**: Coda
+ * **\***: Diamond
+ * **!**: Fermata
+ * **%**: Repeat a bar
+ * **{: ... :}**: Repeat start and repeat end
+ * **{1}**, **{2}**...: First ending, second ending
+ * **&**: Segno
+ * **_**: Tenudo
+ * **~**: Tie
 
 These can go before or after the chord, as long as they are contiguous.
+
+Page Characters 
+---------------
+
+The following characters are important, as they determine basic page functionality.  The Metadata
+and comment character is used to determine your chart's *title*, *key*, *time signature*. etc.  It
+can also be used to change the key or time signature for any line of the song.  The double 
+dash is for separating lines, and will be used often.  The double equals is for separating
+pages, and will be used only in the rare case where the default page break is not good enough.
+
+ * **#**: Metadata
+ * **--** (double dash): Line Break
+ * **==**: Page Break
+ * **(**...**)**: Separates articulation from chord
+ * **[**...**]**: Group two or more chords into one beat
+ * **.**: Rhymic Separation (explained below)
 
 Rhythm
 ------
@@ -74,19 +88,6 @@ most time signatures.
 **Note**: `Rhythmic Notation` can be devised from `Dot Notation`, so it is recommended to use 
 a subdivision of your time signature for the number of divisions.  For a `3/4` time signature,
 subdivisions of *three*, *six*, *nine*, or *twelve* are encouraged.
-
-Page Characters 
----------------
-
-The following characters are important, as they determine basic page functionality.  The Metadata
-and comment character is used to determine your chart's *title*, *key*, *time signature*. etc.  It
-can also be used to change the key or time signature for any line of the song.  The double 
-dash is for separating lines, and will be used often.  The double equals is for separating
-pages, and will be used only in the rare case where the default page break is not good enough.
-
- * **#**: Metadata
- * **--** (double dash): Line Break
- * **==**: Page Break
 
 Labels and Annotations
 ----------------------

@@ -10,22 +10,24 @@
  */
 
 /**
- * Represents a chart lyric.
+ * Represents chart text.
  *
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart_Lyric
+class ChartDown_Chart_Text
 {
-  protected $lyric;
+  protected $text;
+  protected $textile;
   
-  public function __construct($lyric)
+  public function __construct($text)
   {
-    $this->lyric = $lyric;
+    $this->text = $text;
+    $this->textile = new Textile();
   }
   
   public function __toString()
   {
-    return (string) $this->lyric;
+    return $this->textile->TextileThis($this->text);
   }
 }

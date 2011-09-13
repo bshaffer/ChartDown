@@ -17,8 +17,7 @@
  */
 class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
 {
-    protected $lyric;
-    protected $label;
+    protected $text;
     protected $options;
     protected $rhythm;
 
@@ -30,32 +29,18 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
         $this->chords = array();
     }
 
-    public function getLabel()
+    public function getText()
     {
-        return $this->label;
+        return $this->text;
     }
 
-    public function setLabel($label)
+    public function setText($text)
     {
-        if (is_string($label)) {
-            $label = new ChartDown_Chart_Label($label);
+        if (is_string($text)) {
+            $text = new ChartDown_Chart_Text($text);
         }
 
-        $this->label = $label;
-    }
-
-    public function getLyric()
-    {
-        return $this->lyric;
-    }
-
-    public function addLyric($lyric)
-    {
-        if (is_string($lyric)) {
-            $lyric = new ChartDown_Chart_Lyric($lyric);
-        }
-
-        $this->lyric = $lyric;
+        $this->text = $text;
     }
 
     public function addChordGroup()

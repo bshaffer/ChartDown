@@ -28,12 +28,11 @@ class ChartDown_Token
     const CHORD_GROUP_END_TYPE   = 9;
     const LINE_START             = 10;
     const LINE_END               = 11;
-    const LYRIC_TYPE             = 2;
+    const TEXT_TYPE              = 2;
     const BAR_LINE               = 3;
     const METADATA_KEY_TYPE      = 4;
     const METADATA_VALUE_TYPE    = 5;
     const EXPRESSION_TYPE        = 12;
-    const LABEL_TYPE             = 6;
     const END_ROW_TYPE           = 7;
 
     /**
@@ -153,11 +152,8 @@ class ChartDown_Token
             case self::EXPRESSION_TYPE:
                 $name = 'EXPRESSION_TYPE';
                 break;
-            case self::LYRIC_TYPE:
-                $name = 'LYRIC_TYPE';
-                break;
-            case self::LABEL_TYPE:
-                $name = 'LABEL_TYPE';
+            case self::TEXT_TYPE:
+                $name = 'TEXT_TYPE';
                 break;
             case self::METADATA_KEY_TYPE:
                 $name = 'METADATA_KEY_TYPE';
@@ -207,10 +203,8 @@ class ChartDown_Token
                 break;
             case self::EXPRESSION_TYPE:
                 return 'expression';
-            case self::LYRIC_TYPE:
-                return 'lyric';
-            case self::LABEL_TYPE:
-                return 'label';
+            case self::TEXT_TYPE:
+                return 'text';
             case self::METADATA_KEY_TYPE:
                 return 'key for metadata';
             case self::METADATA_VALUE_TYPE:

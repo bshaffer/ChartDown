@@ -150,14 +150,9 @@ class ChartDown_Parser implements ChartDown_ParserInterface
                     }
                     break;
 
-                case ChartDown_Token::LYRIC_TYPE:
+                case ChartDown_Token::TEXT_TYPE:
                     $token = $this->stream->next();
-                    $bars[$barIndex][] = new ChartDown_Node_Lyric($token->getValue(), $token->getLine());
-                    break;
-
-                case ChartDown_Token::LABEL_TYPE:
-                    $token = $this->stream->next();
-                    $bars[$barIndex][] = new ChartDown_Node_Label($token->getValue(), $token->getLine());
+                    $bars[$barIndex][] = new ChartDown_Node_Text($token->getValue(), $token->getLine());
                     break;
 
                 case ChartDown_Token::METADATA_KEY_TYPE:
