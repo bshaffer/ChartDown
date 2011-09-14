@@ -1,18 +1,18 @@
 <?php
 
 /**
-* Segno Expression
+* Fermata Expression
 */
-class ChartDown_Chart_Expression_Segno extends ChartDown_Chart_Expression
+class ChartDown_Chart_ExpressionType_Fermata implements ChartDown_Chart_ExpressionTypeInterface
 {
   public function getSymbol()
   {
-    return '&';
+    return '!';
   }
   
   public function isChordExpression()
   {
-    return false;
+    return true;
   }
   
   public function isPreChordExpression()
@@ -22,11 +22,11 @@ class ChartDown_Chart_Expression_Segno extends ChartDown_Chart_Expression
   
   public function getEnglishName()
   {
-    return 'segno';
+    return 'fermata';
   }
   
   public function getRegex()
   {
-    return '&';
+    return '!';
   }
 }

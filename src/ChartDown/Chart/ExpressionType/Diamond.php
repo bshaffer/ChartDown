@@ -3,7 +3,7 @@
 /**
 * Diamond Expression
 */
-class ChartDown_Chart_Expression_Diamond extends ChartDown_Chart_Expression
+class ChartDown_Chart_ExpressionType_Diamond implements ChartDown_Chart_ExpressionTypeInterface
 {
   public function getSymbol()
   {

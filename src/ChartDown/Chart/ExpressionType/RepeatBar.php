@@ -1,18 +1,18 @@
 <?php
 
 /**
-* Tie Expression
+* Repeat Bar Expression
 */
-class ChartDown_Chart_Expression_Tie extends ChartDown_Chart_Expression
+class ChartDown_Chart_ExpressionType_RepeatBar implements ChartDown_Chart_ExpressionTypeInterface
 {
   public function getSymbol()
   {
-    return '~';
+    return '%';
   }
   
   public function isChordExpression()
   {
-    return true;
+    return false;
   }
   
   public function isPreChordExpression()
@@ -22,11 +22,11 @@ class ChartDown_Chart_Expression_Tie extends ChartDown_Chart_Expression
   
   public function getEnglishName()
   {
-    return 'tie';
+    return 'repeat bar';
   }
   
   public function getRegex()
   {
-    return '~';
+    return '%';
   }
 }

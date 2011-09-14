@@ -1,13 +1,13 @@
 <?php
 
 /**
-* Anticipation Expression
+* Tie Expression
 */
-class ChartDown_Chart_Expression_Anticipation extends ChartDown_Chart_Expression
+class ChartDown_Chart_ExpressionType_Tie implements ChartDown_Chart_ExpressionTypeInterface
 {
   public function getSymbol()
   {
-    return '>';
+    return '~';
   }
   
   public function isChordExpression()
@@ -17,16 +17,16 @@ class ChartDown_Chart_Expression_Anticipation extends ChartDown_Chart_Expression
   
   public function isPreChordExpression()
   {
-    return true;
+    return false;
   }
   
   public function getEnglishName()
   {
-    return 'anticipation';
+    return 'tie';
   }
   
   public function getRegex()
   {
-    return '>';
+    return '~';
   }
 }

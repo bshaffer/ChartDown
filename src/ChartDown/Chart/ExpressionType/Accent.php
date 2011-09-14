@@ -1,18 +1,18 @@
 <?php
 
 /**
-* Repeat Finish Expression
+* Accent Expression
 */
-class ChartDown_Chart_Expression_RepeatFinish extends ChartDown_Chart_Expression
+class ChartDown_Chart_ExpressionType_Accent implements ChartDown_Chart_ExpressionTypeInterface
 {
   public function getSymbol()
   {
-    return ':}';
+    return '^';
   }
   
   public function isChordExpression()
   {
-    return false;
+    return true;
   }
   
   public function isPreChordExpression()
@@ -22,11 +22,11 @@ class ChartDown_Chart_Expression_RepeatFinish extends ChartDown_Chart_Expression
   
   public function getEnglishName()
   {
-    return 'repeat finish';
+    return 'accent';
   }
   
   public function getRegex()
   {
-    return ':\}';
+    return '\^';
   }
 }

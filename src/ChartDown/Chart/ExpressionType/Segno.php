@@ -1,13 +1,13 @@
 <?php
 
 /**
-* Repeat Bar Expression
+* Segno Expression
 */
-class ChartDown_Chart_Expression_RepeatBar extends ChartDown_Chart_Expression
+class ChartDown_Chart_ExpressionType_Segno implements ChartDown_Chart_ExpressionTypeInterface
 {
   public function getSymbol()
   {
-    return '%';
+    return '&';
   }
   
   public function isChordExpression()
@@ -22,11 +22,11 @@ class ChartDown_Chart_Expression_RepeatBar extends ChartDown_Chart_Expression
   
   public function getEnglishName()
   {
-    return 'repeat bar';
+    return 'segno';
   }
   
   public function getRegex()
   {
-    return '%';
+    return '&';
   }
 }

@@ -1,18 +1,18 @@
 <?php
 
 /**
-* Tenudo Expression
+* Repeat Ending Expression
 */
-class ChartDown_Chart_Expression_Tenudo extends ChartDown_Chart_Expression
+class ChartDown_Chart_ExpressionType_RepeatEnding implements ChartDown_Chart_ExpressionTypeInterface
 {
   public function getSymbol()
   {
-    return '_';
+    return '{num}';
   }
   
   public function isChordExpression()
   {
-    return true;
+    return false;
   }
   
   public function isPreChordExpression()
@@ -22,11 +22,11 @@ class ChartDown_Chart_Expression_Tenudo extends ChartDown_Chart_Expression
   
   public function getEnglishName()
   {
-    return 'tenudo';
+    return 'repeat ending';
   }
   
   public function getRegex()
   {
-    return '_';
+    return '\{(\d+)\}';
   }
 }

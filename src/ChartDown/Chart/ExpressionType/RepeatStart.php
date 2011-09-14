@@ -1,13 +1,13 @@
 <?php
 
 /**
-* Coda Expression
+* Repeat Start Expression
 */
-class ChartDown_Chart_Expression_Coda extends ChartDown_Chart_Expression
+class ChartDown_Chart_ExpressionType_RepeatStart implements ChartDown_Chart_ExpressionTypeInterface
 {
   public function getSymbol()
   {
-    return '$';
+    return '{:';
   }
   
   public function isChordExpression()
@@ -22,11 +22,11 @@ class ChartDown_Chart_Expression_Coda extends ChartDown_Chart_Expression
   
   public function getEnglishName()
   {
-    return 'coda';
+    return 'repeat start';
   }
   
   public function getRegex()
   {
-    return '\$';
+    return '\{:';
   }
 }

@@ -36,10 +36,6 @@
       <?php foreach ($chart->getRows() as $row): ?>
         <div class="row clearfix">
           <?php foreach ($row as $bar): ?>
-             <?php if ($label = $bar->getLabel()): ?>
-               <h3><?php echo $label ?></h3>
-             <?php endif ?>
-
              <div class="bar<?php echo $this->renderBarExpressions($bar) ?>">
                  <?php if ($ending = $bar->getExpressionByType(ChartDown_Chart_Expression::REPEAT_ENDING)): ?>
                      <div class="repeat-ending-row repeat-ending-start"><span class="repeat-ending-number"><?php echo $ending->getValue() ?></span></div>
@@ -63,8 +59,8 @@
              </div>
 
              <div class="lyric-row">
-             <?php if ($lyric = $bar->getLyric()): ?>
-               <span class="lyric"><?php echo $lyric ?></span>
+             <?php if ($text = $bar->getText()): ?>
+               <?php echo $text ?>
              <?php else: ?>
                  &nbsp;
              <?php endif ?>

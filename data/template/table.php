@@ -33,7 +33,7 @@
     <div id="content">
       <?php foreach ($chart->getRows() as $row): ?>
         <table class="row">
-           <?php if ($row->hasLabel()): ?>
+           <?php if ($row->hasTopText()): ?>
             <tr class="label-row">
               <?php foreach ($row as $bar): ?>
               <td>
@@ -58,8 +58,8 @@
            <tr class="lyric-row">
               <?php foreach ($row as $bar): ?>
               <td class="bar<?php echo $this->renderBarExpressions($bar) ?>">
-                <?php if ($lyric = $bar->getLyric()): ?>
-                  <span class="lyric"><?php echo $lyric ?></span>
+                <?php if ($text = $bar->getText()): ?>
+                    <?php echo $text ?>
                 <?php endif ?>
               </td>
               <?php endforeach ?>

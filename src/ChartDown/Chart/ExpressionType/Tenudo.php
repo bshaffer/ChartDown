@@ -1,13 +1,13 @@
 <?php
 
 /**
-* Fermata Expression
+* Tenudo Expression
 */
-class ChartDown_Chart_Expression_Fermata extends ChartDown_Chart_Expression
+class ChartDown_Chart_ExpressionType_Tenudo implements ChartDown_Chart_ExpressionTypeInterface
 {
   public function getSymbol()
   {
-    return '!';
+    return '_';
   }
   
   public function isChordExpression()
@@ -22,11 +22,11 @@ class ChartDown_Chart_Expression_Fermata extends ChartDown_Chart_Expression
   
   public function getEnglishName()
   {
-    return 'fermata';
+    return 'tenudo';
   }
   
   public function getRegex()
   {
-    return '!';
+    return '_';
   }
 }

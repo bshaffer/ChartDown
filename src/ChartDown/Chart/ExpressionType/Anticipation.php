@@ -1,32 +1,32 @@
 <?php
 
 /**
-* Repeat Ending Expression
+* Anticipation Expression
 */
-class ChartDown_Chart_Expression_RepeatEnding extends ChartDown_Chart_Expression
+class ChartDown_Chart_ExpressionType_Anticipation implements ChartDown_Chart_ExpressionTypeInterface
 {
   public function getSymbol()
   {
-    return '{num}';
+    return '>';
   }
   
   public function isChordExpression()
   {
-    return false;
+    return true;
   }
   
   public function isPreChordExpression()
   {
-    return false;
+    return true;
   }
   
   public function getEnglishName()
   {
-    return 'repeat ending';
+    return 'anticipation';
   }
   
   public function getRegex()
   {
-    return '\{(\d+)\}';
+    return '>';
   }
 }
