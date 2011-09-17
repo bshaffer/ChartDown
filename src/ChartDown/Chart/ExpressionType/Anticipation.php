@@ -15,12 +15,7 @@ class ChartDown_Chart_ExpressionType_Anticipation implements ChartDown_Chart_Exp
     return true;
   }
   
-  public function isPreChordExpression()
-  {
-    return true;
-  }
-  
-  public function getEnglishName()
+  public function getName()
   {
     return 'anticipation';
   }

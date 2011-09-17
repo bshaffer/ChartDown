@@ -17,11 +17,11 @@
  */
 class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
 {
-    protected $text;
-    protected $options;
-    protected $rhythm;
+    private $text;
+    private $options;
+    private $rhythm;
 
-    protected $expressions = array();
+    private $expressions = array();
 
     public function __construct($options = array())
     {

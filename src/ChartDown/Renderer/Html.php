@@ -27,7 +27,7 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
   {
       $classes = array();
       foreach ($chord->getExpressions() as $expression) {
-          $classes[] = str_replace(' ', '-', $expression->getEnglishName());
+          $classes[] = str_replace(' ', '-', $expression->getName());
       }
       return count($classes) ? ' ' . implode(' ', $classes) : '';
   }
@@ -36,7 +36,7 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
   {
       $classes = array();
       foreach ($bar->getExpressions() as $expression) {
-          $classes[] = str_replace(' ', '-', $expression->getEnglishName());
+          $classes[] = str_replace(' ', '-', $expression->getName());
       }
 
       return count($classes) ? ' ' . implode(' ', $classes) : '';

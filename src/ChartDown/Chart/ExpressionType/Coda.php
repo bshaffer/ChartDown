@@ -15,12 +15,7 @@ class ChartDown_Chart_ExpressionType_Coda implements ChartDown_Chart_ExpressionT
     return false;
   }
   
-  public function isPreChordExpression()
-  {
-    return false;
-  }
-  
-  public function getEnglishName()
+  public function getName()
   {
     return 'coda';
   }

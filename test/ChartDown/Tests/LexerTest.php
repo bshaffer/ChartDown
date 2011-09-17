@@ -48,7 +48,7 @@ EOF;
   {
     $chart = <<<EOF
 G | G | C | D
-Don't miss that train|comin' home|Don't miss that train|to me
+text: Don't miss that train|comin' home|Don't miss that train|to me
 EOF;
 
     $output = $this->lexer->tokenize($chart);
@@ -80,10 +80,10 @@ EOF;
   {
     $chart = <<<EOF
 G | G | C | D
-Don't miss that train|comin' home|Don't miss that train|to me
+text: Don't miss that train|comin' home|Don't miss that train|to me
 --
 G | G | C | D
-We're on a plane|blowin' smoke|signin' our names|en chelo
+text: We're on a plane|blowin' smoke|signin' our names|en chelo
 EOF;
 
     $output = $this->lexer->tokenize($chart);
@@ -129,6 +129,28 @@ LINE_END()
 EOF_TYPE()
 EOF;
 
+    $this->assertEquals($expectedOutput, (string) $output);
+  }
+
+  public function testLexTextLine()
+  {
+    $chart = <<<EOF
+text:Don't miss that train|comin' home|Don't miss that train|to me
+EOF;
+
+    $output = $this->lexer->tokenize($chart);
+    $expectedOutput = <<<EOF
+LINE_START(STATE_TEXT)
+TEXT_TYPE(Don't miss that train)
+BAR_LINE()
+TEXT_TYPE(comin' home)
+BAR_LINE()
+TEXT_TYPE(Don't miss that train)
+BAR_LINE()
+TEXT_TYPE(to me)
+LINE_END()
+EOF_TYPE()
+EOF;
     $this->assertEquals($expectedOutput, (string) $output);
   }
 

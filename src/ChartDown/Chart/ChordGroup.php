@@ -2,8 +2,8 @@
 
 class ChartDown_Chart_ChordGroup implements IteratorAggregate
 {
-    protected $chords = array();
-    protected $preExpressions = array();
+    private $chords = array();
+    private $expressions = array();
 
     public function getChords()
     {
@@ -16,9 +16,9 @@ class ChartDown_Chart_ChordGroup implements IteratorAggregate
             $chord = new ChartDown_Chart_Chord($chord);
         }
 
-        if ($this->preExpressions) {
-            $chord->addExpressions($this->preExpressions);
-            $this->preExpressions = array();
+        if ($this->expressions) {
+            $chord->addExpressions($expressions);
+            $this->expressions = array();
         }
 
         $this->chords[] = $chord;
@@ -29,13 +29,8 @@ class ChartDown_Chart_ChordGroup implements IteratorAggregate
         if (is_string($expression)) {
             $expression = new ChartDown_Chart_Expression($expression);
         }
-
-        if (!$expression->isPreChordExpression() && 0 < $len = count($this->chords)) {
-            $this->chords[$len-1]->addExpression($expression);
-        }
-        else {
-            $this->preExpressions[] = $expression;
-        }
+        
+        $this->expressions[] = $expression;
     }
 
     public function getIterator()

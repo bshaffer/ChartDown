@@ -8,13 +8,13 @@ class ChartDown_Tests_CompilerTest extends PHPUnit_Framework_TestCase
     $this->compiler = new ChartDown_Compiler($chartdown);
   }
 
-  public function testCompileChordAndLyricNodes()
+  public function testCompileChordAndTextNodes()
   {
     // Every country song ever written
     $node = new ChartDown_Node_Module(
       new ChartDown_Node(array(
           new ChartDown_Node_Chord('G', -1),
-          new ChartDown_Node_Lyric('That old dusty wind', -1),
+          new ChartDown_Node_Text('That old dusty wind', -1),
     )),
      null,
      new ChartDown_Node(),
@@ -26,7 +26,7 @@ class ChartDown_Tests_CompilerTest extends PHPUnit_Framework_TestCase
     $source = $this->compiler->getSource();
     
     $this->assertContains('->addChord("G")', $source);
-    $this->assertContains('->addLyric("That old dusty wind")', $source);
+    $this->assertContains('->setText("That old dusty wind")', $source);
   }
   
   public function testCompileMetadataNode()
@@ -86,14 +86,14 @@ class ChartDown_Tests_CompilerTest extends PHPUnit_Framework_TestCase
     $this->assertContains('->setKey(new ChartDown_Chart_Key("G"))', $source);
   }
   
-  public function testCompileChordAndLyricAndMetadataNodes()
+  public function testCompileChordAndTextAndMetadataNodes()
   {
     // Every country song ever written
     $node = new ChartDown_Node_Module(
       new ChartDown_Node(array(
           new ChartDown_Node_Metadata('title', 'Every Country Song Ever Written'),
           new ChartDown_Node_Chord('G', -1),
-          new ChartDown_Node_Lyric('That old dusty wind', -1),
+          new ChartDown_Node_Text('That old dusty wind', -1),
     )),
      null,
      new ChartDown_Node(),
@@ -106,7 +106,7 @@ class ChartDown_Tests_CompilerTest extends PHPUnit_Framework_TestCase
     
     $this->assertContains('->setTitle("Every Country Song Ever Written")', $source);
     $this->assertContains('->addChord("G")', $source);
-    $this->assertContains('->addLyric("That old dusty wind")', $source);
+    $this->assertContains('->setText("That old dusty wind")', $source);
   }
   
   public function testCompileChordGroupNodes()

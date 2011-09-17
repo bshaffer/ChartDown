@@ -12,15 +12,10 @@ class ChartDown_Chart_ExpressionType_Tie implements ChartDown_Chart_ExpressionTy
   
   public function isChordExpression()
   {
-    return true;
-  }
-  
-  public function isPreChordExpression()
-  {
     return false;
   }
   
-  public function getEnglishName()
+  public function getName()
   {
     return 'tie';
   }

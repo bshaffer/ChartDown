@@ -32,6 +32,7 @@ class ChartDown_Environment
     protected $binaryOperators;
     protected $baseChartClass;
     protected $runtimeInitialized;
+    protected $expressionTypes;
     protected $chartClassPrefix = '__ChartDownChart_';
 
     /**
@@ -58,6 +59,21 @@ class ChartDown_Environment
         
         $this->debug              = (bool) $options['debug'];
         $this->loader             = new ChartDown_Loader_String();
+        
+        $this->expressionTypes = array(
+            'Accent'           => new ChartDown_Chart_ExpressionType_Accent(),
+            'Anticipation'     => new ChartDown_Chart_ExpressionType_Anticipation(),
+            'Coda'             => new ChartDown_Chart_ExpressionType_Coda(),
+            'Diamond'          => new ChartDown_Chart_ExpressionType_Diamond(),
+            'Fermata'          => new ChartDown_Chart_ExpressionType_Fermata(),
+            'RepeatBar'        => new ChartDown_Chart_ExpressionType_RepeatBar(),
+            'RepeatEnding'     => new ChartDown_Chart_ExpressionType_RepeatEnding(),
+            'RepeatFinish'     => new ChartDown_Chart_ExpressionType_RepeatFinish(),
+            'RepeatStart'      => new ChartDown_Chart_ExpressionType_RepeatStart(),
+            'Segno'            => new ChartDown_Chart_ExpressionType_Segno(),
+            'Tenudo'           => new ChartDown_Chart_ExpressionType_Tenudo(),
+            'Tie'              => new ChartDown_Chart_ExpressionType_Tie(),
+        );
     }
 
     /**
@@ -68,6 +84,16 @@ class ChartDown_Environment
     public function getBaseChartClass()
     {
         return $this->baseChartClass;
+    }
+    
+    /**
+     * Gets the array of expression types used in the chart
+     *
+     * @return array The ExpressionTypeInterface Objects
+     */
+    public function getExpressionTypes()
+    {
+        return $this->expressionTypes;
     }
 
     /**

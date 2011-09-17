@@ -155,7 +155,7 @@ class ChartDown_LexerNeedle
     $this->cursor += $step;
   }
 
-  protected function moveCursor($text)
+  public function moveCursor($text)
   {
       $this->cursor += strlen($text);
       $this->lineno += substr_count($text, "\n");
@@ -185,6 +185,11 @@ class ChartDown_LexerNeedle
   public function getNumLines()
   {
       return substr_count(substr($this->text, $this->cursor), "\n") + 1;
+  }
+
+  public function ltrim($len)
+  {
+      $this->text = substr($this->text, $len);
   }
   
   public function trim()

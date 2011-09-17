@@ -15,12 +15,7 @@ class ChartDown_Chart_ExpressionType_RepeatBar implements ChartDown_Chart_Expres
     return false;
   }
   
-  public function isPreChordExpression()
-  {
-    return false;
-  }
-  
-  public function getEnglishName()
+  public function getName()
   {
     return 'repeat bar';
   }

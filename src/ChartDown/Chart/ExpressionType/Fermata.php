@@ -14,13 +14,8 @@ class ChartDown_Chart_ExpressionType_Fermata implements ChartDown_Chart_Expressi
   {
     return true;
   }
-  
-  public function isPreChordExpression()
-  {
-    return false;
-  }
-  
-  public function getEnglishName()
+
+  public function getName()
   {
     return 'fermata';
   }

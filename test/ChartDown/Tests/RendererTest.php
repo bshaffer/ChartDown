@@ -38,12 +38,12 @@ class ChartDown_Chart_Test extends ChartDown_Chart
     $this
       ->addBar()
         ->addChord('G')
-        ->addLyric('My momma told me')
+        ->setText('My momma told me')
       ->end()
       ->addBar()
         ->addChord('C')
         ->addChord('D')
-        ->addLyric('You better shop around')
+        ->setText('You better shop around')
       ->end()
     ;
     

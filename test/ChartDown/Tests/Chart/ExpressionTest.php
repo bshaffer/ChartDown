@@ -2,59 +2,63 @@
 
 class ChartDown_Tests_Chart_ExpressionTest extends PHPUnit_Framework_TestCase
 {
-  public function testParseBasicExpressions()
-  {
-    $exp1 = new ChartDown_Chart_Expression('^');
-    $exp2 = new ChartDown_Chart_Expression('>');
-    $exp3 = new ChartDown_Chart_Expression('*');
-    $exp4 = new ChartDown_Chart_Expression('.');
-    $exp5 = new ChartDown_Chart_Expression('_');
-    $exp6 = new ChartDown_Chart_Expression('~');
-    
-    $this->assertEquals($exp1->getType(), ChartDown_Chart_Expression::ACCENT);
-    $this->assertEquals($exp2->getType(), ChartDown_Chart_Expression::ANTICIPATION);
-    $this->assertEquals($exp3->getType(), ChartDown_Chart_Expression::DIAMOND);
-    $this->assertEquals($exp4->getType(), ChartDown_Chart_Expression::STACCATO);
-    $this->assertEquals($exp5->getType(), ChartDown_Chart_Expression::TENUDO);
-    $this->assertEquals($exp6->getType(), ChartDown_Chart_Expression::TIE);
-  }
-  
-  public function testParseRepeatExpressions()
-  {
-    $start  = new ChartDown_Chart_Expression('{:');
-    $finish = new ChartDown_Chart_Expression(':}');
-    $end1   = new ChartDown_Chart_Expression('{1}');
-    $end5   = new ChartDown_Chart_Expression('{5}');
-    
-    $this->assertEquals($start->getType(), ChartDown_Chart_Expression::REPEAT_START);
-    $this->assertEquals($finish->getType(), ChartDown_Chart_Expression::REPEAT_FINISH);
-    $this->assertEquals($end1->getType(), ChartDown_Chart_Expression::REPEAT_ENDING);
-    $this->assertEquals($end1->getValue(), '1');
-    $this->assertEquals($end5->getType(), ChartDown_Chart_Expression::REPEAT_ENDING);
-    $this->assertEquals($end5->getValue(), '5');
-  }
+    public function testBasicExpressions()
+    {
+        $this->assertMatches('^', new ChartDown_Chart_ExpressionType_Accent());
+        $this->assertMatches('>', new ChartDown_Chart_ExpressionType_Anticipation());
+        $this->assertMatches('*', new ChartDown_Chart_ExpressionType_Diamond());
+        $this->assertMatches('!', new ChartDown_Chart_ExpressionType_Fermata());
+        $this->assertMatches('_', new ChartDown_Chart_ExpressionType_Tenudo());
 
-  /**
-  * @expectedException InvalidArgumentException
-  */
-  public function testParseInvalidExpression()
-  {
-    $note = new ChartDown_Chart_Note('#');
-  }
+        $this->assertMatches('&', new ChartDown_Chart_ExpressionType_Segno());
+        $this->assertMatches('$', new ChartDown_Chart_ExpressionType_Coda());
+        $this->assertMatches('~', new ChartDown_Chart_ExpressionType_Tie());
+    }
 
-  /**
-  * @expectedException InvalidArgumentException
-  */
-  public function testCombiningTwoValidExpressionsIsInvalid()
-  {
-    $note = new ChartDown_Chart_Note('*^');
-  }
-  
-  /**
-  * @expectedException InvalidArgumentException
-  */
-  public function testParseInvalidRepeat()
-  {
-    $note = new ChartDown_Chart_Note('{1');
-  }
+    public function testParseRepeatExpressions()
+    {
+        $this->assertMatches('%', new ChartDown_Chart_ExpressionType_RepeatBar());
+        $this->assertMatches('{1}', new ChartDown_Chart_ExpressionType_RepeatEnding());
+        $this->assertMatches('{2}', new ChartDown_Chart_ExpressionType_RepeatEnding());
+        $this->assertMatches('{:', new ChartDown_Chart_ExpressionType_RepeatStart());
+        $this->assertMatches(':}', new ChartDown_Chart_ExpressionType_RepeatFinish());
+
+        $this->assertNoMatch('{#}', new ChartDown_Chart_ExpressionType_RepeatEnding());
+    }
+
+    public function testCombiningMultipleValidExpressions()
+    {
+        $this->assertGroupMatches('^*', array(
+            new ChartDown_Chart_ExpressionType_Accent(),
+            new ChartDown_Chart_ExpressionType_Diamond(),
+        ));
+
+        $this->assertGroupMatches('_^>!*', array(
+            new ChartDown_Chart_ExpressionType_Accent(),
+            new ChartDown_Chart_ExpressionType_Anticipation(),
+            new ChartDown_Chart_ExpressionType_Diamond(),
+            new ChartDown_Chart_ExpressionType_Fermata(),
+            new ChartDown_Chart_ExpressionType_Tenudo(),
+        ));
+    }
+
+    private function assertMatches($symbol, ChartDown_Chart_ExpressionTypeInterface $type)
+    {
+        $this->assertEquals(1, preg_match(sprintf('/%s/', $type->getRegex()), $symbol));
+    }
+
+    private function assertNoMatch($symbol, ChartDown_Chart_ExpressionTypeInterface $type)
+    {
+        $this->assertEquals(0, preg_match(sprintf('/%s/', $type->getRegex()), $symbol));
+    }
+
+    private function assertGroupMatches($symbols, array $types)
+    {
+        $regex = array();
+        foreach ($types as $type) {
+            $regex[] = $type->getRegex();
+        }
+
+        $this->assertEquals(1, preg_match(sprintf('/%s/', implode('|', $regex)), $symbols));
+    }
 }

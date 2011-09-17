@@ -15,12 +15,7 @@ class ChartDown_Chart_ExpressionType_Segno implements ChartDown_Chart_Expression
     return false;
   }
   
-  public function isPreChordExpression()
-  {
-    return false;
-  }
-  
-  public function getEnglishName()
+  public function getName()
   {
     return 'segno';
   }

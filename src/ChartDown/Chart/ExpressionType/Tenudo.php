@@ -15,12 +15,7 @@ class ChartDown_Chart_ExpressionType_Tenudo implements ChartDown_Chart_Expressio
     return true;
   }
   
-  public function isPreChordExpression()
-  {
-    return false;
-  }
-  
-  public function getEnglishName()
+  public function getName()
   {
     return 'tenudo';
   }

@@ -27,6 +27,7 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
     protected $env;
     protected $filename;
     protected $options;
+    protected $expressionRegex;
 
     const STATE_CHORD       = 0;
     const STATE_TEXT        = 1;
@@ -34,8 +35,6 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
 
     const REGEX_CHORD       = '/[a-gA-G1-7][A-G|m|M|b|#|+|2|7|9|11|13|sus|dim|\/]*/';
     const REGEX_METADATA    = '/#*(.*):(.*)/';
-    const REGEX_EXPRESSION  = '/(\.|~|\*|_|\^|>|\{:|:\}|\{\d
-        +\}|%)/';
 
     public function __construct(ChartDown_Environment $env, array $options = array())
     {
@@ -46,6 +45,13 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
             'chord_group'          => array('[', ']'),
             'row_delimiter'        => '--',
         ), $options);
+        
+        $regex = array();
+        foreach ($env->getExpressionTypes() as $type) {
+            $regex[] = $type->getRegex();
+        }
+        
+        $this->expressionRegex = sprintf('/%s/', implode('|', $regex));
     }
 
     /**
@@ -118,7 +124,7 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
         foreach ($line->split($this->options['bar_delimiter']) as $i => $bar) {
             $bar->trim();
             while (!$bar->isEOF()) {
-                if (false !== ($data = $bar->moveToFirst(array(self::REGEX_CHORD, self::REGEX_EXPRESSION, $this->options['chord_group'][0], $this->options['chord_group'][1])))) {
+                if (false !== ($data = $bar->moveToFirst(array(self::REGEX_CHORD, $this->expressionRegex, $this->options['chord_group'][0], $this->options['chord_group'][1])))) {
                     $token = $data[0];
                     $text  = $data[1];
 
@@ -136,10 +142,10 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
 
                         $this->pushToken(ChartDown_Token::CHORD_GROUP_END_TYPE);
 
-                    } elseif( $token == self::REGEX_EXPRESSION ) {
-                        $this->pushToken(ChartDown_Token::EXPRESSION_TYPE, trim($text));
-                    } else {
+                    } elseif( $token == self::REGEX_CHORD ) {
                         $this->pushToken(ChartDown_Token::CHORD_TYPE, trim($text));
+                    } else {
+                        $this->pushToken(ChartDown_Token::EXPRESSION_TYPE, trim($text));
                     }
                 } else if ($text = trim($bar->rest())) {
                     throw new ChartDown_Error_Syntax('Unidentified token: '.$text, $this->lineno, $this->filename);
@@ -154,6 +160,11 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
 
     protected function lexText($line)
     {
+        $line->ltrim(5);
+        if (strpos($line->getText(), ' ') === 0) {
+            $line->ltrim(1); // trim off initial space
+        }
+        
         foreach ($line->split($this->options['bar_delimiter']) as $bar) {
             $this->pushToken(ChartDown_Token::TEXT_TYPE, $bar->getText());
 
