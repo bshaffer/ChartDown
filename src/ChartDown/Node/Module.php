@@ -138,9 +138,9 @@ class ChartDown_Node_Module extends ChartDown_Node
     protected function compileConstructor(ChartDown_Compiler $compiler)
     {
         $compiler
-            ->write("public function __construct(ChartDown_Environment \$env, \$options = array())\n", "{\n")
+            ->write("public function __construct(\$options = array())\n", "{\n")
             ->indent()
-            ->write("parent::__construct(\$env);\n\n")
+            ->write("parent::__construct(\$options);\n\n")
             ->write("\$this->blocks = array(\n")
             ->indent()
         ;

@@ -27,10 +27,10 @@ class ChartDown_Chart_Row implements IteratorAggregate
         return $this->bars;
     }
     
-    public function hasLabel()
+    public function hasTopText()
     {
       foreach ($this->bars as $bar) {
-        if (trim($bar->getLabel()) != '') {
+        if (trim($bar->getTopText()) != '') {
           return true;
         }
       }

@@ -24,11 +24,9 @@ class ChartDown_Chart implements IteratorAggregate
     protected $timeSignature;
     protected $tempo;
     protected $bars;
-    protected $env;
 
-    public function __construct($env, $options = array())
+    public function __construct($options = array())
     {
-        $this->env = $env;
         $this->options = $options;
         $this->bars   = array();
 

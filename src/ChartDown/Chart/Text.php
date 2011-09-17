@@ -28,6 +28,21 @@ class ChartDown_Chart_Text
   
   public function __toString()
   {
-    return $this->textile->TextileThis($this->text);
+    return $this->getRawText();
+  }
+
+  public function getRawText()
+  {
+      return $this->text;
+  }
+  
+  public function getText()
+  {
+      return $this->textile->TextileThis($this->text);
+  }
+  
+  public function addText($text)
+  {
+      $this->text .= "\n\n" . ($text instanceof self ? $text->getRawText() : $text);
   }
 }

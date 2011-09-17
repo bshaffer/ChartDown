@@ -17,7 +17,8 @@
  */
 class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
 {
-    private $text;
+    private $bottomText;
+    private $topText;
     private $options;
     private $rhythm;
 
@@ -26,28 +27,68 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
     public function __construct($options = array())
     {
         $this->options = $options;
-        $this->chords = array();
+    }
+    
+    public function getTopText()
+    {
+        return $this->topText;
     }
 
-    public function getText()
+    public function hasTopText()
     {
-        return $this->text;
+        return !empty($this->topText);
+    }
+
+    public function getBottomText()
+    {
+        return $this->bottomText;
+    }
+
+    public function hasBottomText()
+    {
+        return !empty($this->bottomText);
     }
 
     public function setText($text)
+    {        
+        if (0 == count($this->getChords())) {
+            $this->setTopText($text);
+        } else {
+            $this->setBottomText($text);
+        }
+    }
+    
+    public function setTopText($text)
     {
         if (is_string($text)) {
             $text = new ChartDown_Chart_Text($text);
         }
 
-        $this->text = $text;
+        if (!empty($this->topText)) { 
+            $this->topText->addText($text->getRawText());
+        } else { 
+            $this->topText = $text;
+        }
+    }
+    
+    public function setBottomText($text)
+    {
+        if (is_string($text)) {
+            $text = new ChartDown_Chart_Text($text);
+        }
+
+        if (!empty($this->bottomText)) { 
+            $this->bottomText->addText($text->getRawText());
+        } else { 
+            $this->bottomText = $text;
+        }
     }
 
     public function addChordGroup()
     {
         $group = new ChartDown_Chart_ChordGroup();
 
-        $this->chords[] = $group;
+        $this->addChord($group);
 
         return new ChartDown_FluidObjectTraverser($group, $this);
     }
