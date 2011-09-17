@@ -37,9 +37,18 @@
         <div class="row clearfix">
           <?php foreach ($row as $bar): ?>
              <div class="bar<?php echo $this->renderBarExpressions($bar) ?>">
-                 <?php if ($ending = $bar->getExpressionByType(ChartDown_Chart_Expression::REPEAT_ENDING)): ?>
+                 <?php if ($ending = $bar->hasRepeatEnding()): ?>
                      <div class="repeat-ending-row repeat-ending-start"><span class="repeat-ending-number"><?php echo $ending->getValue() ?></span></div>
                  <?php endif ?>
+                 
+             <div class="text-row">
+             <?php if ($bar->hasTopText()): ?>
+               <?php echo $bar->renderTopText() ?>
+             <?php else: ?>
+                 &nbsp;
+             <?php endif ?>
+             </div>
+                 
              <div class="chord-row">
                  <?php if (count($bar->getChords()) > 0): ?>
                      <?php foreach ($bar->getChords() as $chord): ?>
@@ -58,9 +67,9 @@
                  <?php endif ?>
              </div>
 
-             <div class="lyric-row">
-             <?php if ($text = $bar->getText()): ?>
-               <?php echo $text ?>
+             <div class="text-row">
+             <?php if ($bar->hasBottomText()): ?>
+               <?php echo $bar->renderBottomText() ?>
              <?php else: ?>
                  &nbsp;
              <?php endif ?>

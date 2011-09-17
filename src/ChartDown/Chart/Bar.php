@@ -39,9 +39,19 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
         return !empty($this->topText);
     }
 
+    public function renderTopText()
+    {
+        return $this->topText->getText();
+    }
+
     public function getBottomText()
     {
         return $this->bottomText;
+    }
+
+    public function renderBottomText()
+    {
+        return $this->bottomText->getText();
     }
 
     public function hasBottomText()
@@ -98,10 +108,10 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
         return $this->expressions;
     }
 
-    public function getExpressionByType($type)
+    public function hasRepeatEnding()
     {
         foreach ($this->expressions as $expression) {
-            if ($expression->getType() == $type) {
+            if ($expression->getType()->getName() == 'repeat ending') {
                 return $expression;
             }
         }

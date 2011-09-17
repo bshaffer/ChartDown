@@ -15,11 +15,17 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
     ), $templates);
   }
 
-  public function render(ChartDown_Chart $chart, $template = 'default')
+  public function render(ChartDown_Chart $chart, $outfile = null, $template = 'default')
   {
     ob_start();
     include_once($this->templates[$template]);
-    return ob_get_clean();
+    $html = ob_get_clean();
+    
+    if (is_null($outfile)) {
+        return $html;
+    }
+    
+    return file_put_contents($outfile, $html);
   }
 
   // Methods called in the template

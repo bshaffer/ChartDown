@@ -17,7 +17,7 @@ class ChartDown_Chart_ChordGroup implements IteratorAggregate
         }
 
         if ($this->expressions) {
-            $chord->addExpressions($expressions);
+            $chord->addExpressions($this->expressions);
             $this->expressions = array();
         }
 
