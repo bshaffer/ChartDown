@@ -33,7 +33,7 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
     const STATE_TEXT        = 1;
     const STATE_METADATA    = 4;
 
-    const REGEX_CHORD       = '/[a-gA-G1-7][A-G|m|M|b|#|+|2|7|9|11|13|sus|dim|add|\/]*/';
+    const REGEX_CHORD       = '/[a-gA-G1-7][A-G|m|M|b|#|+|2|7|9|11|13|sus|dim|add|\(|\)\/]*/';
     const REGEX_METADATA    = '/#*(.*):(.*)/';
 
     public function __construct(ChartDown_Environment $env, array $options = array())
@@ -160,17 +160,20 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
 
     protected function lexText($line)
     {
-        $line->ltrim(5);
-        if (strpos($line->getText(), ' ') === 0) {
-            $line->ltrim(1); // trim off initial space
-        }
-        
+        $line->ltrim('text:');
         foreach ($line->split($this->options['bar_delimiter']) as $bar) {
-            $this->pushToken(ChartDown_Token::TEXT_TYPE, $bar->getText());
+            // trim one space off beginning and end (if it exists)
+            $bar->ltrim(' ')->rtrim(' '); 
+            
+            // don't push empty text
+            if ($text = $bar->getText()) {
+                $this->pushToken(ChartDown_Token::TEXT_TYPE, $text);
+            }
 
             $this->pushToken(ChartDown_Token::BAR_LINE);
         }
 
+        // remove last bar line
         $this->popToken();
     }
 
