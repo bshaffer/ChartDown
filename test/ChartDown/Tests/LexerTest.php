@@ -75,6 +75,57 @@ EOF_TYPE()
 EOF;
     $this->assertEquals($expectedOutput, (string) $output);
   }
+  
+  public function testTokenizeBasicChordAndExpressionLine()
+  {
+    $chart = '*G | >G | ^C | !D';
+
+    $output = $this->lexer->tokenize($chart);
+    $expectedOutput = <<<EOF
+LINE_START(STATE_CHORD)
+EXPRESSION_TYPE(*)
+CHORD_TYPE(G)
+BAR_LINE()
+EXPRESSION_TYPE(>)
+CHORD_TYPE(G)
+BAR_LINE()
+EXPRESSION_TYPE(^)
+CHORD_TYPE(C)
+BAR_LINE()
+EXPRESSION_TYPE(!)
+CHORD_TYPE(D)
+LINE_END()
+EOF_TYPE()
+EOF;
+    $this->assertEquals($expectedOutput, (string) $output);
+  }
+
+  public function testTokenizeAdvancedChordAndExpressionLine()
+  {
+    $chart = '_*G#m7 | >*G7add9~ | ^Cm | !Dm7';
+
+    $output = $this->lexer->tokenize($chart);
+    $expectedOutput = <<<EOF
+LINE_START(STATE_CHORD)
+EXPRESSION_TYPE(_)
+EXPRESSION_TYPE(*)
+CHORD_TYPE(G#m7)
+BAR_LINE()
+EXPRESSION_TYPE(>)
+EXPRESSION_TYPE(*)
+CHORD_TYPE(G7add9)
+EXPRESSION_TYPE(~)
+BAR_LINE()
+EXPRESSION_TYPE(^)
+CHORD_TYPE(Cm)
+BAR_LINE()
+EXPRESSION_TYPE(!)
+CHORD_TYPE(Dm7)
+LINE_END()
+EOF_TYPE()
+EOF;
+    $this->assertEquals($expectedOutput, (string) $output);
+  }
 
   public function testTokenizeMultipleChordAndLyricLines()
   {
