@@ -166,9 +166,9 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
             $bar->ltrim(' ')->rtrim(' '); 
             
             // don't push empty text
-            if ($text = $bar->getText()) {
-                $this->pushToken(ChartDown_Token::TEXT_TYPE, $text);
-            }
+            // if ($text = $bar->getText()) {
+                $this->pushToken(ChartDown_Token::TEXT_TYPE, $bar->getText());
+            // }
 
             $this->pushToken(ChartDown_Token::BAR_LINE);
         }

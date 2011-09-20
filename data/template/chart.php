@@ -1,12 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
+  <script type="text/javascript">
+    var imagepath = "<?php echo dirname(__FILE__) ?>/../images";
+  </script>
+
   <link href="file://<?php echo dirname(__FILE__) ?>/chart.css" media="screen" rel="stylesheet" type="text/css" />
   <script src="file://<?php echo dirname(__FILE__) ?>/jquery-1.6.min.js" type="text/javascript"></script>
   <script src="file://<?php echo dirname(__FILE__) ?>/jcanvas.min.js" type="text/javascript"></script>
-  <script src="file://<?php echo dirname(__FILE__) ?>/rafael-min.js" type="text/javascript"></script>
-  <script src="file://<?php echo dirname(__FILE__) ?>/chart.js" type="text/javascript"></script>
+  <script src="file://<?php echo dirname(__FILE__) ?>/raphael-min.js" type="text/javascript"></script>
   <script src="file://<?php echo dirname(__FILE__) ?>/chart-raphael.js" type="text/javascript"></script>
+  <script src="file://<?php echo dirname(__FILE__) ?>/chart.js" type="text/javascript"></script>
 </head>
 <body>
   <div id="chart">

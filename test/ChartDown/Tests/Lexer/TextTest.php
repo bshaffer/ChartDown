@@ -183,4 +183,36 @@ EOF;
 
     $this->assertEquals($expectedOutput, (string) $output);
   }
+  
+  public function testTokenizeTextWithEmptyBars()
+  {
+    $chart = <<<EOF
+text: | | | p>. D.S. Al Coda
+G | G | C | D
+EOF;
+
+    $output = $this->lexer->tokenize($chart);
+    $expectedOutput = <<<EOF
+LINE_START(STATE_TEXT)
+TEXT_TYPE()
+BAR_LINE()
+TEXT_TYPE()
+BAR_LINE()
+TEXT_TYPE()
+BAR_LINE()
+TEXT_TYPE(p>. D.S. Al Coda)
+LINE_END()
+LINE_START(STATE_CHORD)
+CHORD_TYPE(G)
+BAR_LINE()
+CHORD_TYPE(G)
+BAR_LINE()
+CHORD_TYPE(C)
+BAR_LINE()
+CHORD_TYPE(D)
+LINE_END()
+EOF_TYPE()
+EOF;
+    $this->assertEquals($expectedOutput, (string) $output);
+  }
 }
