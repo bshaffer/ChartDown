@@ -7,7 +7,6 @@
 
   <link href="file://<?php echo dirname(__FILE__) ?>/chart.css" media="screen" rel="stylesheet" type="text/css" />
   <script src="file://<?php echo dirname(__FILE__) ?>/jquery-1.6.min.js" type="text/javascript"></script>
-  <script src="file://<?php echo dirname(__FILE__) ?>/jcanvas.min.js" type="text/javascript"></script>
   <script src="file://<?php echo dirname(__FILE__) ?>/raphael-min.js" type="text/javascript"></script>
   <script src="file://<?php echo dirname(__FILE__) ?>/chart-raphael.js" type="text/javascript"></script>
   <script src="file://<?php echo dirname(__FILE__) ?>/chart.js" type="text/javascript"></script>
