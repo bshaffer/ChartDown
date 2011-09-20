@@ -35,17 +35,19 @@ Raphael.fn.tenudo = function (chord) {
 };
 
 Raphael.fn.tie = function (fromChord, toChord) {
-    var radius = toChord.length > 0 ? (toChord.offset().left - $(fromChord).offset().left) / 2 : 50;
+    var radius = toChord && toChord.length > 0 ? (toChord.offset().left - $(fromChord).offset().left) / 3.8 : 50;
+
     var left   = $(fromChord).offset().left + 10;
-	var right  = toChord.offset().left;
-    var bottom = $(fromChord).offset().top;// + (radius/1.4);
+	var right  = $(fromChord).offset().left + (3.8 * radius);
+    var bottom = $(fromChord).offset().top;
     var top    = bottom - radius;
-// alert(radius);
+
+	var thickness = 3;
+
 	return this.spath("M%c C%c %c %c C%c %c %cz", 
 		[left, bottom], 
-		[left-10, bottom+10], [left+radius, top-5], [right, bottom],
-		// [left+50, bottom-40], [right-50, bottom-40], [right, bottom],
-		[right+10, bottom+10], [left+radius, top], [left, bottom]
+		[left+radius, top], [right-radius, top], [right, bottom],
+		[right-radius, top+thickness], [left+radius, top+thickness], [left, bottom]
 	).attr({'fill': 'black'});
 };
 

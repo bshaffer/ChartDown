@@ -6,7 +6,6 @@ $(document).ready(function() {
 
 	//Set up paper element
 	var paper = Raphael(0, 0, $('html').width(), $('html').height() + 100);
-	$('svg').css('z-index', -1);
 
 	// Repeat ending nonsense
 	$('.repeat-ending').each(function() {
