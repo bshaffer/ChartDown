@@ -10,7 +10,7 @@ text: h2. Verse 1
 {2} >C | [^C . . ^Em7] | *D :}
 --
 text: h2. Chorus
-D | D2 ~ | D2 | !D7
+D | $ D2 ~ | D2 | !D7
 text: Now I see...
 --
 text: h2. Chorus

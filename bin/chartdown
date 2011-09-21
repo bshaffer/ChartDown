@@ -3,6 +3,7 @@
 
 $args = array_merge(array(
 	'h' => false,
+	'template' => 'default',
 ), parseArgs($argv));
 
 if (!isset($args[0])) {
@@ -24,7 +25,7 @@ $chart = $chartdown->loadChart(file_get_contents($infile));
 
 // Create the PDF
 $renderer = $args['h'] ? new ChartDown_Renderer_Html() : new ChartDown_Renderer_Pdf();
-if ($renderer->render($chart, $outfile)) {
+if ($renderer->render($chart, $outfile, $args['h'] ? $args['template'] : null)) {
 	echo "\nRendered File to $outfile";
 } else {
 	echo "\n Rendering failed!";

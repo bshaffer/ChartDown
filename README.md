@@ -63,7 +63,6 @@ pages, and will be used only in the rare case where the default page break is no
  * **#**: Metadata
  * **--** (double dash): Line Break
  * **==**: Page Break
- * **(**...**)**: Separates articulation from chord
  * **[**...**]**: Group two or more chords into one beat
  * **.**: Rhymic Separation (explained below)
 
@@ -72,7 +71,7 @@ Rhythm
 
 Rhythm can be performed by using the **period** to designate beat divisions.  This is called `Dot Notation`
 
-    G . B . | G B . . | G B . . | . G . B
+    G . B . | G B . . | G B . . | . [G B] . B
 
     G . B . . . . C | G B . | . . . . G B
 
@@ -133,3 +132,17 @@ Chords
  * **dim**: diminished
  * **aug**: augmented
 
+
+ToDo
+----
+
+Please contact me with any suggestions or feature requests. My goal is for this to be as useful
+and usable as possible. All feedback is appreciated!
+
+Below is a list of possible future enhancements.
+
+**Additional Notation:**
+
+ * **'** (apostrophe/singlequote) - Staccato
+ * **(**...**)**: Separates articulation from chord
+ * **x/o**: Rhythmic notation for beat subdivisions

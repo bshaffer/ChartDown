@@ -1,5 +1,5 @@
 <?php if ($chord instanceof ChartDown_Chart_ChordGroup): $group = $chord ?>
-    <span class="chord-group">
+    <span style="width:<?php echo $percent ?>%" class="chord-group">
         <?php $groupPercent = 100 * (1/count($group->getChords())) ?>
         <?php foreach ($group as $chord): ?>
             <?php echo $this->render('chord', array('percent' => $groupPercent, 'chord' => $chord, 'renderer' => $renderer)) ?>

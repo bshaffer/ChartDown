@@ -35,47 +35,57 @@
 
     <canvas id="canvas"></canvas>
 
-    <div id="content">
+    <table id="content">
       <?php foreach ($chart->getRows() as $row): ?>
-        <div class="row clearfix">
+          <tr class="text-row">
           <?php foreach ($row as $bar): ?>
-             <div class="bar<?php echo $this->renderBarExpressions($bar) ?>">
-                 <?php if ($ending = $bar->hasRepeatEnding()): ?>
-                     <div class="repeat-ending-row repeat-ending-start"><span class="repeat-ending-number"><?php echo $ending->getValue() ?></span></div>
-                 <?php endif ?>
-                 
-             <div class="text-row">
+             <td>
              <?php if ($bar->hasTopText()): ?>
                <?php echo $bar->renderTopText() ?>
              <?php else: ?>
                  &nbsp;
              <?php endif ?>
-             </div>
+            </td>
+          <?php endforeach ?>
+          </tr>
 
-             <div class="chord-row">
+         <tr class="chord-row">
+          <?php foreach ($row as $bar): ?>
+             <td width="25%" class="chord-cell<?php echo $renderer->renderBarExpressions($bar) ?>">
+                 <?php if (false && $ending = $bar->hasRepeatEnding()): ?>
+                     <div class="repeat-ending-row repeat-ending-start"><span class="repeat-ending-number"><?php echo $ending->getValue() ?></span></div>
+                 <?php endif ?>
+                 
                  <?php if (count($chords = $bar->getChords()) > 0): ?>
+                     <table>
+                         <tr>
                     <?php $percent = 100 * (1/count($chords)) ?>
                      <?php foreach ($chords as $chord): ?>
-                         <?php echo $engine->render('chord', array('chord' => $chord, 'percent' => $percent, 'renderer' => $this)) ?>
+                         <?php echo $this->render('cell', array('chord' => $chord, 'percent' => $percent, 'renderer' => $renderer)) ?>
                      <?php endforeach ?>
+                         </tr>
+                    </table>
                  <?php else: ?>
                      &nbsp;
                  <?php endif ?>
-             </div>
 
-             <div class="text-row">
+              </td>
+          <?php endforeach ?>
+             </tr>
+
+             <tr class="text-row">
+          <?php foreach ($row as $bar): ?>
+              <td>
              <?php if ($bar->hasBottomText()): ?>
                <?php echo $bar->renderBottomText() ?>
              <?php else: ?>
                  &nbsp;
              <?php endif ?>
-             </div>
-             </div>
+             </td>
           <?php endforeach ?>
-          &nbsp;
-        </div>
+             </tr>
       <?php endforeach ?>
-    </div>
+    </table>
   </div>
 </body>
 </html>

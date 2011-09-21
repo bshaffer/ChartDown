@@ -14,21 +14,17 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
             'template_dir' => dirname(__FILE__).'/../../../data/template',
         ), $options);
         
-        $this->templates = array_merge(array(
-          'default' => $this->options['template_dir'] . '/chart.php',
-          'table'   => $this->options['template_dir'] . '/table.php',
-        ), $templates);
-        
-        $loader       = new sfTemplateLoaderFilesystem($this->options['template_dir'].'/_%name%.php');
+        $loader       = new sfTemplateLoaderFilesystem(array_merge(array(
+            $this->options['template_dir'].'/_%name%.php',
+            $this->options['template_dir'].'/%name%Chart.php'
+        ), $templates));
+
         $this->engine = new sfTemplateEngine($loader);
     }
 
     public function render(ChartDown_Chart $chart, $outfile = null, $template = 'default')
     {
-        $engine = $this->getEngine();
-        ob_start();
-        include_once($this->templates[$template]);
-        $html = ob_get_clean();
+        $html = $this->engine->render($template, array('chart' => $chart, 'renderer' => $this));
 
         if (is_null($outfile)) {
             return $html;
