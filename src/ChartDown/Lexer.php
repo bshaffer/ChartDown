@@ -29,13 +29,14 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
     protected $options;
     protected $expressionRegex;
 
-    const STATE_CHORD       = 0;
-    const STATE_TEXT        = 1;
-    const STATE_METADATA    = 4;
+    const STATE_CHORD    = 0;
+    const STATE_TEXT     = 1;
+    const STATE_METADATA = 4;
 
-    const REGEX_CHORD       = '/[a-gA-G1-7][A-G|m|M|b|#|+|2|7|9|11|13|sus|dim|add|\(|\)\/]*/';
-    const REGEX_METADATA    = '/#*(.*):(.*)/';
-
+    const REGEX_CHORD    = '/[a-gA-G1-7][A-G|m|M|b|#|+|2|7|9|11|13|sus|dim|add|\(|\)\/]*/';
+    const REGEX_METADATA = '/#*(.*):(.*)/';
+    const REGEX_RHYTHM   = '/\./';
+    
     public function __construct(ChartDown_Environment $env, array $options = array())
     {
         $this->env = $env;
@@ -124,26 +125,30 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
         foreach ($line->split($this->options['bar_delimiter']) as $i => $bar) {
             $bar->trim();
             while (!$bar->isEOF()) {
-                if (false !== ($data = $bar->moveToFirst(array(self::REGEX_CHORD, $this->expressionRegex, $this->options['chord_group'][0], $this->options['chord_group'][1])))) {
+                if (false !== ($data = $bar->moveToFirst(array(
+                    self::REGEX_CHORD,
+                    self::REGEX_RHYTHM,
+                    $this->expressionRegex, 
+                    $this->options['chord_group'][0], 
+                    $this->options['chord_group'][1])))
+                ) {
                     $token = $data[0];
                     $text  = $data[1];
 
-                    if ($token == $this->options['chord_group'][0]) {
+                    if( $token == self::REGEX_CHORD ) {
+                        $this->pushToken(ChartDown_Token::CHORD_TYPE, trim($text));
+                    } elseif ($token == self::REGEX_RHYTHM) {
+                        $this->pushToken(ChartDown_Token::RHYTHM_TYPE, trim($text));
+                    } elseif ($token == $this->options['chord_group'][0]) {
                         if (trim($text) !== $token) {
                             throw new ChartDown_Error_Syntax('Unidentified token: '.$text, $this->lineno, $this->filename);
                         }
-
                         $this->pushToken(ChartDown_Token::CHORD_GROUP_START_TYPE);
-
                     } else if ($token == $this->options['chord_group'][1]) {
                         if (trim($text) !== $token) {
                             throw new ChartDown_Error_Syntax('Unidentified token: '.$text, $this->lineno, $this->filename);
                         }
-
                         $this->pushToken(ChartDown_Token::CHORD_GROUP_END_TYPE);
-
-                    } elseif( $token == self::REGEX_CHORD ) {
-                        $this->pushToken(ChartDown_Token::CHORD_TYPE, trim($text));
                     } else {
                         $this->pushToken(ChartDown_Token::EXPRESSION_TYPE, trim($text));
                     }

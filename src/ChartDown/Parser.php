@@ -140,11 +140,21 @@ class ChartDown_Parser implements ChartDown_ParserInterface
                     $group = null;
                     break;
 
+                case ChartDown_Token::RHYTHM_TYPE:
+                    $token = $this->stream->next();
+                    $rhythmNode = new ChartDown_Node_Rhythm($token->getValue(), $token->getLine());
+                    if ($group) {
+                        $group->addRhythmNode($rhythmNode);
+                    } else {
+                        $bars[$barIndex][] = $rhythmNode;
+                    }
+                    break;
+
                 case ChartDown_Token::EXPRESSION_TYPE:
                     $token = $this->stream->next();
                     $expressionNode = new ChartDown_Node_Expression($token->getValue(), $token->getLine());
                     if ($group) {
-                        $group->addChordNode($expressionNode);
+                        $group->addExpressionNode($expressionNode);
                     } else {
                         $bars[$barIndex][] = $expressionNode;
                     }

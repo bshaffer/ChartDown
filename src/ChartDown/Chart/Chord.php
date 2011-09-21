@@ -15,7 +15,7 @@
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart_Chord
+class ChartDown_Chart_Chord implements ChartDown_Chart_Rhythm_RelativeMeterInterface
 {
     const EXTENSION_REGEX = '/(b2|2|6|7|M7|b9|9|#9|#11|b13|13|sus)/';
 
@@ -158,5 +158,10 @@ class ChartDown_Chart_Chord
     public function getExpressions()
     {
         return $this->expressions;
+    }
+    
+    public function getRelativeMeter()
+    {
+        return 1;
     }
 }

@@ -25,6 +25,16 @@ class ChartDown_Node_ChordGroup extends ChartDown_Node implements ChartDown_Node
         $this->nodes[] = $chordNode;
     }
 
+    public function addExpressionNode(ChartDown_Node_Expression $expressionNode)
+    {
+        $this->nodes[] = $expressionNode;
+    }
+
+    public function addRhythmNode(ChartDown_Node_Rhythm $rhythmNode)
+    {
+        $this->nodes[] = $rhythmNode;
+    }
+
     public function getNumChords()
     {
         return count($this->nodes);

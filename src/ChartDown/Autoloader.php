@@ -24,6 +24,9 @@ class ChartDown_Autoloader
     {
         ini_set('unserialize_callback_func', 'spl_autoload_call');
         spl_autoload_register(array(new self, 'autoload'));
+        
+        include_once(dirname(__FILE__).'/../../vendor/sensio/templating/sfTemplateAutoloader.php');
+        sfTemplateAutoloader::register();
     }
 
     /**

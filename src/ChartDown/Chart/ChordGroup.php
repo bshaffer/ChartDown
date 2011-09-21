@@ -1,6 +1,6 @@
 <?php
 
-class ChartDown_Chart_ChordGroup implements IteratorAggregate
+class ChartDown_Chart_ChordGroup implements IteratorAggregate, ChartDown_Chart_Rhythm_RelativeMeterInterface
 {
     private $chords = array();
     private $expressions = array();
@@ -36,5 +36,19 @@ class ChartDown_Chart_ChordGroup implements IteratorAggregate
     public function getIterator()
     {
         return new ArrayIterator($this->chords);
+    }
+    
+    public function addRhythm($rhythm)
+    {
+        if (is_string($rhythm)) {
+            $rhythm = new ChartDown_Chart_Rhythm($rhythm);
+        }
+        
+        $this->chords[] = $rhythm;
+    }
+    
+    public function getRelativeMeter()
+    {
+        return 1;
     }
 }

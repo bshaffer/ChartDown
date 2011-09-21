@@ -5,12 +5,12 @@
 text: h2. Verse 1
 {: G | G | C | C
 --
-& _G | *G | {1} >C | ^C ^C :}
+& _G | *G | {1} >C | . ^C . ^C :}
 --
-{2} >C | ^C ^D | *D :}
+{2} >C | [^C . . ^Em7] | *D :}
 --
 text: h2. Chorus
-D | D ~ | D | !D
+D | D2 ~ | D2 | !D7
 text: Now I see...
 --
 text: h2. Chorus
@@ -18,7 +18,7 @@ D | *D ~ | *D | D
 text: Now I see...
 --
 text: | | | p>. _D.S. Al Coda_
-C | C | G | C
+C | Csus | G | C
 --
 text: h2. Verse 2
 text: h2. Chorus
@@ -26,4 +26,4 @@ text: h2. Verse 3
 text: h2. Chorus
 text: h2. Chorus
 --
-$ C | C | G | !C
+$ C | C | G | !GM7

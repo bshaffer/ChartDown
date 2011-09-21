@@ -58,11 +58,19 @@
                          <?php if ($chord instanceof ChartDown_Chart_ChordGroup): $group = $chord?>
                             <span class="chord-group">
                                 <?php foreach ($group as $chord): ?>
-                                    <span class="chord<?php echo $this->renderChordExpressions($chord) ?>"><?php echo $chord ?></span>
+                                    <?php if ($chord instanceof ChartDown_Chart_Chord): ?>
+                                        <span class="chord<?php echo $this->renderChordExpressions($chord) ?>"><?php echo $chord ?></span>
+                                    <?php else: ?>
+                                        <span class="rhythm">&nbsp;</span>
+                                    <?php endif ?>
                                 <?php endforeach ?>                               
                             </span>
                          <?php else: ?>
-                             <span class="chord<?php echo $this->renderChordExpressions($chord) ?>"><?php echo $chord ?></span>
+                            <?php if ($chord instanceof ChartDown_Chart_Chord): ?>
+                                <span class="chord<?php echo $this->renderChordExpressions($chord) ?>"><?php echo $chord ?></span>
+                            <?php else: ?>
+                                <span class="rhythm">&nbsp;</span>
+                            <?php endif ?>
                          <?php endif ?>
                      <?php endforeach ?>
                  <?php else: ?>

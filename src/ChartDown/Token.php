@@ -33,6 +33,7 @@ class ChartDown_Token
     const METADATA_KEY_TYPE      = 4;
     const METADATA_VALUE_TYPE    = 5;
     const EXPRESSION_TYPE        = 12;
+    const RHYTHM_TYPE            = 13;
     const END_ROW_TYPE           = 7;
 
     /**
@@ -149,6 +150,9 @@ class ChartDown_Token
             case self::CHORD_GROUP_END_TYPE:
                 $name = 'CHORD_GROUP_END_TYPE';
                 break;
+            case self::RHYTHM_TYPE:
+                $name = 'RHYTHM_TYPE';
+                break;
             case self::EXPRESSION_TYPE:
                 $name = 'EXPRESSION_TYPE';
                 break;
@@ -196,11 +200,11 @@ class ChartDown_Token
             case self::CHORD_TYPE:
                 return 'chord';
             case self::CHORD_GROUP_START_TYPE:
-                $name = 'chord group start';
-                break;
+                return 'chord group start';
             case self::CHORD_GROUP_END_TYPE:
-                $name = 'chord group end';
-                break;
+                return 'chord group end';
+            case self::RHYTHM_TYPE:
+                return 'rhythm';
             case self::EXPRESSION_TYPE:
                 return 'expression';
             case self::TEXT_TYPE:
@@ -213,7 +217,6 @@ class ChartDown_Token
                 return 'bar line';
             case self::END_ROW_TYPE:
                 return 'end of row';
-
             default:
                 throw new ChartDown_Error_Syntax(sprintf('Token of type "%s" does not exist.', $type), $line);
         }
