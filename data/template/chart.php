@@ -51,27 +51,12 @@
                  &nbsp;
              <?php endif ?>
              </div>
-                 
+
              <div class="chord-row">
-                 <?php if (count($bar->getChords()) > 0): ?>
-                     <?php foreach ($bar->getChords() as $chord): ?>
-                         <?php if ($chord instanceof ChartDown_Chart_ChordGroup): $group = $chord?>
-                            <span class="chord-group">
-                                <?php foreach ($group as $chord): ?>
-                                    <?php if ($chord instanceof ChartDown_Chart_Chord): ?>
-                                        <span class="chord<?php echo $this->renderChordExpressions($chord) ?>"><?php echo $chord ?></span>
-                                    <?php else: ?>
-                                        <span class="rhythm">&nbsp;</span>
-                                    <?php endif ?>
-                                <?php endforeach ?>                               
-                            </span>
-                         <?php else: ?>
-                            <?php if ($chord instanceof ChartDown_Chart_Chord): ?>
-                                <span class="chord<?php echo $this->renderChordExpressions($chord) ?>"><?php echo $chord ?></span>
-                            <?php else: ?>
-                                <span class="rhythm">&nbsp;</span>
-                            <?php endif ?>
-                         <?php endif ?>
+                 <?php if (count($chords = $bar->getChords()) > 0): ?>
+                    <?php $percent = 100 * (1/count($chords)) ?>
+                     <?php foreach ($chords as $chord): ?>
+                         <?php echo $engine->render('chord', array('chord' => $chord, 'percent' => $percent, 'renderer' => $this)) ?>
                      <?php endforeach ?>
                  <?php else: ?>
                      &nbsp;
