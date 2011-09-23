@@ -125,7 +125,7 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
             $expression = new ChartDown_Chart_Expression($expression);
         }
 
-        if ($expression->getPosition() == 'bar') {
+        if ($expression->getPosition() == 'bar' || $expression->getPosition() == 'bar-top') {
             $this->expressions[] = $expression;
         } else {
             parent::addExpression($expression);

@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
+  <title><?php echo $chart->getTitle() ?> | <?php echo $chart->getAuthor() ?></title>
   <script type="text/javascript">
     var imagepath = "<?php echo dirname(__FILE__) ?>/../web/images";
   </script>
@@ -15,7 +16,7 @@
   <div id="chart">
     <div id="header">
       <h1><?php echo $chart->getTitle() ?></h1>
-      <h2><?php echo $chart->getAuthor() ?></h2>
+      <h3><?php echo $chart->getAuthor() ?></h3>
       <div class="chart-info">
           <dl>
               <?php if ($key = $chart->getKey()): ?>
@@ -33,22 +34,22 @@
       </div>
     </div>
 
-    <canvas id="canvas"></canvas>
-
     <table id="content">
       <?php foreach ($chart->getRows() as $row): ?>
-          <tr class="text-row">
-          <?php foreach ($row as $bar): ?>
-             <td>
-             <?php if ($bar->hasTopText()): ?>
-               <?php echo $bar->renderTopText() ?>
-             <?php else: ?>
-                 &nbsp;
-             <?php endif ?>
-            </td>
-          <?php endforeach ?>
-          </tr>
-          
+        <?php if ($row->hasTopText()): ?>
+            <tr class="text-row">
+                <?php foreach ($row as $bar): ?>
+                    <td>
+                        <?php if ($bar->hasTopText()): ?>
+                            <?php echo $bar->renderTopText() ?>
+                        <?php else: ?>
+                            &nbsp;
+                        <?php endif ?>
+                    </td>
+                <?php endforeach ?>
+            </tr>
+        <?php endif ?>          
+
           <?php if ($renderer->rowHasTopExpression($row)): ?>
               <tr class="expression-row">
                   <td colspan="<?php echo $renderer->getMaxBarsInChart($chart) ?>">&nbsp;</td>
@@ -57,11 +58,7 @@
 
          <tr class="chord-row">
           <?php foreach ($row as $bar): ?>
-             <td width="25%" class="chord-cell<?php echo $renderer->renderBarExpressions($bar) ?>">
-                 <?php if (false && $ending = $bar->hasRepeatEnding()): ?>
-                     <div class="repeat-ending-row repeat-ending-start"><span class="repeat-ending-number"><?php echo $ending->getValue() ?></span></div>
-                 <?php endif ?>
-                 
+             <td width="25%" class="chord-cell<?php echo $renderer->renderBarExpressions($bar) ?>" <?php echo $renderer->renderChartObjectAttributes($bar) ?>>
                  <?php if (count($chords = $bar->getChords()) > 0): ?>
                      <table style="width:100%">
                          <tr>
@@ -78,17 +75,19 @@
           <?php endforeach ?>
              </tr>
 
-             <tr class="text-row">
-          <?php foreach ($row as $bar): ?>
-              <td>
-             <?php if ($bar->hasBottomText()): ?>
-               <?php echo $bar->renderBottomText() ?>
-             <?php else: ?>
-                 &nbsp;
-             <?php endif ?>
-             </td>
-          <?php endforeach ?>
-             </tr>
+          <?php if (true || $row->hasBottomText()): ?>
+              <tr class="text-row">
+              <?php foreach ($row as $bar): ?>
+                  <td>
+                 <?php if ($bar->hasBottomText()): ?>
+                   <?php echo $bar->renderBottomText() ?>
+                 <?php else: ?>
+                     &nbsp;
+                 <?php endif ?>
+                 </td>
+              <?php endforeach ?>
+              </tr>
+          <?php endif ?>
       <?php endforeach ?>
     </table>
   </div>

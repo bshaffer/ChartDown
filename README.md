@@ -28,7 +28,7 @@ HTML document which you can modify and then render to PDF, if tweaking is requir
 
     // and then generate your PDF...
     $renderer = new ChartDown_Renderer_Pdf();
-    $renderer->render($chart, 'my_chart.pdf', file_get_contents('my_chart.html'));
+    $renderer->render(file_get_contents('my_chart.html'), 'my_chart.pdf');
 
 ## Syntax Guide
 

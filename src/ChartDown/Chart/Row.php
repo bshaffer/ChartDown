@@ -30,7 +30,18 @@ class ChartDown_Chart_Row implements IteratorAggregate
     public function hasTopText()
     {
       foreach ($this->bars as $bar) {
-        if (trim($bar->getTopText()) != '') {
+        if ($bar->hasTopText()) {
+          return true;
+        }
+      }
+      
+      return false;
+    }
+
+    public function hasBottomText()
+    {
+      foreach ($this->bars as $bar) {
+        if ($bar->hasBottomText()) {
           return true;
         }
       }

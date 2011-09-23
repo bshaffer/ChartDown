@@ -1,64 +1,42 @@
 $(document).ready(function() {
-	// Set up canvas element
-	var canvas = document.getElementById('canvas');
-	canvas.width = $('html').width();
-	canvas.height = $('html').height() + 100;
 
 	//Set up paper element
 	var paper = Raphael(0, 0, $('html').width(), $('html').height() + 100);
 
 	// Repeat ending nonsense
 	$('.repeat-ending').each(function() {
-		var bar = $(this);
-		var row = $(this).parents('.row');
-		var rowIndex = $('.row').index(row);
-		var barIndex = row.find('.bar').index(bar);
+		var row = $(this).parents('.chord-row');
+		var rowIndex = $('.chord-row').index(row);
+		var barIndex = row.find('.chord-cell').index($(this));
 
 		// This row
-		var repeatFinish = $('.row:eq('+rowIndex.toString()+') .bar:gt('+ barIndex.toString()+')').filter('.repeat-finish:first');;
+		var repeatFinish = $('.chord-row:eq('+rowIndex.toString()+') .chord-cell:gt('+ barIndex.toString()+')');
 		if (repeatFinish.length == 0) {
 		  	// preceeding rows
-		  	repeatFinish = $('.row:gt('+rowIndex.toString()+') .repeat-finish');
+		  	repeatFinish = $('.chord-row:gt('+rowIndex.toString()+') .repeat-finish');
 		};
 
-		var allBars = $('.bar');
-		var barAllIndex = allBars.index(bar);
-		if (repeatFinish.length > 0) {
-			bars = $('.bar:gt('+barAllIndex.toString()+'):lt('+(allBars.index(repeatFinish)-barAllIndex).toString()+')');
-			bars.prepend('<div class="repeat-ending-row repeat-ending-active">&nbsp;</div>');
-
-			// add "repeat-ending-row" to each bar in a relevant row (if they do not exist)
-			bars.parents('.row').find('.bar').each(function(){
-			  	if ($(this).find('.repeat-ending-row').length == 0) {
-			    	$(this).prepend('<div class="repeat-ending-row">&nbsp;</div>');
-			  	};
-			});
-		};
+		paper.repeat_ending($(this), repeatFinish, $(this).attr('repeatending'));
 	});
 
 	$('.tie').each(function() {
-		var fromChord 	= $(this).parent().find('.chord:last');
+		var fromChord 	= $(this).parents('tr').find('.chord:last');
 		
 		if (!fromChord.length) {
 			console.log("no fromChord found for tie!");
-		} else {
-			var toChord   	= null;
-			var isNextChord = null;
-
-			$(this).parents('.chord-row:first').find('.chord').each(function(i) {
-				if (isNextChord) {
-					toChord = this; isNextChord = false;
-				}
-				isNextChord = (this == fromChord[0]);
-			});
-
-		    var radius = toChord ? ($(toChord).offset().left - $(fromChord).offset().left - 20) / 3.8 : 50;
-
-		    var left   = $(fromChord).offset().left + 20;
-		    var bottom = $(fromChord).offset().top;
-
-			paper.tie(left, bottom, 3.8 * radius, radius);
+			return;
 		}
+
+		row 	= $(this).parents('.chord-row:first');
+		index 	= row.find('.chord').index(fromChord);
+		toChord = row.find('.chord:eq('+(index+1)+')');
+
+	    radius = toChord ? ($(toChord).offset().left - $(fromChord).offset().left - 20) / 3.8 : 50;
+
+	    left   = $(fromChord).offset().left + 20;
+	    bottom = $(fromChord).offset().top;
+
+		paper.tie(left, bottom, 3.8 * radius, radius);
 	});
 
 	$('.diamond').each(function(){
@@ -68,19 +46,20 @@ $(document).ready(function() {
 	$('.repeat-start').each(function() {
 		var x = $(this).offset().left;
 		var y = $(this).offset().top;
-		paper.repeat(x, y, 20, $(this).height());
+		paper.repeat(x, y, 15, $(this).outerHeight());
+	});
+
+	$('.repeat-finish').each(function() {
+		var postion = $(this).position();
+		var x = $(this).offset().left + $(this).outerWidth();
+		var y = $(this).offset().top;
+		paper.repeat(x, y, -15, $(this).outerHeight());
 	});
 
 	$('.repeat-bar').each(function() {
 		var left = $(this).offset().left + ($(this).width()/2) - 10;
 		var top = $(this).offset().top + ($(this).height()/2) - 10;
 		paper.repeat_bar(left, top, 20, 20);
-	});
-
-	$('.repeat-finish').each(function() {
-		var x = $(this).offset().left + $(this).width();
-		var y = $(this).offset().top;
-		paper.repeat(x, y, -20, $(this).height());
 	});
 
 	$('.accent').each(function() {
@@ -105,5 +84,9 @@ $(document).ready(function() {
 	
 	$('.coda').each(function() {
 		paper.coda(this);
+	});
+	
+	$('.rhythm').each(function() {
+		paper.rhythm(this);
 	});
 });

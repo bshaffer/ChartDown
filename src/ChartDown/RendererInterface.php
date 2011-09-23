@@ -22,5 +22,5 @@ interface ChartDown_RendererInterface
      *
      * @param ChartDown_Chart $chart - the chart to render
      */
-    function render(ChartDown_Chart $chart);
+    function render($chart);
 }

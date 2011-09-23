@@ -12,7 +12,7 @@ class ChartDown_Chart_ExpressionType_RepeatEnding implements ChartDown_Chart_Exp
 
     public function getPosition()
     {
-        return 'top';
+        return 'bar-top';
     }
 
     public function getName()

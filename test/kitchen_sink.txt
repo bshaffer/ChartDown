@@ -3,22 +3,21 @@
 # key: C
 # tempo: 111
 text: h2. Verse 1
-{: G | G | C | C
+{: G | G . . . | . C . . | C
 --
-& _G | *G | {1} >C | . ^C . ^C :}
+& _G | *G | {1} >^_C | [. ^C . ^C] :}
 --
-{2} >C | [^C . . ^Em7] | *D :}
+{2} >C | [^C . . ^Em7] | *D :} | G
 --
 text: h2. Chorus
 D $ | D2 ~ | D2 | !D7
 text: Now I see...
 --
-text: h2. Chorus
-D | *D ~ | *D | D
-text: Now I see...
+D | *Dm7 ~ | *Dm7 | D
+text: There's nothing more to believe...
 --
 text: | | | p>. _D.S. Al Coda_
-C | Csus | G | C
+C | Csus | _>*G#M7 | C
 --
 text: h2. Verse 2
 text: h2. Chorus
@@ -26,4 +25,4 @@ text: h2. Verse 3
 text: h2. Chorus
 text: h2. Chorus
 --
-$ C | C | G | !GM7
+$ C | C | *Gm | !GM7

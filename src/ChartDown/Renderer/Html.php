@@ -22,7 +22,7 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
         $this->engine = new sfTemplateEngine($loader);
     }
 
-    public function render(ChartDown_Chart $chart, $outfile = null, $template = 'default')
+    public function render($chart, $outfile = null, $template = 'default')
     {
         $html = $this->engine->render($template, array('chart' => $chart, 'renderer' => $this));
 
@@ -52,6 +52,18 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
         }
         return $this->renderExpression($object);
     }
+    
+    public function renderChartObjectAttributes($object)
+    {
+        if ($object instanceof ChartDown_Chart_Bar) {
+            foreach ($object->getExpressions() as $expression) {
+                if (!is_null($value = $expression->getValue())) {
+                    return sprintf('%s="%s"', str_replace(' ', '', $expression->getName()), $value);
+                }
+            }
+        } 
+        return '';
+    }
 
     public function renderChartObject($object)
     {
@@ -68,7 +80,6 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
         foreach ($bar->getExpressions() as $expression) {
           $classes[] = $this->renderExpression($expression);
         }
-
         return count($classes) ? ' ' . implode(' ', $classes) : '';
     }
     
@@ -76,18 +87,18 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
     {
         foreach ($row->getBars() as $bar) {
             foreach ($bar->getExpressions() as $expression) {
-                if ($expression->getPosition() == 'top') {
+                if ($expression->getPosition() == 'top' || $expression->getPosition() == 'bar-top') {
                     return true;
                 }
             }
             foreach ($bar->getChords() as $chord) {
                 if ($chord instanceof ChartDown_Chart_Expression) {
-                    if ($chord->getPosition() == 'top') {
+                    if ($chord->getPosition() == 'top' || $expression->getPosition() == 'bar-top') {
                         return true;
                     }
-                } else {
+                } elseif ($chord instanceof ChartDown_Chart_Chord) {
                     foreach ($chord->getExpressions() as $expression) {
-                        if ($expression->getPosition() == 'top') {
+                        if ($expression->getPosition() == 'top' || $expression->getPosition() == 'bar-top') {
                             return true;
                         }
                     }

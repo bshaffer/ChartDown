@@ -27,6 +27,6 @@ class ChartDown_Chart_ExpressionType_Tie implements ChartDown_Chart_ExpressionTy
     
     public function getRelativeMeter()
     {
-        return 1;
+        return 0;
     }
 }

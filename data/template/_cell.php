@@ -10,11 +10,11 @@
         </table>
     </td>
 <?php elseif ($chord instanceof ChartDown_Chart_Rhythm_RelativeMeterInterface): ?>
-    <td style="width:<?php echo $percent ?>%" >
-        <span class="<?php echo $renderer->renderChartObjectClass($chord) ?>">
+    <td style="width:<?php echo $percent ?>%">
+        <span class="<?php echo $renderer->renderChartObjectClass($chord) ?>" <?php echo $renderer->renderChartObjectAttributes($chord) ?>>
             <?php echo $renderer->renderChartObject($chord) ?>
         </span>
     </td>
 <?php else: ?>
-    <td class="<?php echo $renderer->renderChartObjectClass($chord) ?>"><span><?php echo $renderer->renderChartObject($chord) ?></span></td>
+    <td class="<?php echo $renderer->renderChartObjectClass($chord) ?>" <?php echo $renderer->renderChartObjectAttributes($chord) ?>><span><?php echo $renderer->renderChartObject($chord) ?></span></td>
 <?php endif ?>

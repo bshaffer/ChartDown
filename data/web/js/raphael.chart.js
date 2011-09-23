@@ -1,17 +1,17 @@
 Raphael.fn.coda = function (chord) {
-	x = $(chord).offset().left;
+	x = $(chord).offset().left - ($(chord).width()/2); // center coda directly above chord
 	y = $(chord).offset().top;
-	height = 30;
 
-	return this.image(imagepath+"/coda.png", x, y-height, 30, 30);	
+	return this.image(imagepath+"/coda.png", x, y, 30, 30)
+		.translate(0, -30);	
 };
 
 Raphael.fn.segno = function (chord) {
 	x = $(chord).offset().left;
 	y = $(chord).offset().top;
-	height = 30;
 	
-	return this.image(imagepath+"/segno.png", x, y-height, 30, 30);	
+	return this.image(imagepath+"/segno.png", x, y, 30, 30)
+		.translate(0, -30);	
 };
 
 Raphael.fn.fermata = function (chord) {
@@ -22,20 +22,25 @@ Raphael.fn.fermata = function (chord) {
 
 Raphael.fn.accent = function (chord) {
 	x = $(chord).offset().left;
-	y = $(chord).offset().top;
-	return this.spath("M%s L%s L%s", [x, y], [x+5, y-10], [x+10, y]);
+	y = $(chord).offset().top - 2;
+
+	return this.spath("M%s L%s L%s", [x+3, y], [x+6, y-6], [x+9, y])
+		.attr({'stroke-width': 2});
 };
 
 Raphael.fn.anticipation = function (chord) {
 	x = $(chord).offset().left;
 	y = $(chord).offset().top;
-	return this.spath("M%s L%s L%s", [x, y], [x+10, y-5], [x, y-10]);
+	return this.spath("M%s L%s L%s", [x, y], [x+6, y-3], [x, y-6])
+		.translate(-6, 6)
+		.attr({'stroke-width': 2});
 };
 
 Raphael.fn.tenudo = function (chord) {
-	x = $(chord).offset().left;
+	x = $(chord).offset().left + 2;
 	y = $(chord).offset().top;
-	return this.spath("M%s L%s", [x, y], [x+10, y]);
+	return this.spath("M%s L%s", [x, y], [x+10, y])
+		.attr({'stroke-width': 2});
 };
 
 Raphael.fn.tie = function (left, bottom, width, height) {
@@ -53,10 +58,13 @@ Raphael.fn.tie = function (left, bottom, width, height) {
 
 Raphael.fn.diamond = function(chord) {
 	// Calculate center of chord
-    var x = $(chord).offset().left - ($(chord).width());
-    var y = $(chord).offset().top - ($(chord).height()/2);
-    var radius = Math.min(15 + ($(chord).width()/4), 22);
-	return this.spath("M%s L%s L%s L%s L%s", [x, y+radius], [x+radius, y], [x+(2*radius), y+radius], [x+radius, y+(2*radius)], [x, y+radius]);
+    var x = $(chord).offset().left + ($(chord).width()/2);
+    var y = $(chord).offset().top + ($(chord).height()/2);
+
+    var radius = Math.min(10+($(chord).width()/2), 28);
+
+	return this.spath("M%s L%s L%s L%sz", [x-radius, y], [x, y-radius], [x+radius, y], [x, y+radius])
+		.attr({'fill': 'white'});;
 };
 
 Raphael.fn.repeat = function(left, top, width, height) {
@@ -67,11 +75,32 @@ Raphael.fn.repeat = function(left, top, width, height) {
 	return [fatLine, thinLine, topDot, bottomDot];
 };
 
+Raphael.fn.rhythm = function(bar) {
+	var height = $(bar).height()/2;
+	var width  = Math.max($(bar).width()/2, 5);
+	var x      = $(bar).offset().left + (width/2);
+	var y      = $(bar).offset().top + (height/2);
+	
+ 	return this.spath("M%s L%s", [x, y+height], [x+width, y]).attr({'stroke-width': 1});
+};
+
 Raphael.fn.repeat_bar = function(left, top, width, height) {
 	var line   	  = this.spath("M%s L%s", [left, top+height], [left+width, top]).attr({'stroke-width': 3});
 	var topDot    = this.circle(left, top, 1).attr({"fill": "black"});
 	var bottomDot = this.circle(left+width, top+height, 1).attr({"fill": "black"});
 	return [line, topDot, bottomDot];
+};
+
+Raphael.fn.repeat_ending = function(fromBar, toBar, endingNumber) {
+	if (toBar && toBar.length > 0) {
+		allBars = $('.chord-cell');
+		fromBarIndex = allBars.index(fromBar);
+
+		bars = $('.chord-cell:gt('+fromBarIndex.toString()+'):lt('+(allBars.index(toBar)-fromBarIndex).toString()+')');
+		bars.addClass('repeat-ending-cell');
+		
+		this.text(fromBar.offset().left+5, fromBar.offset().top-6, endingNumber+'.');
+	};
 };
 
 Raphael.fn.spath = function(path) {

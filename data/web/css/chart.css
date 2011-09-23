@@ -7,20 +7,28 @@ h1 {
 }
 
 h2 {
-  font-size:14px;
-  font-weight: normal;
-  margin:0;
+  font-size:20px;
+  margin:0 0 5px;
   padding: 0;
 }
 
 h3 {
+  font-weight: normal;
   margin: 0;
+}
+
+table {
+  	border-spacing: 0;
 }
 
 .bar { 
   float: left;
   width: 25%;
   height:100%;
+}
+
+.chord-cell {
+  padding:5px 12px;
 }
 
 .lyric {
@@ -41,13 +49,6 @@ h3 {
   height:100%;
   margin-top: 15px;
   margin-bottom: 15px;
-}
-
-table.row {
-  border-collapse: collapse;
-  border-spacing: 0;
-  border-padding: 0;
-  width:100%;
 }
 
 hr {
@@ -77,9 +78,13 @@ hr {
 /*** Articulations ***/
 
 .chord-group {
+}
+.chord-group table {
+  height: 30px;
+  padding:5px;
+}
+.chord-group table {
   border: 1px solid black;
-  padding:5px 3px 5px 5px;
-  margin-right:5px;
 }
 
 .repeat-start .chord-row, .repeat-start .lyric-row{
@@ -89,19 +94,7 @@ hr {
   padding-right: 20px;
 }
 
-.repeat-ending .repeat-ending-number {
-  font-size: .8em;
-  padding-left: 5px;
-}
-.repeat-ending .repeat-ending-start {
-  border-left: 1px solid black;
-}
-.repeat-ending .repeat-ending-number:after {
-  font-size: .8em;
-  content:'.';
-}
-
-.repeat-ending, .repeat-ending-active {
+.repeat-finish, .repeat-ending, .repeat-ending-cell, .repeat-ending-active {
   border-top: 1px solid black;
 }
 
