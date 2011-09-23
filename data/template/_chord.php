@@ -7,6 +7,8 @@
     </span>
 <?php elseif ($chord instanceof ChartDown_Chart_Chord): ?>
     <span style="width:<?php echo $percent ?>%" class="chord<?php echo $renderer->renderChordExpressions($chord) ?>"><?php echo $chord ?></span>
+<?php elseif ($chord instanceof ChartDown_Chart_Expression): ?>
+    <span style="width:<?php echo $percent ?>%" class="<?php echo $renderer->renderExpression($chord) ?>">&nbsp;</span>
 <?php else: ?>
     <span style="width:<?php echo $percent ?>%" class="rhythm">&nbsp;</span>
 <?php endif ?>

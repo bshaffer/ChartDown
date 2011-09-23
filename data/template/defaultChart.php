@@ -8,7 +8,7 @@
   <link href="file://<?php echo dirname(__FILE__) ?>/../web/css/chart.css" media="screen" rel="stylesheet" type="text/css" />
   <script src="file://<?php echo dirname(__FILE__) ?>/../web/js/jquery-1.6.min.js" type="text/javascript"></script>
   <script src="file://<?php echo dirname(__FILE__) ?>/../web/js/raphael-min.js" type="text/javascript"></script>
-  <script src="file://<?php echo dirname(__FILE__) ?>/../web/js/chart-raphael.js" type="text/javascript"></script>
+  <script src="file://<?php echo dirname(__FILE__) ?>/../web/js/raphael.chart.js" type="text/javascript"></script>
   <script src="file://<?php echo dirname(__FILE__) ?>/../web/js/chart.js" type="text/javascript"></script>
 </head>
 <body>

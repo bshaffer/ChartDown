@@ -30,7 +30,11 @@ class ChartDown_Chart_ChordGroup implements IteratorAggregate, ChartDown_Chart_R
             $expression = new ChartDown_Chart_Expression($expression);
         }
         
-        $this->expressions[] = $expression;
+        if ($expression->getType() instanceof ChartDown_Chart_Rhythm_RelativeMeterInterface) {
+            $this->chords[] = $expression;
+        } else {
+            $this->expressions[] = $expression;
+        }
     }
 
     public function getIterator()

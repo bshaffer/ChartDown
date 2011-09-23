@@ -37,10 +37,23 @@ $(document).ready(function() {
 	});
 
 	$('.tie').each(function() {
-		var nextChord = $(this).next().find('.chord');
-		var thisChord = $(this).find('.chord:last');
+		var fromChord 	= $(this).parent().find('.chord:last');
+		var toChord   	= null;
+		var isNextChord = null;
 
-		paper.tie(thisChord, nextChord);
+		$(this).parents('.chord-row:first').find('.chord').each(function(i) {
+			if (isNextChord) {
+				toChord = this; isNextChord = false;
+			}
+			isNextChord = (this == fromChord[0]);
+		});
+
+	    var radius = toChord ? ($(toChord).offset().left - $(fromChord).offset().left - 20) / 3.8 : 50;
+
+	    var left   = $(fromChord).offset().left + 20;
+	    var bottom = $(fromChord).offset().top;
+
+		paper.tie(left, bottom, 3.8 * radius, radius);
 	});
 
 	$('.diamond').each(function(){

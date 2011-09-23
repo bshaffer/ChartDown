@@ -125,11 +125,10 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
             $expression = new ChartDown_Chart_Expression($expression);
         }
 
-        if ($expression->isChordExpression()) {
-            parent::addExpression($expression);
-        }
-        else {
+        if ($expression->getPosition() == 'bar') {
             $this->expressions[] = $expression;
+        } else {
+            parent::addExpression($expression);
         }
     }
 

@@ -146,3 +146,8 @@ Below is a list of possible future enhancements.
  * **'** (apostrophe/singlequote) - Staccato
  * **(**...**)**: Separates articulation from chord
  * **x/o**: Rhythmic notation for beat subdivisions
+
+**Miscellaneous Features**
+ 
+ * Auto generate fingering charts and place at the top or bottom of the chart for quick reference.
+ * Riff Shorthand - A quick way to tab out a guitar / piano /bass lick

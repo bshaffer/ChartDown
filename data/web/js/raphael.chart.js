@@ -34,15 +34,11 @@ Raphael.fn.tenudo = function (chord) {
 	return this.spath("M%s L%s", [x, y], [x+10, y]);
 };
 
-Raphael.fn.tie = function (fromChord, toChord) {
-    var radius = toChord && toChord.length > 0 ? (toChord.offset().left - $(fromChord).offset().left) / 3.8 : 50;
-
-    var left   = $(fromChord).offset().left + 10;
-	var right  = $(fromChord).offset().left + (3.8 * radius);
-    var bottom = $(fromChord).offset().top;
-    var top    = bottom - radius;
-
+Raphael.fn.tie = function (left, bottom, width, height) {
 	var thickness = 3;
+	var top = bottom - height;
+	var right = left + width;
+	var radius = width / 2.6;
 
 	return this.spath("M%c C%c %c %c C%c %c %cz", 
 		[left, bottom], 

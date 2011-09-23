@@ -31,7 +31,7 @@ class ChartDown_Chart_Expression
     const SEGNO         = 9;
     const TENUDO        = 10;
     const TIE           = 11;
-
+    
     public function __construct(ChartDown_Chart_ExpressionTypeInterface $type, $value = null)
     {
         $this->type  = $type;
@@ -63,11 +63,11 @@ class ChartDown_Chart_Expression
         return is_null($this->type) ? '' : $this->type->getName();
     }
     
-    public function isChordExpression()
+    public function getPosition()
     {
         if (!$this->type) {
             throw new Exception();
         }
-        return $this->type->isChordExpression();
+        return $this->type->getPosition();
     }
 }

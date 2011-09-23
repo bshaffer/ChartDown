@@ -10,9 +10,9 @@ class ChartDown_Chart_ExpressionType_Accent implements ChartDown_Chart_Expressio
         return '^';
     }
   
-    public function isChordExpression()
+    public function getPosition()
     {
-        return true;
+        return 'chord';
     }
   
     public function getName()
@@ -23,10 +23,5 @@ class ChartDown_Chart_ExpressionType_Accent implements ChartDown_Chart_Expressio
     public function getRegex()
     {
         return '\^';
-    }
-  
-    public function getType()
-    {
-        return ChartDown_Chart_Expression::ACCENT;
     }
 }
