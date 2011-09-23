@@ -1,13 +1,17 @@
 Raphael.fn.coda = function (chord) {
 	x = $(chord).offset().left;
 	y = $(chord).offset().top;
-	return this.image(imagepath+"/coda.png", x, y-6, 30, 30);	
+	height = 30;
+
+	return this.image(imagepath+"/coda.png", x, y-height, 30, 30);	
 };
 
 Raphael.fn.segno = function (chord) {
 	x = $(chord).offset().left;
 	y = $(chord).offset().top;
-	return this.image(imagepath+"/segno.png", x, y-6, 30, 30);	
+	height = 30;
+	
+	return this.image(imagepath+"/segno.png", x, y-height, 30, 30);	
 };
 
 Raphael.fn.fermata = function (chord) {
@@ -53,7 +57,7 @@ Raphael.fn.diamond = function(chord) {
     var y = $(chord).offset().top - ($(chord).height()/2);
     var radius = Math.min(15 + ($(chord).width()/4), 22);
 	return this.spath("M%s L%s L%s L%s L%s", [x, y+radius], [x+radius, y], [x+(2*radius), y+radius], [x+radius, y+(2*radius)], [x, y+radius]);
-}
+};
 
 Raphael.fn.repeat = function(left, top, width, height) {
 	var fatLine   = this.spath("M%s L%s", [left, top], [left, top+height]).attr({'stroke-width': 4});
@@ -61,14 +65,14 @@ Raphael.fn.repeat = function(left, top, width, height) {
 	var topDot    = this.circle(left+(width/1.5), top+(height/3), 1).attr({"fill": "black"});
 	var bottomDot = this.circle(left+(width/1.5), top+(height/1.5), 1).attr({"fill": "black"});
 	return [fatLine, thinLine, topDot, bottomDot];
-}
+};
 
 Raphael.fn.repeat_bar = function(left, top, width, height) {
 	var line   	  = this.spath("M%s L%s", [left, top+height], [left+width, top]).attr({'stroke-width': 3});
 	var topDot    = this.circle(left, top, 1).attr({"fill": "black"});
 	var bottomDot = this.circle(left+width, top+height, 1).attr({"fill": "black"});
 	return [line, topDot, bottomDot];
-}
+};
 
 Raphael.fn.spath = function(path) {
   var args = arguments;
@@ -79,10 +83,10 @@ Raphael.fn.spath = function(path) {
 	switch (match) {
 		case '%s':
 			replace = Math.round(coordinates[0]) + ' ' + Math.round(coordinates[1]);
-		 	break
+		 	break;
 		case '%c':
 			replace = Math.round(coordinates[0]) + ',' + Math.round(coordinates[1]);
-		 	break
+		 	break;
 	}
 	i++;
 	return replace;

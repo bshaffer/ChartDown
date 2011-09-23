@@ -38,22 +38,27 @@ $(document).ready(function() {
 
 	$('.tie').each(function() {
 		var fromChord 	= $(this).parent().find('.chord:last');
-		var toChord   	= null;
-		var isNextChord = null;
+		
+		if (!fromChord.length) {
+			console.log("no fromChord found for tie!");
+		} else {
+			var toChord   	= null;
+			var isNextChord = null;
 
-		$(this).parents('.chord-row:first').find('.chord').each(function(i) {
-			if (isNextChord) {
-				toChord = this; isNextChord = false;
-			}
-			isNextChord = (this == fromChord[0]);
-		});
+			$(this).parents('.chord-row:first').find('.chord').each(function(i) {
+				if (isNextChord) {
+					toChord = this; isNextChord = false;
+				}
+				isNextChord = (this == fromChord[0]);
+			});
 
-	    var radius = toChord ? ($(toChord).offset().left - $(fromChord).offset().left - 20) / 3.8 : 50;
+		    var radius = toChord ? ($(toChord).offset().left - $(fromChord).offset().left - 20) / 3.8 : 50;
 
-	    var left   = $(fromChord).offset().left + 20;
-	    var bottom = $(fromChord).offset().top;
+		    var left   = $(fromChord).offset().left + 20;
+		    var bottom = $(fromChord).offset().top;
 
-		paper.tie(left, bottom, 3.8 * radius, radius);
+			paper.tie(left, bottom, 3.8 * radius, radius);
+		}
 	});
 
 	$('.diamond').each(function(){

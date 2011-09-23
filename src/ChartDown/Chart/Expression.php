@@ -15,7 +15,7 @@
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart_Expression
+class ChartDown_Chart_Expression implements ChartDown_Chart_Rhythm_RelativeMeterInterface
 {
     protected $value;
     protected $type;
@@ -66,8 +66,16 @@ class ChartDown_Chart_Expression
     public function getPosition()
     {
         if (!$this->type) {
-            throw new Exception();
+            throw new Exception('Must set expression type to call this method');
         }
         return $this->type->getPosition();
+    }
+    
+    public function getRelativeMeter()
+    {
+        if (!$this->type) {
+            throw new Exception('Must set expression type to call this method');
+        }
+        return $this->type->getRelativeMeter();
     }
 }

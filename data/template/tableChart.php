@@ -48,6 +48,12 @@
             </td>
           <?php endforeach ?>
           </tr>
+          
+          <?php if ($renderer->rowHasTopExpression($row)): ?>
+              <tr class="expression-row">
+                  <td colspan="<?php echo $renderer->getMaxBarsInChart($chart) ?>">&nbsp;</td>
+              </tr>
+          <?php endif ?>
 
          <tr class="chord-row">
           <?php foreach ($row as $bar): ?>
@@ -59,9 +65,8 @@
                  <?php if (count($chords = $bar->getChords()) > 0): ?>
                      <table style="width:100%">
                          <tr>
-                    <?php $percent = 100 * (1/count($chords)) ?>
                      <?php foreach ($chords as $chord): ?>
-                         <?php echo $this->render('cell', array('chord' => $chord, 'percent' => $percent, 'renderer' => $renderer)) ?>
+                         <?php echo $this->render('cell', array('chord' => $chord, 'percent' => $renderer->getPercentage($chord, $chords), 'renderer' => $renderer)) ?>
                      <?php endforeach ?>
                          </tr>
                     </table>

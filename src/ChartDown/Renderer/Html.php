@@ -71,6 +71,54 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
 
         return count($classes) ? ' ' . implode(' ', $classes) : '';
     }
+    
+    public function rowHasTopExpression(ChartDown_Chart_Row $row)
+    {
+        foreach ($row->getBars() as $bar) {
+            foreach ($bar->getExpressions() as $expression) {
+                if ($expression->getPosition() == 'top') {
+                    return true;
+                }
+            }
+            foreach ($bar->getChords() as $chord) {
+                if ($chord instanceof ChartDown_Chart_Expression) {
+                    if ($chord->getPosition() == 'top') {
+                        return true;
+                    }
+                } else {
+                    foreach ($chord->getExpressions() as $expression) {
+                        if ($expression->getPosition() == 'top') {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    public function getBarsInRow(ChartDown_Chart_Row $row)
+    {
+        return count($row->getBars());
+    }
+    
+    public function getMaxBarsInChart(ChartDown_Chart $chart)
+    {
+        $barCount = 0;
+        foreach ($chart->getRows() as $row) {
+            $barCount = max($barCount, $this->getBarsInRow($row));
+        }
+        return $barCount;
+    }
+    
+    public function getPercentage( $rhythm, $meters)
+    {
+        $meterCount = 0;
+        foreach ($meters as $meter) {
+            $meterCount += $meter->getRelativeMeter();
+        }
+        return $meterCount ? 100 * ($rhythm->getRelativeMeter() / $meterCount) : 100;
+    }
 
     public function renderExpression(ChartDown_Chart_Expression $expression)
     {
