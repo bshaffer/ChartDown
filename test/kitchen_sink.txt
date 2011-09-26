@@ -3,7 +3,7 @@
 # key: C
 # tempo: 111
 text: h2. Verse 1
-{: G | G . . . | . C . . | C
+{: G | G/D . . . | . C . . | ^*G#add9/D
 --
 & _G | *G | {1} >^_C | [. ^C . ^C] :}
 --
@@ -11,10 +11,10 @@ text: h2. Verse 1
 --
 text: h2. Chorus
 D $ | D2 ~ | D2 | !D7
-text: Now I see...
+text: I need more to drink...
 --
 D | *Dm7 ~ | *Dm7 | D
-text: There's nothing more to believe...
+text: Look in the kitchen sink...
 --
 text: | | | p>. _D.S. Al Coda_
 C | Csus | _>*G#M7 | C
@@ -25,4 +25,4 @@ text: h2. Verse 3
 text: h2. Chorus
 text: h2. Chorus
 --
-$ C | C | *Gm | !GM7
+$ {:C | C | *Gm | !GM7 :} | x2

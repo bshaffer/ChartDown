@@ -39,13 +39,11 @@
         <?php if ($row->hasTopText()): ?>
             <tr class="text-row">
                 <?php foreach ($row as $bar): ?>
-                    <td>
-                        <?php if ($bar->hasTopText()): ?>
+                    <?php if ($bar->hasTopText()): ?>
+                        <td colspan="<?php echo $renderer->getColspan($chart, $row) ?>">
                             <?php echo $bar->renderTopText() ?>
-                        <?php else: ?>
-                            &nbsp;
-                        <?php endif ?>
-                    </td>
+                        </td>
+                    <?php endif ?>
                 <?php endforeach ?>
             </tr>
         <?php endif ?>          
@@ -75,16 +73,14 @@
           <?php endforeach ?>
              </tr>
 
-          <?php if (true || $row->hasBottomText()): ?>
+          <?php if ($row->hasBottomText()): ?>
               <tr class="text-row">
               <?php foreach ($row as $bar): ?>
-                  <td>
                  <?php if ($bar->hasBottomText()): ?>
-                   <?php echo $bar->renderBottomText() ?>
-                 <?php else: ?>
-                     &nbsp;
+                    <td colspan="<?php echo $renderer->getColspan($chart, $row) ?>">
+                        <?php echo $bar->renderBottomText() ?>
+                    </td>
                  <?php endif ?>
-                 </td>
               <?php endforeach ?>
               </tr>
           <?php endif ?>

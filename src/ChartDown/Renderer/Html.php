@@ -122,6 +122,13 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
         return $barCount;
     }
     
+    public function getColspan(ChartDown_Chart $chart, ChartDown_Chart_Row $row)
+    {
+        $maxBars = $this->getMaxBarsInChart($chart);
+        $barsInRow = count($row->getBars());
+        return floor($maxBars / $barsInRow);
+    }
+    
     public function getPercentage( $rhythm, $meters)
     {
         $meterCount = 0;

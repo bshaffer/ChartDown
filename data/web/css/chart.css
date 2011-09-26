@@ -98,6 +98,12 @@ hr {
   border-top: 1px solid black;
 }
 
+.chord-extensions {
+	font-size:small; 
+	vertical-align:top;
+	padding-left:1px;
+}
+
 /* Hacks */
 .clearfix:after {
      visibility: hidden;

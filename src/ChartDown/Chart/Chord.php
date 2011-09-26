@@ -19,12 +19,15 @@ class ChartDown_Chart_Chord implements ChartDown_Chart_Rhythm_RelativeMeterInter
 {
     const EXTENSION_REGEX = '/(b2|2|6|7|M7|b9|9|#9|#11|b13|13|sus)/';
 
+    protected $root;
     protected $value;
     protected $text;
     protected $interval;
+    protected $intervalText;
     protected $accidental;
     protected $bass;
     protected $notations;
+    protected $rest;
 
     protected $extensions = array();
     protected $expressions = array();
@@ -54,7 +57,9 @@ class ChartDown_Chart_Chord implements ChartDown_Chart_Rhythm_RelativeMeterInter
 
         // Chord Value
         if (!preg_match('/[A-G1-7]/', strtoupper($chord[0]))) {
-            throw new InvalidArgumentException(sprintf("Cannot parse '%s' as a chord letter", $chord[0]));
+            // Add this value as text
+            $this->setText($chord);
+            return;
         }
 
         $root = $chord[0];
@@ -76,15 +81,24 @@ class ChartDown_Chart_Chord implements ChartDown_Chart_Rhythm_RelativeMeterInter
             // Minor / Diminished / Augmented
             if (preg_match('/[+m-]/', $chord[$i])) {
                 $this->interval = $chord[$i] === '+' ? ChartDown::AUGMENTED : ChartDown::MINOR;
+                $this->intervalText = $chord[$i];
                 $i++;
             } elseif (strpos(strtolower(substr($chord, $i)), 'dim') === 0) {
                 $this->interval = ChartDown::DIMINISHED;
+                $this->intervalText = 'dim';
                 $i+=3;
+            } elseif (strpos(substr($chord, $i), '°') === 0) {
+                $this->interval = ChartDown::DIMINISHED;
+                $this->intervalText = '°';
+                $i+=1;            
             } else {
                 $this->interval = ChartDown::MAJOR;
             }
 
             $chord = substr($chord, $i);
+            
+            // preserve the full string after the chord value
+            $this->rest = $chord;
 
             // Match Extensions (b7, #11, sus, etc)
             if (preg_match_all(self::EXTENSION_REGEX, $chord, $matches)) {
@@ -100,12 +114,17 @@ class ChartDown_Chart_Chord implements ChartDown_Chart_Rhythm_RelativeMeterInter
 
     public function getRoot()
     {
-        return $this->root->getNote();
+        return $this->root ? $this->root->getNote() : null;
     }
 
     public function getInterval()
     {
         return $this->interval;
+    }
+
+    public function getIntervalText()
+    {
+        return $this->intervalText;
     }
 
     public function getExtensions()
@@ -153,6 +172,11 @@ class ChartDown_Chart_Chord implements ChartDown_Chart_Rhythm_RelativeMeterInter
         foreach ($expressions as $expression) {
             $this->addExpression($expression);
         }
+    }
+    
+    public function getRest()
+    {
+        return $this->rest;
     }
 
     public function getExpressions()

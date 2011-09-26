@@ -12,9 +12,17 @@
 <?php elseif ($chord instanceof ChartDown_Chart_Rhythm_RelativeMeterInterface): ?>
     <td style="width:<?php echo $percent ?>%">
         <span class="<?php echo $renderer->renderChartObjectClass($chord) ?>" <?php echo $renderer->renderChartObjectAttributes($chord) ?>>
-            <?php echo $renderer->renderChartObject($chord) ?>
+            <?php if ($chord instanceof ChartDown_Chart_Chord): ?>
+                <?php if ($chord->getRootNote()): ?>
+                    <?php echo $chord->getRoot().$chord->getIntervalText() ?><?php if ($rest = $chord->getRest()): ?><span class="chord-extensions"><?php echo $chord->getRest() ?></span><?php endif ?><?php echo $chord->getBass() ? sprintf('/%s', $chord->getBass()) : '' ?>
+                <?php else: ?>
+                    <?php echo (string) $chord ?>
+                <?php endif ?>
+            <?php endif ?>
         </span>
     </td>
 <?php else: ?>
-    <td class="<?php echo $renderer->renderChartObjectClass($chord) ?>" <?php echo $renderer->renderChartObjectAttributes($chord) ?>><span><?php echo $renderer->renderChartObject($chord) ?></span></td>
+    <td class="<?php echo $renderer->renderChartObjectClass($chord) ?>" <?php echo $renderer->renderChartObjectAttributes($chord) ?>>
+        <span>&nbsp;</span>
+    </td>
 <?php endif ?>
