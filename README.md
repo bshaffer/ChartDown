@@ -35,19 +35,22 @@ HTML document which you can modify and then render to PDF, if tweaking is requir
 Expressions
 -----------
 
-The following expressions are valid:
+The following expressions are valid on a chord:
 
  * **^**: Accent
  * **>**: Anticipation
- * **$**: Coda
  * **\***: Diamond
  * **!**: Fermata
+ * **_**: Tenudo
+ * **~**: Tie
+
+The following expressions can be used anywhere in your chart:
+
  * **%**: Repeat a bar
  * **{: ... :}**: Repeat start and repeat end
  * **{1}**, **{2}**...: First ending, second ending
+ * **$**: Coda
  * **&**: Segno
- * **_**: Tenudo
- * **~**: Tie
 
 These can go before or after the chord, as long as they are contiguous.
 

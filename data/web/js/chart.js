@@ -53,9 +53,7 @@ $(document).ready(function() {
 	});
 
 	$('.repeat-bar').each(function() {
-		var left = $(this).offset().left + ($(this).width()/2) - 10;
-		var top = $(this).offset().top + ($(this).height()/2) - 10;
-		paper.repeat_bar(left, top, 20, 20);
+		paper.repeat_bar(this);
 	});
 
 	$('.accent').each(function() {

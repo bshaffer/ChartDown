@@ -85,10 +85,15 @@ Raphael.fn.rhythm = function(bar) {
  	return this.spath("M%s L%s", [x, y+height], [x+width, y]).attr({'stroke-width': 1});
 };
 
-Raphael.fn.repeat_bar = function(left, top, width, height) {
-	var line   	  = this.spath("M%s L%s", [left, top+height], [left+width, top]).attr({'stroke-width': 3});
-	var topDot    = this.circle(left, top, 1).attr({"fill": "black"});
-	var bottomDot = this.circle(left+width, top+height, 1).attr({"fill": "black"});
+Raphael.fn.repeat_bar = function(bar) {
+	var left = $(bar).offset().left + ($(bar).width()/2) - 5;
+	var top = $(bar).offset().top + ($(bar).height()/2) - 5;
+	var width = 10;
+	var height = 10;
+
+	var line   	  = this.spath("M%s L%s", [left, top+height], [left+width, top]).attr({'stroke-width': 2});
+	var topDot    = this.circle(left, top, .5).attr({"fill": "black"});
+	var bottomDot = this.circle(left+width, top+height, .5).attr({"fill": "black"});
 	return [line, topDot, bottomDot];
 };
 
