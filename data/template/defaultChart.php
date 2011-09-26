@@ -61,7 +61,7 @@
                      <table style="width:100%">
                          <tr>
                      <?php foreach ($chords as $chord): ?>
-                         <?php echo $this->render('cell', array('chord' => $chord, 'percent' => $renderer->getPercentage($chord, $chords), 'renderer' => $renderer)) ?>
+                         <?php echo $this->render('chord', array('chord' => $chord, 'percent' => $renderer->getPercentage($chord, $chords), 'renderer' => $renderer)) ?>
                      <?php endforeach ?>
                          </tr>
                     </table>

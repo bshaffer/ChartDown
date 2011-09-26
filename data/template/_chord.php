@@ -4,7 +4,7 @@
             <tr>
         <?php $groupPercent = 100 * (1/count($group->getChords())) ?>
         <?php foreach ($group as $chord): ?>
-            <?php echo $this->render('cell', array('percent' => $groupPercent, 'chord' => $chord, 'renderer' => $renderer)) ?>
+            <?php echo $this->render('chord', array('percent' => $groupPercent, 'chord' => $chord, 'renderer' => $renderer)) ?>
         <?php endforeach ?>
             </tr>
         </table>
