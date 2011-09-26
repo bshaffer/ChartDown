@@ -94,7 +94,7 @@ hr {
   padding-right: 20px;
 }
 
-.repeat-finish, .repeat-ending, .repeat-ending-cell, .repeat-ending-active {
+.repeat-ending, .repeat-ending-cell {
   border-top: 1px solid black;
 }
 

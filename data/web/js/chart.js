@@ -5,18 +5,14 @@ $(document).ready(function() {
 
 	// Repeat ending nonsense
 	$('.repeat-ending').each(function() {
-		var row = $(this).parents('.chord-row');
-		var rowIndex = $('.chord-row').index(row);
-		var barIndex = row.find('.chord-cell').index($(this));
+		var row 	= $(this).parents('.chord-row');
+		var finish 	= $(this).nextAll('.repeat-finish');
 
-		// This row
-		var repeatFinish = $('.chord-row:eq('+rowIndex.toString()+') .chord-cell:gt('+ barIndex.toString()+')');
-		if (repeatFinish.length == 0) {
-		  	// preceeding rows
-		  	repeatFinish = $('.chord-row:gt('+rowIndex.toString()+') .repeat-finish');
+		if (!finish.length) {
+		  	finish = $('.chord-row:gt('+$('.chord-row').index(row).toString()+') .repeat-finish:first');
 		};
 
-		paper.repeat_ending($(this), repeatFinish, $(this).attr('repeatending'));
+		paper.repeat_ending($(this), finish, $(this).attr('repeatending'));
 	});
 
 	$('.tie').each(function() {
@@ -87,6 +83,6 @@ $(document).ready(function() {
 	});
 	
 	$('.rhythm').each(function() {
-		paper.rhythm(this);
+		paper.rhythm($(this).parent());
 	});
 });

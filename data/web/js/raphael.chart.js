@@ -76,9 +76,9 @@ Raphael.fn.repeat = function(left, top, width, height) {
 };
 
 Raphael.fn.rhythm = function(bar) {
+	var width  = 5;
 	var height = $(bar).height()/2;
-	var width  = Math.max($(bar).width()/2, 5);
-	var x      = $(bar).offset().left + (width/2);
+	var x      = $(bar).offset().left + (width);
 	var y      = $(bar).offset().top + (height/2);
 	
  	return this.spath("M%s L%s", [x, y+height], [x+width, y]).attr({'stroke-width': 1});
@@ -98,8 +98,10 @@ Raphael.fn.repeat_ending = function(fromBar, toBar, endingNumber) {
 
 		bars = $('.chord-cell:gt('+fromBarIndex.toString()+'):lt('+(allBars.index(toBar)-fromBarIndex).toString()+')');
 		bars.addClass('repeat-ending-cell');
-		
+
 		this.text(fromBar.offset().left+5, fromBar.offset().top-6, endingNumber+'.');
+	} else {
+		console.log('no ending bar found');
 	};
 };
 
