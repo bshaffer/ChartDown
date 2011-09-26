@@ -44,6 +44,7 @@
               </tr>
           <?php endif ?>
 
+         <?php if ($row->hasChords()): ?>
          <tr class="chord-row">
           <?php foreach ($row as $bar): ?>
              <td width="25%" class="chord-cell<?php echo $renderer->renderBarExpressions($bar) ?>" <?php echo $renderer->renderChartObjectAttributes($bar) ?>>
@@ -58,10 +59,11 @@
                  <?php else: ?>
                      &nbsp;
                  <?php endif ?>
-
-              </td>
+             </td>
           <?php endforeach ?>
-             </tr>
+         </tr>
+            
+         <?php endif ?>
 
           <?php echo $this->render('text', array('row' => $row, 'position' => 'bottom', 'renderer' => $renderer, 'maxBars' => $renderer->getMaxBarsInChart($chart))) ?>
       <?php endforeach ?>

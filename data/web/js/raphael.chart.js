@@ -32,7 +32,7 @@ Raphael.fn.anticipation = function (chord) {
 	x = $(chord).offset().left;
 	y = $(chord).offset().top;
 	return this.spath("M%s L%s L%s", [x, y], [x+6, y-3], [x, y-6])
-		.translate(-6, 6)
+		.translate(-4, 5)
 		.attr({'stroke-width': 2});
 };
 

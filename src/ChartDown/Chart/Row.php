@@ -17,7 +17,9 @@
  */
 class ChartDown_Chart_Row implements IteratorAggregate
 {
-    public function __construct($bars)
+    protected $bars;
+
+    public function __construct($bars = array())
     {
         $this->bars = $bars;
     }
@@ -25,6 +27,17 @@ class ChartDown_Chart_Row implements IteratorAggregate
     public function getBars()
     {
         return $this->bars;
+    }
+    
+    public function hasChords()
+    {
+        foreach ($this->bars as $bar) {
+            if ($bar->getChords()) {
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     public function hasText($position = null)
