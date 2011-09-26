@@ -35,8 +35,7 @@ table {
   font-size: .8em;
 }
 
-.chord-row, .lyric-row {
-  height:50%;
+.chord-row, .text-row {
   padding: 3px 0;
 }
 
@@ -76,9 +75,11 @@ hr {
 }
 
 /*** Articulations ***/
-
-.chord-group {
+.rhythm {
+	min-height:16px;
+	display:block;
 }
+
 .chord-group table {
   height: 30px;
   padding:5px;

@@ -32,7 +32,7 @@ $(document).ready(function() {
 	    left   = $(fromChord).offset().left + 20;
 	    bottom = $(fromChord).offset().top;
 
-		paper.tie(left, bottom, 3.8 * radius, radius);
+		paper.tie(left, bottom, 3.8 * radius, Math.min(radius, 30));
 	});
 
 	$('.diamond').each(function(){

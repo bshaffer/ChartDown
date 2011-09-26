@@ -62,7 +62,7 @@ Raphael.fn.diamond = function(chord) {
     var y = $(chord).offset().top + ($(chord).height()/2);
 
     var width = 10+($(chord).width()/2);
-    var height = Math.min(width, 28);
+    var height = Math.min(width, 20);
 
 	return this.spath("M%s L%s L%s L%sz", [x-width, y], [x, y-height], [x+width, y], [x, y+height])
 		.attr({'fill': 'white'});;

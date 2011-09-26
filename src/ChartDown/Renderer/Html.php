@@ -93,7 +93,7 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
             }
             foreach ($bar->getChords() as $chord) {
                 if ($chord instanceof ChartDown_Chart_Expression) {
-                    if ($chord->getPosition() == 'top' || $expression->getPosition() == 'bar-top') {
+                    if ($chord->getPosition() == 'top' || $chord->getPosition() == 'bar-top') {
                         return true;
                     }
                 } elseif ($chord instanceof ChartDown_Chart_Chord) {
