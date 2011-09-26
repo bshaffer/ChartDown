@@ -28,44 +28,42 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
     {
         $this->options = $options;
     }
+
+    public function getText($position = null)
+    {
+        if (is_null($position) || $position == 'top') {
+            return $this->getTopText();
+        }
+
+        return $this->getBottomText();
+    }
     
-    public function getTopText()
+    public function setText($text, $position = null)
     {
-        return $this->topText;
-    }
-
-    public function hasTopText()
-    {
-        return !empty($this->topText);
-    }
-
-    public function renderTopText()
-    {
-        return $this->topText->getText();
-    }
-
-    public function getBottomText()
-    {
-        return $this->bottomText;
-    }
-
-    public function renderBottomText()
-    {
-        return $this->bottomText->getText();
-    }
-
-    public function hasBottomText()
-    {
-        return !empty($this->bottomText);
-    }
-
-    public function setText($text)
-    {        
-        if (0 == count($this->getChords())) {
+        if (0 == count($this->getChords()) || $position == 'top') {
             $this->setTopText($text);
         } else {
             $this->setBottomText($text);
         }
+    }
+    
+    public function hasText($position = null)
+    {
+        if (0 == count($this->getChords()) || $position == 'top') {
+            return $this->hasTopText();
+        } 
+        
+        return $this->hasBottomText();
+    }
+    
+    public function renderText($position = null)
+    {
+        return $this->getText($position)->getText();
+    }
+
+    public function getTopText()
+    {
+        return $this->topText;
     }
     
     public function setTopText($text)
@@ -81,6 +79,21 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
         }
     }
     
+    public function hasTopText()
+    {
+        return !is_null($this->topText);
+    }
+
+    public function renderTopText()
+    {
+        return $this->topText->getText();
+    }
+
+    public function getBottomText()
+    {
+        return $this->bottomText;
+    }
+    
     public function setBottomText($text)
     {
         if (is_string($text)) {
@@ -92,6 +105,16 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
         } else { 
             $this->bottomText = $text;
         }
+    }
+
+    public function hasBottomText()
+    {
+        return !is_null($this->bottomText);
+    }
+
+    public function renderBottomText()
+    {
+        return $this->bottomText->getText();
     }
 
     public function addChordGroup()

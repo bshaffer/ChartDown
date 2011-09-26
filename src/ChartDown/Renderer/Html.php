@@ -122,11 +122,33 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
         return $barCount;
     }
     
-    public function getColspan(ChartDown_Chart $chart, ChartDown_Chart_Row $row)
+    public function getColspan(ChartDown_Chart_Row $row, ChartDown_Chart_Bar $bar, $position = 'top', $maxBars = null)
     {
-        $maxBars = $this->getMaxBarsInChart($chart);
         $barsInRow = count($row->getBars());
-        return floor($maxBars / $barsInRow);
+        $maxBars   = is_null($maxBars) ? $barsInRow : $maxBars;
+        $colspan   = 1;
+        $reset     = false;
+        
+        // rewind until current bar.  
+        // if text doesn't exist in the bars immediately before this one, extend colspan
+        foreach (array_reverse($row->getBars()) as $sibling) {
+            if ($sibling == $bar) {
+                break;
+            } elseif ($sibling->hasText($position)) {
+                // reset to 1
+                $colspan = 1;
+                $reset   = true;
+            } else {
+                $colspan++;
+            }
+        }
+        
+        // if there are bars left over, and this is the last bar in the row, add the extra bars
+        if ($barsInRow < $maxBars && !$reset) {
+            $colspan += $maxBars - $barsInRow;
+        }
+
+        return $colspan;
     }
     
     public function getPercentage( $rhythm, $meters)

@@ -36,18 +36,8 @@
 
     <table id="content">
       <?php foreach ($chart->getRows() as $row): ?>
-        <?php if ($row->hasTopText()): ?>
-            <tr class="text-row">
-                <?php foreach ($row as $bar): ?>
-                    <?php if ($bar->hasTopText()): ?>
-                        <td colspan="<?php echo $renderer->getColspan($chart, $row) ?>">
-                            <?php echo $bar->renderTopText() ?>
-                        </td>
-                    <?php endif ?>
-                <?php endforeach ?>
-            </tr>
-        <?php endif ?>          
-
+          <?php echo $this->render('text', array('row' => $row, 'position' => 'top', 'renderer' => $renderer, 'maxBars' => $renderer->getMaxBarsInChart($chart))) ?>
+          
           <?php if ($renderer->rowHasTopExpression($row)): ?>
               <tr class="expression-row">
                   <td colspan="<?php echo $renderer->getMaxBarsInChart($chart) ?>">&nbsp;</td>
@@ -73,17 +63,7 @@
           <?php endforeach ?>
              </tr>
 
-          <?php if ($row->hasBottomText()): ?>
-              <tr class="text-row">
-              <?php foreach ($row as $bar): ?>
-                 <?php if ($bar->hasBottomText()): ?>
-                    <td colspan="<?php echo $renderer->getColspan($chart, $row) ?>">
-                        <?php echo $bar->renderBottomText() ?>
-                    </td>
-                 <?php endif ?>
-              <?php endforeach ?>
-              </tr>
-          <?php endif ?>
+          <?php echo $this->render('text', array('row' => $row, 'position' => 'bottom', 'renderer' => $renderer, 'maxBars' => $renderer->getMaxBarsInChart($chart))) ?>
       <?php endforeach ?>
     </table>
   </div>
