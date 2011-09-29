@@ -3,7 +3,7 @@
 ChartDown is shorthand for chart writing.  
 
 The ChartDown codebase is based off the 
-[https://github.com/fabpot/Twig](Twig) templating library.
+[Twig](https://github.com/fabpot/Twig) templating library.
 
 ## Installation
 
@@ -123,7 +123,7 @@ Below is a more complex example of how text can be used to create complex chart 
 In this example, not only are the poor lyrics continued, but a D.S. Al Coda is added.  The text
 for the coda will appear above the final bar and be aligned right, so that it will be directly over the 
 repeat, as is appropriate in a chord chart.  Read more on 
-[http://www.redmine.org/projects/redmine/wiki/RedmineTextFormatting#Headings](Textile Syntax),
+[Textile Syntax](http://www.redmine.org/projects/redmine/wiki/RedmineTextFormatting#Headings),
 I assure you it's easier than you might think.
 
 Chords
