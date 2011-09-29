@@ -1,9 +1,12 @@
 <?php
 
+namespace ChartDown\Chart;
+use ChartDown;
+
 /**
 *
 */
-class ChartDown_Chart_Transposer
+class Transposer
 {
     public function __construct()
     {
@@ -33,7 +36,7 @@ class ChartDown_Chart_Transposer
       );
     }
 
-    public function transposeNote(ChartDown_Chart_Note $note, $interval)
+    public function transposeNote(Note $note, $interval)
     {
         $value = $this->getValueFromNote($note->getNote());
 
@@ -42,7 +45,7 @@ class ChartDown_Chart_Transposer
         $note->setNote($this->getNoteFromValue($transposedValue));
     }
 
-    public function transposeChord(ChartDown_Chart_Chord $chord, $interval)
+    public function transposeChord(Chord $chord, $interval)
     {
         $root = $chord->getRoot();
         $rootNote = $chord->getRootNote();

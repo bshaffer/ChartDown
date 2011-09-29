@@ -9,13 +9,15 @@
  * file that was distributed with this source code.
  */
 
+namespace ChartDown\Chart;
+
 /**
  * Represents chart text.
  *
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart_Text
+class Text
 {
   protected $text;
   protected $textile;
@@ -23,7 +25,7 @@ class ChartDown_Chart_Text
   public function __construct($text)
   {
     $this->text = $text;
-    $this->textile = new Textile();
+    $this->textile = new \Textile();
   }
   
   public function __toString()

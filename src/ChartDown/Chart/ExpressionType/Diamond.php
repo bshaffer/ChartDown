@@ -1,9 +1,11 @@
 <?php
 
+namespace ChartDown\Chart\ExpressionType;
+
 /**
 * Diamond Expression
 */
-class ChartDown_Chart_ExpressionType_Diamond implements ChartDown_Chart_ExpressionTypeInterface
+class Diamond implements ExpressionTypeInterface
 {
     public function getSymbol()
     {

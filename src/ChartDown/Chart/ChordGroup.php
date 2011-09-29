@@ -1,6 +1,9 @@
 <?php
 
-class ChartDown_Chart_ChordGroup implements IteratorAggregate, ChartDown_Chart_Rhythm_RelativeMeterInterface
+namespace ChartDown\Chart;
+use ChartDown\Chart\Rhythm\RelativeMeterInterface;
+
+class ChordGroup implements IteratorAggregate, RelativeMeterInterface
 {
     private $chords = array();
     private $expressions = array();
@@ -13,7 +16,7 @@ class ChartDown_Chart_ChordGroup implements IteratorAggregate, ChartDown_Chart_R
     public function addChord($chord)
     {
         if (is_string($chord)) {
-            $chord = new ChartDown_Chart_Chord($chord);
+            $chord = new Chord($chord);
         }
 
         if ($this->expressions) {
@@ -27,10 +30,10 @@ class ChartDown_Chart_ChordGroup implements IteratorAggregate, ChartDown_Chart_R
     public function addExpression($expression)
     {
         if (is_string($expression)) {
-            $expression = new ChartDown_Chart_Expression($expression);
+            $expression = new Expression($expression);
         }
         
-        if ($expression->getType() instanceof ChartDown_Chart_Rhythm_RelativeMeterInterface) {
+        if ($expression->getType() instanceof RelativeMeterInterface) {
             $this->chords[] = $expression;
         } else {
             $this->expressions[] = $expression;
@@ -45,7 +48,7 @@ class ChartDown_Chart_ChordGroup implements IteratorAggregate, ChartDown_Chart_R
     public function addRhythm($rhythm)
     {
         if (is_string($rhythm)) {
-            $rhythm = new ChartDown_Chart_Rhythm($rhythm);
+            $rhythm = new Rhythm($rhythm);
         }
         
         $this->chords[] = $rhythm;

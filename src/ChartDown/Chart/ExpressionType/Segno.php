@@ -1,9 +1,11 @@
 <?php
 
+namespace ChartDown\Chart\ExpressionType;
+
 /**
 * Segno Expression
 */
-class ChartDown_Chart_ExpressionType_Segno implements ChartDown_Chart_ExpressionTypeInterface
+class Segno implements ExpressionTypeInterface
 {
     public function getSymbol()
     {

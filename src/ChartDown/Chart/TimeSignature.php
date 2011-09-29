@@ -9,13 +9,15 @@
  * file that was distributed with this source code.
  */
 
+namespace ChartDown\Chart;
+
 /**
  * Represents a chart time signature.
  *
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart_TimeSignature
+class TimeSignature
 {
   protected $beatsPerMeasure;
   protected $beatNoteValue;

@@ -1,6 +1,8 @@
 <?php
 
-interface ChartDown_Chart_ExpressionTypeInterface
+namespace ChartDown\Chart\ExpressionType;
+
+interface ExpressionTypeInterface
 {
   public function getSymbol();
   public function getRegex();

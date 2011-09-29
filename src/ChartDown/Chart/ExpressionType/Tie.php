@@ -1,9 +1,13 @@
 <?php
 
+namespace ChartDown\Chart\ExpressionType;
+
+use ChartDown\Chart\Rhythm\RelativeMeterInterface;
+
 /**
 * Tie Expression
 */
-class ChartDown_Chart_ExpressionType_Tie implements ChartDown_Chart_ExpressionTypeInterface, ChartDown_Chart_Rhythm_RelativeMeterInterface
+class Tie implements ExpressionTypeInterface, RelativeMeterInterface
 {
     public function getSymbol()
     {

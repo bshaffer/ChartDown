@@ -9,13 +9,17 @@
  * file that was distributed with this source code.
  */
 
+namespace ChartDown\Chart;
+
+use ChartDown\Chart\Rhythm\Rhythm;
+
 /**
  * Represents a bar in a chart.
  *
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
+class Bar extends ChordGroup
 {
     private $bottomText;
     private $topText;
@@ -69,7 +73,7 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
     public function setTopText($text)
     {
         if (is_string($text)) {
-            $text = new ChartDown_Chart_Text($text);
+            $text = new Text($text);
         }
 
         if (!empty($this->topText)) { 
@@ -97,7 +101,7 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
     public function setBottomText($text)
     {
         if (is_string($text)) {
-            $text = new ChartDown_Chart_Text($text);
+            $text = new Text($text);
         }
 
         if (!empty($this->bottomText)) { 
@@ -119,11 +123,11 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
 
     public function addChordGroup()
     {
-        $group = new ChartDown_Chart_ChordGroup();
+        $group = new ChordGroup();
 
         $this->addChord($group);
 
-        return new ChartDown_FluidObjectTraverser($group, $this);
+        return new ChartDown\FluidObjectTraverser($group, $this);
     }
 
     public function getExpressions()
@@ -145,7 +149,7 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
     public function addExpression($expression)
     {
         if (is_string($expression)) {
-            $expression = new ChartDown_Chart_Expression($expression);
+            $expression = new Expression($expression);
         }
 
         if ($expression->getPosition() == 'bar' || $expression->getPosition() == 'bar-top') {
@@ -160,7 +164,7 @@ class ChartDown_Chart_Bar extends ChartDown_Chart_ChordGroup
         return $this->rhythm;
     }
 
-    public function setRhythm(ChartDown_Chart_Rhythm $rhythm)
+    public function setRhythm(Rhythm $rhythm)
     {
         $this->rhythm = $rhythm;
     }

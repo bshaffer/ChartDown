@@ -1,5 +1,7 @@
 <?php
 
+namespace ChartDown\Chart;
+
 /*
  * This file is part of ChartDown.
  *
@@ -15,7 +17,7 @@
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart_Key
+class Key
 {
   protected $key;
   protected $mode;

@@ -1,9 +1,11 @@
 <?php
 
+namespace ChartDown\Chart\ExpressionType;
+
 /**
 * Anticipation Expression
 */
-class ChartDown_Chart_ExpressionType_Anticipation implements ChartDown_Chart_ExpressionTypeInterface
+class Anticipation implements ExpressionTypeInterface
 {
     public function getSymbol()
     {

@@ -1,9 +1,13 @@
 <?php
 
+namespace ChartDown\Chart\ExpressionType;
+
+use ChartDown\Chart\Rhythm\RelativeMeterInterface;
+
 /**
 * Repeat Finish Expression
 */
-class ChartDown_Chart_ExpressionType_RepeatFinish implements ChartDown_Chart_ExpressionTypeInterface, ChartDown_Chart_Rhythm_RelativeMeterInterface
+class RepeatFinish implements ExpressionTypeInterface, RelativeMeterInterface
 {
     public function getSymbol()
     {

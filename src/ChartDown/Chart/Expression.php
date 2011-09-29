@@ -9,13 +9,18 @@
  * file that was distributed with this source code.
  */
 
+namespace ChartDown\Chart;
+
+use ChartDown\Chart\Rhythm\RelativeMeterInterface;
+use ChartDown\Chart\Expression\ExpressionTypeInterface;
+
 /**
  * Represents a chart expression.
  *
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart_Expression implements ChartDown_Chart_Rhythm_RelativeMeterInterface
+class Expression implements RelativeMeterInterface
 {
     protected $value;
     protected $type;
@@ -32,7 +37,7 @@ class ChartDown_Chart_Expression implements ChartDown_Chart_Rhythm_RelativeMeter
     const TENUDO        = 10;
     const TIE           = 11;
     
-    public function __construct(ChartDown_Chart_ExpressionTypeInterface $type, $value = null)
+    public function __construct(ExpressionTypeInterface $type, $value = null)
     {
         $this->type  = $type;
         $this->value = $value;
@@ -48,7 +53,7 @@ class ChartDown_Chart_Expression implements ChartDown_Chart_Rhythm_RelativeMeter
         return $this->value;
     }
 
-    public function setType(ChartDown_Chart_ExpressionTypeInterface $type)
+    public function setType(ExpressionTypeInterface $type)
     {
         $this->type = $type;
     }

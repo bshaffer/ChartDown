@@ -9,13 +9,15 @@
  * file that was distributed with this source code.
  */
 
+namespace ChartDown\Chart;
+
 /**
  * Represents a chart.
  *
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart_RowGroup implements IteratorAggregate
+class RowGroup implements IteratorAggregate
 {
     protected $rows;
 
@@ -29,7 +31,7 @@ class ChartDown_Chart_RowGroup implements IteratorAggregate
         return $this->rows;
     }
     
-    public function addRow(ChartDown_Chart_Row $row)
+    public function addRow(Row $row)
     {
         $this->rows[] = $row;
     }

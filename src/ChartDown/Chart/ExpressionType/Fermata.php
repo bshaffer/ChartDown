@@ -1,9 +1,11 @@
 <?php
 
+namespace ChartDown\Chart\ExpressionType;
+
 /**
 * Fermata Expression
 */
-class ChartDown_Chart_ExpressionType_Fermata implements ChartDown_Chart_ExpressionTypeInterface
+class Fermata implements ExpressionTypeInterface
 {
     public function getSymbol()
     {

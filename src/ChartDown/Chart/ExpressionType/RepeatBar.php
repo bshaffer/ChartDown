@@ -1,9 +1,11 @@
 <?php
 
+namespace ChartDown\Chart\ExpressionType;
+
 /**
 * Repeat Bar Expression
 */
-class ChartDown_Chart_ExpressionType_RepeatBar implements ChartDown_Chart_ExpressionTypeInterface
+class RepeatBar implements ExpressionTypeInterface
 {
     public function getSymbol()
     {

@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+namespace ChartDown\Chart;
 
 /**
  * Represents a chart key.
@@ -15,7 +16,7 @@
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart_Tempo
+class Tempo
 {
   protected $tempo;
 

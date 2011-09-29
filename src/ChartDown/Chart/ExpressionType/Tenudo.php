@@ -1,9 +1,11 @@
 <?php
 
+namespace ChartDown\Chart\ExpressionType;
+
 /**
 * Tenudo Expression
 */
-class ChartDown_Chart_ExpressionType_Tenudo implements ChartDown_Chart_ExpressionTypeInterface
+class Tenudo implements ExpressionTypeInterface
 {
     public function getSymbol()
     {

@@ -1,6 +1,8 @@
 <?php
 
-interface ChartDown_Chart_Rhythm_FixedMeterInterface
+namespace ChartDown\Chart\Rhythm;
+
+interface FixedMeterInterface
 {
     public function getFixedMeter();
 }

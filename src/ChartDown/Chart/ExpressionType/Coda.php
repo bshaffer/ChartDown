@@ -1,9 +1,13 @@
 <?php
 
+namespace ChartDown\Chart\ExpressionType;
+
+use ChartDown\Chart\Rhythm\RelativeMeterInterface;
+
 /**
 * Coda Expression
 */
-class ChartDown_Chart_ExpressionType_Coda implements ChartDown_Chart_ExpressionTypeInterface, ChartDown_Chart_Rhythm_RelativeMeterInterface
+class Coda implements ExpressionTypeInterface, RelativeMeterInterface
 {
     public function getSymbol()
     {

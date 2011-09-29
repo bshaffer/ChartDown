@@ -1,6 +1,8 @@
 <?php
 
-interface ChartDown_Chart_Rhythm_RelativeMeterInterface
+namespace ChartDown\Chart\Rhythm;
+
+interface RelativeMeterInterface
 {
     public function getRelativeMeter();
 }

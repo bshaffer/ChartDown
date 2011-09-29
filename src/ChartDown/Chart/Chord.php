@@ -8,6 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+ 
+namespace ChartDown\Chart;
+
+use ChartDown\Chart\Rhythm\RelativeMeterInterface;
 
 /**
  * Represents a chart chord.
@@ -15,7 +19,7 @@
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart_Chord implements ChartDown_Chart_Rhythm_RelativeMeterInterface
+class Chord implements RelativeMeterInterface
 {
     const EXTENSION_REGEX = '/(b2|2|6|7|M7|b9|9|#9|#11|b13|13|sus)/';
 
@@ -52,7 +56,7 @@ class ChartDown_Chart_Chord implements ChartDown_Chart_Rhythm_RelativeMeterInter
             $bass = substr($chord, $pos + 1);
             $chord = substr($chord, 0, $pos);
 
-            $this->bass = new ChartDown_Chart_Note($bass);
+            $this->bass = new Note($bass);
         }
 
         // Chord Value
@@ -69,30 +73,30 @@ class ChartDown_Chart_Chord implements ChartDown_Chart_Rhythm_RelativeMeterInter
         if (strlen($chord) > $i) {
             // Accidental
             if (preg_match('/[b#]/', $chord[$i])) {
-                $this->accidental = $chord[$i] == 'b' ? ChartDown::FLAT : ChartDown::SHARP;
+                $this->accidental = $chord[$i] == 'b' ? \ChartDown::FLAT : \ChartDown::SHARP;
                 $root .= $chord[$i];
                 $i++;
             }
         }
 
-        $this->root = new ChartDown_Chart_Note($root);
+        $this->root = new Note($root);
 
         if (strlen($chord) > $i) {
             // Minor / Diminished / Augmented
             if (preg_match('/[+m-]/', $chord[$i])) {
-                $this->interval = $chord[$i] === '+' ? ChartDown::AUGMENTED : ChartDown::MINOR;
+                $this->interval = $chord[$i] === '+' ? \ChartDown::AUGMENTED : \ChartDown::MINOR;
                 $this->intervalText = $chord[$i];
                 $i++;
             } elseif (strpos(strtolower(substr($chord, $i)), 'dim') === 0) {
-                $this->interval = ChartDown::DIMINISHED;
+                $this->interval = \ChartDown::DIMINISHED;
                 $this->intervalText = 'dim';
                 $i+=3;
             } elseif (strpos(substr($chord, $i), '°') === 0) {
-                $this->interval = ChartDown::DIMINISHED;
+                $this->interval = \ChartDown::DIMINISHED;
                 $this->intervalText = '°';
                 $i+=1;            
             } else {
-                $this->interval = ChartDown::MAJOR;
+                $this->interval = \ChartDown::MAJOR;
             }
 
             $chord = substr($chord, $i);
@@ -162,7 +166,7 @@ class ChartDown_Chart_Chord implements ChartDown_Chart_Rhythm_RelativeMeterInter
         return $this->notations;
     }
 
-    public function addExpression(ChartDown_Chart_Expression $expression)
+    public function addExpression(Expression $expression)
     {
         $this->expressions[] = $expression;
     }

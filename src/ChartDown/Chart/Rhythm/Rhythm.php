@@ -1,6 +1,8 @@
 <?php
 
-class ChartDown_Chart_Rhythm implements ChartDown_Chart_Rhythm_FixedMeterInterface, ChartDown_Chart_Rhythm_RelativeMeterInterface
+namespace ChartDown\Chart\Rhythm;
+
+class Rhythm implements FixedMeterInterface, RelativeMeterInterface
 {
     public function __construct($rhythm = null)
     {

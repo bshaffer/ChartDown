@@ -1,9 +1,11 @@
 <?php
 
+namespace ChartDown\Chart;
+
 /**
 *
 */
-class ChartDown_Chart_Note
+class Note
 {
     protected $note;
     protected $letter;
