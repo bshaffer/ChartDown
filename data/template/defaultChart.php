@@ -3,14 +3,14 @@
 <head>
   <title><?php echo $chart->getTitle() ?> | <?php echo $chart->getAuthor() ?></title>
   <script type="text/javascript">
-    var imagepath = "<?php echo dirname(__FILE__) ?>/../web/images";
+    var assetpath = "<?php $assetpath = isset($assetpath) ? $assetpath : dirname(__FILE__).'/../web'; echo $assetpath; ?>";
   </script>
 
-  <link href="file://<?php echo dirname(__FILE__) ?>/../web/css/chart.css" media="screen" rel="stylesheet" type="text/css" />
-  <script src="file://<?php echo dirname(__FILE__) ?>/../web/js/jquery-1.6.min.js" type="text/javascript"></script>
-  <script src="file://<?php echo dirname(__FILE__) ?>/../web/js/raphael-min.js" type="text/javascript"></script>
-  <script src="file://<?php echo dirname(__FILE__) ?>/../web/js/raphael.chart.js" type="text/javascript"></script>
-  <script src="file://<?php echo dirname(__FILE__) ?>/../web/js/chart.js" type="text/javascript"></script>
+  <link href="file://<?php echo $assetpath ?>/css/chart.css" media="screen" rel="stylesheet" type="text/css" />
+  <script src="file://<?php echo $assetpath ?>/js/jquery-1.6.min.js" type="text/javascript"></script>
+  <script src="file://<?php echo $assetpath ?>/js/raphael-min.js" type="text/javascript"></script>
+  <script src="file://<?php echo $assetpath ?>/js/raphael.chart.js" type="text/javascript"></script>
+  <script src="file://<?php echo $assetpath ?>/js/chart.js" type="text/javascript"></script>
 </head>
 <body>
   <div id="chart">

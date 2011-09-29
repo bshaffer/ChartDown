@@ -2,7 +2,7 @@ Raphael.fn.coda = function (chord) {
 	x = $(chord).offset().left - ($(chord).width()/2); // center coda directly above chord
 	y = $(chord).offset().top;
 
-	return this.image(imagepath+"/coda.png", x, y, 30, 30)
+	return this.image(assetpath+"/images/coda.png", x, y, 30, 30)
 		.translate(0, -30);	
 };
 
@@ -10,14 +10,14 @@ Raphael.fn.segno = function (chord) {
 	x = $(chord).offset().left;
 	y = $(chord).offset().top;
 	
-	return this.image(imagepath+"/segno.png", x, y, 30, 30)
+	return this.image(assetpath+"/images/segno.png", x, y, 30, 30)
 		.translate(0, -30);	
 };
 
 Raphael.fn.fermata = function (chord) {
 	x = $(chord).offset().left;
 	y = $(chord).offset().top;
-	return this.image(imagepath+"/fermata.png", x, y-10, 15, 10);	
+	return this.image(assetpath+"/images/fermata.png", x, y-10, 15, 10);	
 };
 
 Raphael.fn.accent = function (chord) {
