@@ -51,22 +51,22 @@ class Chord implements RelativeMeterInterface
         // remember original text
         $this->text = $chord;
 
-        // Bass Note
-        if (false !== $pos = strpos($chord, '/')) {
-            $bass = substr($chord, $pos + 1);
-            $chord = substr($chord, 0, $pos);
-
-            $this->bass = new Note($bass);
-        }
-
         // Chord Value
         if (!preg_match('/[A-G1-7]/', strtoupper($chord[0]))) {
-            // Add this value as text
-            $this->setText($chord);
             return;
         }
 
         $root = $chord[0];
+
+        // Bass Note
+        if (false !== $pos = strpos($chord, '/')) {
+            $bass = substr($chord, $pos + 1);
+
+            if (preg_match('/^[A-G1-7][b#]?$/', $bass)) {
+                $this->bass = new Note($bass);
+                $chord = substr($chord, 0, $pos);
+            }
+        }
 
         $i = 1;
 

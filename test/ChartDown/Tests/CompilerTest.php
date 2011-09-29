@@ -64,7 +64,7 @@ class ChartDown_Tests_CompilerTest extends PHPUnit_Framework_TestCase
     
     $source = $this->compiler->getSource();
 
-    $this->assertContains('->setTimeSignature(new ChartDown_Chart_TimeSignature(6, 5))', $source);
+    $this->assertContains('->setTimeSignature(new TimeSignature(6, 5))', $source);
   }
   
   public function testCompileMetadataWithKeySignature()
@@ -83,7 +83,7 @@ class ChartDown_Tests_CompilerTest extends PHPUnit_Framework_TestCase
     
     $source = $this->compiler->getSource();
 
-    $this->assertContains('->setKey(new ChartDown_Chart_Key("G"))', $source);
+    $this->assertContains('->setKey(new Key("G"))', $source);
   }
   
   public function testCompileChordAndTextAndMetadataNodes()

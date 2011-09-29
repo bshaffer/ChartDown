@@ -17,7 +17,7 @@ namespace ChartDown\Chart;
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class Row implements IteratorAggregate
+class Row implements \IteratorAggregate
 {
     protected $bars;
 
@@ -75,6 +75,6 @@ class Row implements IteratorAggregate
 
     public function getIterator()
     {
-        return new ArrayIterator($this->bars);
+        return new \ArrayIterator($this->bars);
     }
 }

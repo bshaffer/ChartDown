@@ -1,12 +1,14 @@
 <?php
 
+use ChartDown\Chart\Chord;
+
 class ChartDown_Tests_Chart_ChordTest extends PHPUnit_Framework_TestCase
 {
   public function testParseBasicChord()
   {
-    $chord1 = new ChartDown_Chart_Chord('G');
-    $chord2 = new ChartDown_Chart_Chord('Bb');
-    $chord3 = new ChartDown_Chart_Chord('F#');
+    $chord1 = new Chord('G');
+    $chord2 = new Chord('Bb');
+    $chord3 = new Chord('F#');
 
     $this->assertEquals($chord1->getRoot(), ChartDown::G);
 
@@ -17,7 +19,7 @@ class ChartDown_Tests_Chart_ChordTest extends PHPUnit_Framework_TestCase
 
   public function testParseChordWithBass()
   {
-    $chord1 = new ChartDown_Chart_Chord('G/B');
+    $chord1 = new Chord('G/B');
 
     $this->assertEquals($chord1->getRoot(), ChartDown::G);
     $this->assertEquals($chord1->getBass(), ChartDown::B);
@@ -25,7 +27,7 @@ class ChartDown_Tests_Chart_ChordTest extends PHPUnit_Framework_TestCase
 
   public function testParseMinorChord()
   {
-    $chord1 = new ChartDown_Chart_Chord('Gm');
+    $chord1 = new Chord('Gm');
 
     $this->assertEquals($chord1->getRoot(), ChartDown::G);
     $this->assertEquals($chord1->getInterval(), ChartDown::MINOR);
@@ -33,7 +35,7 @@ class ChartDown_Tests_Chart_ChordTest extends PHPUnit_Framework_TestCase
 
   public function testParseDiminishedChord()
   {
-    $chord1 = new ChartDown_Chart_Chord('F#dim');
+    $chord1 = new Chord('F#dim');
 
     $this->assertEquals($chord1->getRoot(), ChartDown::F_SHARP);
     $this->assertEquals($chord1->getInterval(), ChartDown::DIMINISHED);
@@ -41,7 +43,7 @@ class ChartDown_Tests_Chart_ChordTest extends PHPUnit_Framework_TestCase
 
   public function testParseAugmentedChord()
   {
-    $chord1 = new ChartDown_Chart_Chord('A#+');
+    $chord1 = new Chord('A#+');
 
     $this->assertEquals($chord1->getRoot(), ChartDown::A_SHARP);
     $this->assertEquals($chord1->getInterval(), ChartDown::AUGMENTED);
@@ -49,7 +51,7 @@ class ChartDown_Tests_Chart_ChordTest extends PHPUnit_Framework_TestCase
 
   public function testParseChordWithExtension()
   {
-    $chord1 = new ChartDown_Chart_Chord('C7');
+    $chord1 = new Chord('C7');
 
     $this->assertEquals($chord1->getRoot(), ChartDown::C);
     $this->assertEquals($chord1->getExtensions(), array('7'));
@@ -57,7 +59,7 @@ class ChartDown_Tests_Chart_ChordTest extends PHPUnit_Framework_TestCase
 
   public function testParseChordWithMultipleExtensions()
   {
-    $chord1 = new ChartDown_Chart_Chord('D7b13');
+    $chord1 = new Chord('D7b13');
 
     $this->assertEquals($chord1->getRoot(), ChartDown::D);
     $this->assertEquals($chord1->getExtensions(), array('7', 'b13'));
@@ -65,7 +67,7 @@ class ChartDown_Tests_Chart_ChordTest extends PHPUnit_Framework_TestCase
 
   public function testParseComplexChord()
   {
-    $chord1 = new ChartDown_Chart_Chord('Dbm7#11/A#');
+    $chord1 = new Chord('Dbm7#11/A#');
 
     $this->assertEquals($chord1->getRoot(), ChartDown::D_FLAT);
     $this->assertEquals($chord1->getInterval(), ChartDown::MINOR);
@@ -73,27 +75,21 @@ class ChartDown_Tests_Chart_ChordTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($chord1->getBass(), ChartDown::A_SHARP);
   }
 
-  /**
-  * @expectedException InvalidArgumentException
-  */
   public function testParseInvalidNote()
   {
-    $note = new ChartDown_Chart_Chord('H#');
+    $note = new Chord('H#');
+    $this->assertEquals($note->getText(), 'H#');
   }
 
-  /**
-  * @expectedException InvalidArgumentException
-  */
   public function testParseInvalidExtension()
   {
-    $note = new ChartDown_Chart_Chord('H#14');
+    $note = new Chord('H#14');
+    $this->assertEquals($note->getText(), 'H#14');
   }
 
-  /**
-  * @expectedException InvalidArgumentException
-  */
   public function testParseInvalidBass()
   {
-    $note = new ChartDown_Chart_Chord('Bm/H');
+    $note = new Chord('Bm/H');
+    $this->assertEquals($note->getText(), 'Bm/H');
   }
 }

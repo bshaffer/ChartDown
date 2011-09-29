@@ -1,12 +1,14 @@
 <?php
 
+use ChartDown\Chart\Note;
+
 class ChartDown_Tests_Chart_NoteTest extends PHPUnit_Framework_TestCase
 {
   public function testParseNote()
   {
-    $note1 = new ChartDown_Chart_Note('G');
-    $note2 = new ChartDown_Chart_Note('Bb');
-    $note3 = new ChartDown_Chart_Note('F#');
+    $note1 = new Note('G');
+    $note2 = new Note('Bb');
+    $note3 = new Note('F#');
     
     $this->assertEquals($note1->getLetter(), ChartDown::G);
     $this->assertEquals($note1->getAccidental(), null);
@@ -23,7 +25,7 @@ class ChartDown_Tests_Chart_NoteTest extends PHPUnit_Framework_TestCase
   */
   public function testParseInvalidNote()
   {
-    $note = new ChartDown_Chart_Note('H#');
+    $note = new Note('H#');
   }
 
   /**
@@ -31,7 +33,7 @@ class ChartDown_Tests_Chart_NoteTest extends PHPUnit_Framework_TestCase
   */
   public function testParseInvalidAccidental()
   {
-    $note = new ChartDown_Chart_Note('Bm');
+    $note = new Note('Bm');
   }
 
   /**
@@ -39,6 +41,6 @@ class ChartDown_Tests_Chart_NoteTest extends PHPUnit_Framework_TestCase
   */
   public function testParseInvalidLength()
   {
-    $note = new ChartDown_Chart_Note('Bbm');
+    $note = new Note('Bbm');
   }
 }

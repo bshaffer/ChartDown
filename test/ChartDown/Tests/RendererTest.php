@@ -31,7 +31,7 @@ class ChartDown_Tests_RendererTest extends PHPUnit_Framework_TestCase
   }
 }
 
-class ChartDown_Chart_Test extends ChartDown_Chart
+class ChartDown_Chart_Test extends ChartDown\Chart\Chart
 {
   public function setup()
   {

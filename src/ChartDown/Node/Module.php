@@ -83,7 +83,7 @@ class ChartDown_Node_Module extends ChartDown_Node
                 ->subcompile($this->getNode('parent'))
                 ->raw(";\n")
                 ->write("if (!\$this->parent")
-                ->raw(" instanceof ChartDown_Chart) {\n")
+                ->raw(" instanceof Chart) {\n")
                 ->indent()
                 ->write("\$this->parent = \$this->env->loadChart(\$this->parent);\n")
                 ->outdent()

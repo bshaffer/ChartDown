@@ -3,7 +3,7 @@
 namespace ChartDown\Chart;
 use ChartDown\Chart\Rhythm\RelativeMeterInterface;
 
-class ChordGroup implements IteratorAggregate, RelativeMeterInterface
+class ChordGroup implements RelativeMeterInterface, \IteratorAggregate
 {
     private $chords = array();
     private $expressions = array();
@@ -42,7 +42,7 @@ class ChordGroup implements IteratorAggregate, RelativeMeterInterface
 
     public function getIterator()
     {
-        return new ArrayIterator($this->chords);
+        return new \ArrayIterator($this->chords);
     }
     
     public function addRhythm($rhythm)

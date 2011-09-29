@@ -1,53 +1,56 @@
 <?php
 
+use ChartDown\Chart\ExpressionType;
+use ChartDown\Chart\ExpressionType\ExpressionTypeInterface;
+
 class ChartDown_Tests_Chart_ExpressionTest extends PHPUnit_Framework_TestCase
 {
     public function testBasicExpressions()
     {
-        $this->assertMatches('^', new ChartDown_Chart_ExpressionType_Accent());
-        $this->assertMatches('>', new ChartDown_Chart_ExpressionType_Anticipation());
-        $this->assertMatches('*', new ChartDown_Chart_ExpressionType_Diamond());
-        $this->assertMatches('!', new ChartDown_Chart_ExpressionType_Fermata());
-        $this->assertMatches('_', new ChartDown_Chart_ExpressionType_Tenudo());
+        $this->assertMatches('^', new ExpressionType\Accent());
+        $this->assertMatches('>', new ExpressionType\Anticipation());
+        $this->assertMatches('*', new ExpressionType\Diamond());
+        $this->assertMatches('!', new ExpressionType\Fermata());
+        $this->assertMatches('_', new ExpressionType\Tenudo());
 
-        $this->assertMatches('&', new ChartDown_Chart_ExpressionType_Segno());
-        $this->assertMatches('$', new ChartDown_Chart_ExpressionType_Coda());
-        $this->assertMatches('~', new ChartDown_Chart_ExpressionType_Tie());
+        $this->assertMatches('&', new ExpressionType\Segno());
+        $this->assertMatches('$', new ExpressionType\Coda());
+        $this->assertMatches('~', new ExpressionType\Tie());
     }
 
     public function testParseRepeatExpressions()
     {
-        $this->assertMatches('%', new ChartDown_Chart_ExpressionType_RepeatBar());
-        $this->assertMatches('{1}', new ChartDown_Chart_ExpressionType_RepeatEnding());
-        $this->assertMatches('{2}', new ChartDown_Chart_ExpressionType_RepeatEnding());
-        $this->assertMatches('{:', new ChartDown_Chart_ExpressionType_RepeatStart());
-        $this->assertMatches(':}', new ChartDown_Chart_ExpressionType_RepeatFinish());
+        $this->assertMatches('%', new ExpressionType\RepeatBar());
+        $this->assertMatches('{1}', new ExpressionType\RepeatEnding());
+        $this->assertMatches('{2}', new ExpressionType\RepeatEnding());
+        $this->assertMatches('{:', new ExpressionType\RepeatStart());
+        $this->assertMatches(':}', new ExpressionType\RepeatFinish());
 
-        $this->assertNoMatch('{#}', new ChartDown_Chart_ExpressionType_RepeatEnding());
+        $this->assertNoMatch('{#}', new ExpressionType\RepeatEnding());
     }
 
     public function testCombiningMultipleValidExpressions()
     {
         $this->assertGroupMatches('^*', array(
-            new ChartDown_Chart_ExpressionType_Accent(),
-            new ChartDown_Chart_ExpressionType_Diamond(),
+            new ExpressionType\Accent(),
+            new ExpressionType\Diamond(),
         ));
 
         $this->assertGroupMatches('_^>!*', array(
-            new ChartDown_Chart_ExpressionType_Accent(),
-            new ChartDown_Chart_ExpressionType_Anticipation(),
-            new ChartDown_Chart_ExpressionType_Diamond(),
-            new ChartDown_Chart_ExpressionType_Fermata(),
-            new ChartDown_Chart_ExpressionType_Tenudo(),
+            new ExpressionType\Accent(),
+            new ExpressionType\Anticipation(),
+            new ExpressionType\Diamond(),
+            new ExpressionType\Fermata(),
+            new ExpressionType\Tenudo(),
         ));
     }
 
-    private function assertMatches($symbol, ChartDown_Chart_ExpressionTypeInterface $type)
+    private function assertMatches($symbol, ExpressionTypeInterface $type)
     {
         $this->assertEquals(1, preg_match(sprintf('/%s/', $type->getRegex()), $symbol));
     }
 
-    private function assertNoMatch($symbol, ChartDown_Chart_ExpressionTypeInterface $type)
+    private function assertNoMatch($symbol, ExpressionTypeInterface $type)
     {
         $this->assertEquals(0, preg_match(sprintf('/%s/', $type->getRegex()), $symbol));
     }

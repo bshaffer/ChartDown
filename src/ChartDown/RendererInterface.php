@@ -20,7 +20,7 @@ interface ChartDown_RendererInterface
     /**
      * Renders the chart to the appropriate medium
      *
-     * @param ChartDown_Chart $chart - the chart to render
+     * @param mixed - a ChartDown\Chart\Chart instance to render, or other medium (ex: HTML for PDF Renderer)
      */
     function render($chart);
 }

@@ -48,7 +48,7 @@ class ChartDown_Environment
     {
         $options = array_merge(array(
             'debug'               => false,
-            'base_chart_class'    => 'ChartDown_Chart',
+            'base_chart_class'    => 'ChartDown\Chart\Chart',
         ), $options);
 
         $this->extensions         = array(
@@ -61,18 +61,18 @@ class ChartDown_Environment
         $this->loader             = new ChartDown_Loader_String();
         
         $this->expressionTypes = array(
-            'Accent'           => new ChartDown_Chart_ExpressionType_Accent(),
-            'Anticipation'     => new ChartDown_Chart_ExpressionType_Anticipation(),
-            'Coda'             => new ChartDown_Chart_ExpressionType_Coda(),
-            'Diamond'          => new ChartDown_Chart_ExpressionType_Diamond(),
-            'Fermata'          => new ChartDown_Chart_ExpressionType_Fermata(),
-            'RepeatBar'        => new ChartDown_Chart_ExpressionType_RepeatBar(),
-            'RepeatEnding'     => new ChartDown_Chart_ExpressionType_RepeatEnding(),
-            'RepeatFinish'     => new ChartDown_Chart_ExpressionType_RepeatFinish(),
-            'RepeatStart'      => new ChartDown_Chart_ExpressionType_RepeatStart(),
-            'Segno'            => new ChartDown_Chart_ExpressionType_Segno(),
-            'Tenudo'           => new ChartDown_Chart_ExpressionType_Tenudo(),
-            'Tie'              => new ChartDown_Chart_ExpressionType_Tie(),
+            'Accent'           => new \ChartDown\Chart\ExpressionType\Accent(),
+            'Anticipation'     => new \ChartDown\Chart\ExpressionType\Anticipation(),
+            'Coda'             => new \ChartDown\Chart\ExpressionType\Coda(),
+            'Diamond'          => new \ChartDown\Chart\ExpressionType\Diamond(),
+            'Fermata'          => new \ChartDown\Chart\ExpressionType\Fermata(),
+            'RepeatBar'        => new \ChartDown\Chart\ExpressionType\RepeatBar(),
+            'RepeatEnding'     => new \ChartDown\Chart\ExpressionType\RepeatEnding(),
+            'RepeatFinish'     => new \ChartDown\Chart\ExpressionType\RepeatFinish(),
+            'RepeatStart'      => new \ChartDown\Chart\ExpressionType\RepeatStart(),
+            'Segno'            => new \ChartDown\Chart\ExpressionType\Segno(),
+            'Tenudo'           => new \ChartDown\Chart\ExpressionType\Tenudo(),
+            'Tie'              => new \ChartDown\Chart\ExpressionType\Tie(),
         );
     }
 
@@ -155,7 +155,7 @@ class ChartDown_Environment
      *
      * @param  string  $name  The template name
      *
-     * @return ChartDown_ChartInterface A template instance representing the given template name
+     * @return ChartDown\Chart\Chart A template instance representing the given template name
      */
     public function loadChart($name)
     {

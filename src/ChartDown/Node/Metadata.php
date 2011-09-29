@@ -69,7 +69,7 @@ class ChartDown_Node_Metadata extends ChartDown_Node implements ChartDown_NodeOu
               $signature[] = 4;
             }
 
-            $value = sprintf('new ChartDown_Chart_TimeSignature(%s, %s)', $signature[0], $signature[1]);
+            $value = sprintf('new TimeSignature(%s, %s)', $signature[0], $signature[1]);
             $compiler
               ->raw($value)
             ;
@@ -81,7 +81,7 @@ class ChartDown_Node_Metadata extends ChartDown_Node implements ChartDown_NodeOu
           case 'key signature':
 
             $compiler
-              ->raw('new ChartDown_Chart_Key(')
+              ->raw('new Key(')
               ->string($value)
               ->raw(')')
             ;
@@ -91,7 +91,7 @@ class ChartDown_Node_Metadata extends ChartDown_Node implements ChartDown_NodeOu
           case 'tempo':
 
             $compiler
-              ->raw('new ChartDown_Chart_Tempo(')
+              ->raw('new Tempo(')
               ->string($value)
               ->raw(')')
             ;

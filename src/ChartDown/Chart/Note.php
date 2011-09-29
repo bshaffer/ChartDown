@@ -44,7 +44,7 @@ class Note
     protected function parseNote($note)
     {
         if (!preg_match('/[A-G1-7]/', strtoupper($note[0]))) {
-          throw new InvalidArgumentException(sprintf("'%s' is not a valid note", $note));
+          throw new \InvalidArgumentException(sprintf("'%s' is not a valid note", $note));
         }
 
         $this->letter = $note[0];
@@ -52,12 +52,12 @@ class Note
         if (strlen($note) == 2) {
             // Accidental
             if ($note[1] && !preg_match('/[b#]/', $note[1])) {
-              throw new InvalidArgumentException(sprintf("'%s' is not a valid accidental", $note[1]));
+              throw new \InvalidArgumentException(sprintf("'%s' is not a valid accidental", $note[1]));
             }
 
-            $this->accidental = $note[1] == 'b' ? ChartDown::FLAT : ChartDown::SHARP;
+            $this->accidental = $note[1] == 'b' ? \ChartDown::FLAT : \ChartDown::SHARP;
         } elseif (strlen($note) > 2) {
-            throw new InvalidArgumentException(sprintf("Cannot parse '%s' as part of a note", substr($note, 2)));
+            throw new \InvalidArgumentException(sprintf("Cannot parse '%s' as part of a note", substr($note, 2)));
         } else {
             $this->accidental = null;
         }

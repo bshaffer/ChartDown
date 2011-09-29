@@ -1,4 +1,4 @@
-<?php if ($chord instanceof ChartDown_Chart_ChordGroup): $group = $chord ?>
+<?php if ($chord instanceof \ChartDown\Chart\ChordGroup): $group = $chord ?>
     <td style="width:<?php echo $percent ?>%" class="chord-group">
         <table style="width:100%">
             <tr>
@@ -9,10 +9,10 @@
             </tr>
         </table>
     </td>
-<?php elseif ($chord instanceof ChartDown_Chart_Rhythm_RelativeMeterInterface): ?>
+<?php elseif ($chord instanceof \ChartDown\Chart\Rhythm\RelativeMeterInterface): ?>
     <td style="width:<?php echo $percent ?>%">
         <span class="<?php echo $renderer->renderChartObjectClass($chord) ?>" <?php echo $renderer->renderChartObjectAttributes($chord) ?>>
-            <?php if ($chord instanceof ChartDown_Chart_Chord): ?>
+            <?php if ($chord instanceof \ChartDown\Chart\Chord): ?>
                 <?php if ($chord->getRootNote()): ?>
                     <?php echo $chord->getRoot().$chord->getIntervalText() ?><?php if ($rest = $chord->getRest()): ?><span class="chord-extensions"><?php echo $chord->getRest() ?></span><?php endif ?><?php echo $chord->getBass() ? sprintf('/%s', $chord->getBass()) : '' ?>
                 <?php else: ?>

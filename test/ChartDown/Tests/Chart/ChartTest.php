@@ -1,10 +1,12 @@
 <?php
 
+use ChartDown\Chart\Chart;
+
 class ChartDown_Tests_Chart_ChartTest extends PHPUnit_Framework_TestCase
 {
     public function testAddTopAndBottomText()
     {
-        $chart = new ChartDown_Chart();
+        $chart = new Chart();
         $chart
             ->addBar()
                 ->setText('h1. Chorus')
@@ -52,7 +54,7 @@ class ChartDown_Tests_Chart_ChartTest extends PHPUnit_Framework_TestCase
     
     public function testMultilineTopText()
     {
-        $chart = new ChartDown_Chart();
+        $chart = new Chart();
         $chart
             ->addBar()
                 ->setText('h1. Chorus')
@@ -73,7 +75,7 @@ class ChartDown_Tests_Chart_ChartTest extends PHPUnit_Framework_TestCase
     
     public function testTextile()
     {
-        $chart = new ChartDown_Chart();
+        $chart = new Chart();
         $chart
             ->addBar()
                 ->setText('h1. Chorus')

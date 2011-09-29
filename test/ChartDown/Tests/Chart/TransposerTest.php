@@ -1,15 +1,19 @@
 <?php
 
+use ChartDown\Chart\Transposer;
+use ChartDown\Chart\Note;
+use ChartDown\Chart\Chord;
+
 class ChartDown_Tests_Chart_TransposerTest extends PHPUnit_Framework_TestCase
 {
   public function setUp()
   {
-    $this->transposer = new ChartDown_Chart_Transposer();
+    $this->transposer = new Transposer();
   }
 
   public function testTransposeNote()
   {
-    $note = new ChartDown_Chart_Note('Bb');
+    $note = new Note('Bb');
 
     $this->transposer->transposeNote($note, 2);
     
@@ -19,7 +23,7 @@ class ChartDown_Tests_Chart_TransposerTest extends PHPUnit_Framework_TestCase
 
   public function testTransposeNoteRollover()
   {
-    $note = new ChartDown_Chart_Note('G');
+    $note = new Note('G');
 
     $this->transposer->transposeNote($note, 3);
     
@@ -29,7 +33,7 @@ class ChartDown_Tests_Chart_TransposerTest extends PHPUnit_Framework_TestCase
 
   public function testTransposeBasicChord()
   {
-    $chord = new ChartDown_Chart_Chord('Bbm');
+    $chord = new Chord('Bbm');
 
     $this->transposer->transposeChord($chord, 2);
     
@@ -39,7 +43,7 @@ class ChartDown_Tests_Chart_TransposerTest extends PHPUnit_Framework_TestCase
 
   public function testTransposeChordWithBass()
   {
-    $chord = new ChartDown_Chart_Chord('Cm/Eb');
+    $chord = new Chord('Cm/Eb');
 
     $this->transposer->transposeChord($chord, -2);
     

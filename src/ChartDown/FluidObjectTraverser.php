@@ -1,6 +1,8 @@
 <?php
 
-class ChartDown_FluidObjectTraverser
+namespace ChartDown;
+
+class FluidObjectTraverser
 {
     protected $subject;
     protected $invoker;
@@ -19,7 +21,7 @@ class ChartDown_FluidObjectTraverser
             return $this;
         }
         
-        if ($ret instanceof ChartDown_FluidObjectTraverser) {
+        if ($ret instanceof self) {
             // we are drilling down deeper.  Set this traverser as the envoker
             $ret->setInvoker($this);
         }

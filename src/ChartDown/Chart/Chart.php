@@ -9,13 +9,15 @@
  * file that was distributed with this source code.
  */
 
+namespace ChartDown\Chart;
+
 /**
  * Represents a chart.
  *
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Chart implements IteratorAggregate
+class Chart implements \IteratorAggregate
 {
     protected $title;
     protected $Author;
@@ -40,13 +42,13 @@ class ChartDown_Chart implements IteratorAggregate
     public function getTimeSignature()
     {
         if ($this->timeSignature === null) {
-          $this->timeSignature = new ChartDown_Chart_TimeSignature(4, 4);
+          $this->timeSignature = new TimeSignature(4, 4);
         }
 
         return $this->timeSignature;
     }
 
-    public function setTimeSignature(ChartDown_Chart_TimeSignature $timeSignature)
+    public function setTimeSignature(TimeSignature $timeSignature)
     {
         $this->timeSignature = $timeSignature;
     }
@@ -54,13 +56,13 @@ class ChartDown_Chart implements IteratorAggregate
     public function getKey()
     {
         if ($this->key === null) {
-          $this->key = new ChartDown_Chart_Key();
+          $this->key = new Key();
         }
 
         return $this->key;
     }
 
-    public function setKey(ChartDown_Chart_Key $key)
+    public function setKey(Key $key)
     {
         $this->key = $key;
     }
@@ -68,13 +70,13 @@ class ChartDown_Chart implements IteratorAggregate
     public function getTempo()
     {
         if ($this->tempo === null) {
-          $this->tempo = new ChartDown_Chart_Tempo();
+          $this->tempo = new Tempo();
         }
 
         return $this->tempo;
     }
 
-    public function setTempo(ChartDown_Chart_Tempo $tempo)
+    public function setTempo(Tempo $tempo)
     {
         $this->tempo = $tempo;
     }
@@ -109,14 +111,14 @@ class ChartDown_Chart implements IteratorAggregate
         $this->Author = $Author;
     }
 
-    public function addBar(ChartDown_Chart_Bar $bar = null)
+    public function addBar(Bar $bar = null)
     {
         if (is_null($bar)) {
-          $bar = new ChartDown_Chart_Bar();
+          $bar = new Bar();
         }
         $this->bars[] = $bar;
         
-        return new ChartDown_FluidObjectTraverser($bar, $this);
+        return new \ChartDown\FluidObjectTraverser($bar, $this);
     }
 
     public function setBars($bars)
@@ -135,7 +137,7 @@ class ChartDown_Chart implements IteratorAggregate
         $rows = array();
         foreach ($this->bars as $bar) {
             if (is_null($bar)) {
-                $rows[] = new ChartDown_Chart_Row($bars);
+                $rows[] = new Row($bars);
                 $bars = array();
             } else {
                 $bars[] = $bar;
@@ -143,7 +145,7 @@ class ChartDown_Chart implements IteratorAggregate
         }
         
         if (count($bars) > 0) {
-            $rows[] = new ChartDown_Chart_Row($bars);
+            $rows[] = new Row($bars);
         }
         
         return $rows;
@@ -156,6 +158,6 @@ class ChartDown_Chart implements IteratorAggregate
 
     public function getIterator()
     {
-        return new ArrayIterator($this->bars);
+        return new \ArrayIterator($this->bars);
     }
 }

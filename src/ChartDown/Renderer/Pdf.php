@@ -1,5 +1,8 @@
 <?php
 
+use ChartDown\Chart\Chart;
+use Knplabs\Snappy\Pdf;
+
 /**
 * 
 */
@@ -11,7 +14,7 @@ class ChartDown_Renderer_Pdf implements ChartDown_RendererInterface
   public function __construct($pdf = null, $renderer = null)
   {
     if (is_null($pdf)) {
-      $pdf = new Knplabs\Snappy\Pdf('wkhtmltopdf');
+      $pdf = new Pdf('wkhtmltopdf');
     }
     
     if (is_null($renderer)) {
@@ -24,7 +27,7 @@ class ChartDown_Renderer_Pdf implements ChartDown_RendererInterface
   
   public function render($chart, $path = null, $template = 'default')
   {
-    if ($chart instanceof ChartDown_Chart) {
+    if ($chart instanceof Chart) {
       $chart = $this->renderer->render($chart, null, $template);
     }
 

@@ -1,5 +1,12 @@
 <?php
 
+use ChartDown\Chart\Chart;
+use ChartDown\Chart\Row;
+use ChartDown\Chart\Bar;
+use ChartDown\Chart\Chord;
+use ChartDown\Chart\Expression;
+use ChartDown\Chart\Rhythm\Rhythm;
+
 /**
 *
 */
@@ -34,7 +41,7 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
     }
 
     // Methods called in the template
-    public function renderChordExpressions(ChartDown_Chart_Chord $chord)
+    public function renderChordExpressions(Chord $chord)
     {
         $classes = array();
         foreach ($chord->getExpressions() as $expression) {
@@ -45,9 +52,9 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
 
     public function renderChartObjectClass($object)
     {
-        if ($object instanceof ChartDown_Chart_Chord) {
+        if ($object instanceof Chord) {
             return 'chord'.$this->renderChordExpressions($object);
-        } else if ($object instanceof ChartDown_Chart_Rhythm) {
+        } else if ($object instanceof Rhythm) {
             return 'rhythm';
         }
         return $this->renderExpression($object);
@@ -55,7 +62,7 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
     
     public function renderChartObjectAttributes($object)
     {
-        if ($object instanceof ChartDown_Chart_Bar) {
+        if ($object instanceof Bar) {
             foreach ($object->getExpressions() as $expression) {
                 if (!is_null($value = $expression->getValue())) {
                     return sprintf('%s="%s"', str_replace(' ', '', $expression->getName()), $value);
@@ -67,14 +74,14 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
 
     public function renderChartObject($object)
     {
-        if ($object instanceof ChartDown_Chart_Chord) {
+        if ($object instanceof Chord) {
             return (string) $object;
         } 
         
         return '&nbsp;';
     }
     
-    public function renderBarExpressions(ChartDown_Chart_Bar $bar)
+    public function renderBarExpressions(Bar $bar)
     {
         $classes = array();
         foreach ($bar->getExpressions() as $expression) {
@@ -83,7 +90,7 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
         return count($classes) ? ' ' . implode(' ', $classes) : '';
     }
     
-    public function rowHasTopExpression(ChartDown_Chart_Row $row)
+    public function rowHasTopExpression(Row $row)
     {
         foreach ($row->getBars() as $bar) {
             foreach ($bar->getExpressions() as $expression) {
@@ -92,11 +99,11 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
                 }
             }
             foreach ($bar->getChords() as $chord) {
-                if ($chord instanceof ChartDown_Chart_Expression) {
+                if ($chord instanceof Expression) {
                     if ($chord->getPosition() == 'top' || $chord->getPosition() == 'bar-top') {
                         return true;
                     }
-                } elseif ($chord instanceof ChartDown_Chart_Chord) {
+                } elseif ($chord instanceof Chord) {
                     foreach ($chord->getExpressions() as $expression) {
                         if ($expression->getPosition() == 'top' || $expression->getPosition() == 'bar-top') {
                             return true;
@@ -108,12 +115,12 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
         return false;
     }
     
-    public function getBarsInRow(ChartDown_Chart_Row $row)
+    public function getBarsInRow(Row $row)
     {
         return count($row->getBars());
     }
     
-    public function getMaxBarsInChart(ChartDown_Chart $chart)
+    public function getMaxBarsInChart(Chart $chart)
     {
         $barCount = 0;
         foreach ($chart->getRows() as $row) {
@@ -122,7 +129,7 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
         return $barCount;
     }
     
-    public function getColspan(ChartDown_Chart_Row $row, ChartDown_Chart_Bar $bar, $position = 'top', $maxBars = null)
+    public function getColspan(Row $row, Bar $bar, $position = 'top', $maxBars = null)
     {
         $barsInRow = count($row->getBars());
         $maxBars   = is_null($maxBars) ? $barsInRow : $maxBars;
@@ -160,7 +167,7 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
         return $meterCount ? 100 * ($rhythm->getRelativeMeter() / $meterCount) : 100;
     }
 
-    public function renderExpression(ChartDown_Chart_Expression $expression)
+    public function renderExpression(Expression $expression)
     {
         return str_replace(' ', '-', $expression->getName());
     }

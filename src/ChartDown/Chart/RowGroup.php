@@ -17,7 +17,7 @@ namespace ChartDown\Chart;
  * @package chartdown
  * @author  Brent Shaffer <bshafs@gmail.com>
  */
-class RowGroup implements IteratorAggregate
+class RowGroup implements \IteratorAggregate
 {
     protected $rows;
 
@@ -38,6 +38,6 @@ class RowGroup implements IteratorAggregate
 
     public function getIterator()
     {
-        return new ArrayIterator($this->rows);
+        return new \ArrayIterator($this->rows);
     }
 }

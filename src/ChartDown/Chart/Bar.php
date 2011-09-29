@@ -127,7 +127,7 @@ class Bar extends ChordGroup
 
         $this->addChord($group);
 
-        return new ChartDown\FluidObjectTraverser($group, $this);
+        return new \ChartDown\FluidObjectTraverser($group, $this);
     }
 
     public function getExpressions()

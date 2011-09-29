@@ -47,7 +47,7 @@ class ChartDown_Node_Expression extends ChartDown_Node implements ChartDown_Node
 
         $compiler
             ->addDebugInfo($this)
-            ->write('->addExpression(new ChartDown_Chart_Expression(')
+            ->write('->addExpression(new Expression(')
             ->raw(sprintf('new %s(), ', get_class($expression)))
             ->raw(var_export($value, true))
             ->raw("))\n")
