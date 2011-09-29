@@ -1,5 +1,10 @@
 # ChartDown
 
+ChartDown is shorthand for chart writing.  
+
+The ChartDown codebase is based off the 
+[https://github.com/fabpot/Twig](Twig) templating library.
+
 ## Installation
 
  1. Download the package
@@ -19,12 +24,10 @@ Another renderer which may be useful is `ChartDown_Renderer_Html`, which renders
 HTML document which you can modify and then render to PDF, if tweaking is required.
 
     // render your chart into html...
-    $chartdown = new ChartDown_Environment();
-    $chart = $chartdown->loadChart(file_get_contents('my_chart.txt'));
     $renderer = new ChartDown_Renderer_Html();
-    file_put_contents('my_chart.html', $renderer->render($chart));
+    $renderer->render($chart, 'my_chart.html'); // saves to "my_chart.html"
     
-    /** do your customization here... **/
+    /** do manual customization here... **/
 
     // and then generate your PDF...
     $renderer = new ChartDown_Renderer_Pdf();
@@ -67,7 +70,7 @@ pages, and will be used only in the rare case where the default page break is no
  * **--** (double dash): Line Break
  * **==**: Page Break
  * **[**...**]**: Group two or more chords into one beat
- * **.**: Rhymic Separation (explained below)
+ * **.** (period): Rhymic Separation (explained below)
 
 Rhythm
 ------
@@ -115,7 +118,7 @@ Below is a more complex example of how text can be used to create complex chart 
     --
     text: | | | p>. *D.S. Al Coda*
     G C | D G $ | C G | G* :}
-    text: The poor man cried | when the food arrived | and it smelled like feet
+    text: The poor man cried | when the food arrived | because it smelled of feet
     
 In this example, not only are the poor lyrics continued, but a D.S. Al Coda is added.  The text
 for the coda will appear above the final bar and be aligned right, so that it will be directly over the 

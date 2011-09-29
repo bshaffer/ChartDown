@@ -1,5 +1,5 @@
 # title: Kitchen Sink
-# author: More Hazards More Heroes
+# artist: More Hazards More Heroes
 # key: C
 # tempo: 111
 text: h2. Verse 1

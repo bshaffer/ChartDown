@@ -20,7 +20,7 @@ namespace ChartDown\Chart;
 class Chart implements \IteratorAggregate
 {
     protected $title;
-    protected $Author;
+    protected $artist;
     protected $key;
     protected $raw;
     protected $timeSignature;
@@ -91,9 +91,9 @@ class Chart implements \IteratorAggregate
         $this->title = $title;
     }
 
-    public function getAuthor()
+    public function getArtist()
     {
-        return $this->Author;
+        return $this->artist;
     }
 
     public function setRaw($raw)
@@ -106,9 +106,9 @@ class Chart implements \IteratorAggregate
         return $this->raw;
     }
 
-    public function setAuthor($Author)
+    public function setArtist($artist)
     {
-        $this->Author = $Author;
+        $this->artist = $artist;
     }
 
     public function addBar(Bar $bar = null)

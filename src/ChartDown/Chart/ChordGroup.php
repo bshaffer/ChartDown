@@ -1,6 +1,8 @@
 <?php
 
 namespace ChartDown\Chart;
+
+use ChartDown\Chart\Rhythm\Rhythm;
 use ChartDown\Chart\Rhythm\RelativeMeterInterface;
 
 class ChordGroup implements RelativeMeterInterface, \IteratorAggregate

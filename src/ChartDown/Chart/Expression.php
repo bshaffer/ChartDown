@@ -12,7 +12,7 @@
 namespace ChartDown\Chart;
 
 use ChartDown\Chart\Rhythm\RelativeMeterInterface;
-use ChartDown\Chart\Expression\ExpressionTypeInterface;
+use ChartDown\Chart\ExpressionType\ExpressionTypeInterface;
 
 /**
  * Represents a chart expression.

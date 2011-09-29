@@ -48,6 +48,6 @@ class ChartDown_Chart_Test extends ChartDown\Chart\Chart
     ;
     
     $this->setTitle('Shop Around');
-    $this->setAuthor('The Miracles');
+    $this->setArtist('The Miracles');
   }
 }

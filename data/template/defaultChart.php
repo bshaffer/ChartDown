@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-  <title><?php echo $chart->getTitle() ?> | <?php echo $chart->getAuthor() ?></title>
+  <title><?php echo $chart->getTitle() ?> | <?php echo $chart->getArtist() ?></title>
   <script type="text/javascript">
     var assetpath = "<?php $assetpath = isset($assetpath) ? $assetpath : dirname(__FILE__).'/../web'; echo $assetpath; ?>";
   </script>
@@ -16,7 +16,7 @@
   <div id="chart">
     <div id="header">
       <h1><?php echo $chart->getTitle() ?></h1>
-      <h3><?php echo $chart->getAuthor() ?></h3>
+      <h3><?php echo $chart->getArtist() ?></h3>
       <div class="chart-info">
           <dl>
               <?php if ($key = $chart->getKey()): ?>
