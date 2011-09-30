@@ -156,7 +156,9 @@ Below is a list of possible future enhancements.
  * **'** (apostrophe/singlequote) - Staccato
  * **(**...**)**: Separates articulation from chord
  * **x/o**: Rhythmic notation for beat subdivisions
-
+ * **&lt;mod:C&gt;**: modulate to the key of C
+ * **&lt;mod:+2&gt;**: modulate up two half steps
+ 
 **Miscellaneous Features**
  
  * Auto generate fingering charts and place at the top or bottom of the chart for quick reference.
