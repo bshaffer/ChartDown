@@ -1,6 +1,8 @@
 # ChartDown
 
-ChartDown is shorthand for chart writing.  
+ChartDown is shorthand for chart writing.  It can turn a shorthand chart like 
+[this](http://bshaffer.github.com/ChartDown/kitchen_sink.txt) into an awesome pdf
+like [this](http://bshaffer.github.com/ChartDown/kitchen_sink.pdf).
 
 The ChartDown codebase is based off the 
 [Twig](https://github.com/fabpot/Twig) templating library.
