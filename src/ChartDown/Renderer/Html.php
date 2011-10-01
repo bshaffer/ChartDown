@@ -19,10 +19,10 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
     {
         $this->options = array_merge(array(
             'template_dir' => dirname(__FILE__).'/../../../data/template',
-            'assets_path'  => dirname(__FILE__).'/../../../data/web',
+            'assets_path'  => 'file://'.dirname(__FILE__).'/../../../data/web',
         ), $options);
         
-        $loader       = new sfTemplateLoaderFilesystem(array_merge(array(
+        $loader = new sfTemplateLoaderFilesystem(array_merge(array(
             $this->options['template_dir'].'/_%name%.php',
             $this->options['template_dir'].'/%name%Chart.php'
         ), $templates));

@@ -6,11 +6,11 @@
     var assetpath = "<?php echo $assets_path ?>";
   </script>
 
-  <link href="file://<?php echo $assets_path ?>/css/chart.css" media="screen" rel="stylesheet" type="text/css" />
-  <script src="file://<?php echo $assets_path ?>/js/jquery-1.6.min.js" type="text/javascript"></script>
-  <script src="file://<?php echo $assets_path ?>/js/raphael-min.js" type="text/javascript"></script>
-  <script src="file://<?php echo $assets_path ?>/js/raphael.chart.js" type="text/javascript"></script>
-  <script src="file://<?php echo $assets_path ?>/js/chart.js" type="text/javascript"></script>
+  <link href="<?php echo $assets_path ?>/css/chart.css" media="screen" rel="stylesheet" type="text/css" />
+  <script src="<?php echo $assets_path ?>/js/jquery-1.6.min.js" type="text/javascript"></script>
+  <script src="<?php echo $assets_path ?>/js/raphael-min.js" type="text/javascript"></script>
+  <script src="<?php echo $assets_path ?>/js/raphael.chart.js" type="text/javascript"></script>
+  <script src="<?php echo $assets_path ?>/js/chart.js" type="text/javascript"></script>
 </head>
 <body>
   <div id="chart">
