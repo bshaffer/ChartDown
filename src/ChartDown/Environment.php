@@ -515,6 +515,30 @@ class ChartDown_Environment
 
         return $this->binaryOperators;
     }
+    
+    /**
+     * Do we need these checks?
+     *
+     * @author Brent Shaffer
+     */
+    public function chartHasSetter($setter)
+    {
+        switch(trim($setter))
+        {
+          case 'title':
+          case 'artist':
+          case 'time':
+          case 'time_signature':
+          case 'time signature':
+          case 'key':
+          case 'key_signature':
+          case 'key signature':
+          case 'tempo':
+            return true;
+        }
+        
+        return false;
+    }
 
     protected function initOperators()
     {

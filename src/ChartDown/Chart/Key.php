@@ -59,9 +59,9 @@ class Key
   const DOUBLE_SHARP = +2;
   const DOUBLE_FLAT  = -2;
   
-  public function __construct($key = null, $mode = 1, $accidental = null)
+  public function __construct($key = null, $mode = self::IONIAN, $accidental = null)
   {
-    $this->key = $key;
+    $this->key  = $key;
     $this->mode = $mode;
     $this->accidental = $accidental;
   }

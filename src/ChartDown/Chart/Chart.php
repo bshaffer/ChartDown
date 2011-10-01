@@ -41,10 +41,6 @@ class Chart implements \IteratorAggregate
 
     public function getTimeSignature()
     {
-        if ($this->timeSignature === null) {
-          $this->timeSignature = new TimeSignature(4, 4);
-        }
-
         return $this->timeSignature;
     }
 
@@ -55,10 +51,6 @@ class Chart implements \IteratorAggregate
 
     public function getKey()
     {
-        if ($this->key === null) {
-          $this->key = new Key();
-        }
-
         return $this->key;
     }
 
@@ -69,10 +61,6 @@ class Chart implements \IteratorAggregate
 
     public function getTempo()
     {
-        if ($this->tempo === null) {
-          $this->tempo = new Tempo();
-        }
-
         return $this->tempo;
     }
 

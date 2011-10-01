@@ -10,13 +10,11 @@ class ChartDown_Tests_Chart_ChartTest extends PHPUnit_Framework_TestCase
         $chart = new Chart();
         $chart
             ->addRow()
-                ->setType(Row::TYPE_TEXT)
                 ->addBar()
                     ->setText('h1. Chorus')
                 ->end()
             ->end()
             ->addRow()
-                ->setType(Row::TYPE_CHORD)
                 ->addBar()
                     ->addChord('C')
                 ->end()
@@ -31,7 +29,6 @@ class ChartDown_Tests_Chart_ChartTest extends PHPUnit_Framework_TestCase
                 ->end()
             ->end()
             ->addRow()
-                ->setType(Row::TYPE_TEXT)
                 ->addBar()
                     ->setText('Thank God')
                 ->end()
@@ -47,15 +44,15 @@ class ChartDown_Tests_Chart_ChartTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(3, count($rows = $chart->getRows()));
 
         // first row
-        $this->assertEquals($rows[0]->getType(), Row::TYPE_TEXT);
+        $this->assertTrue($rows[0]->hasText());
         $this->assertEquals(1, count($bars = $rows[0]->getBars()));
 
         // second row
-        $this->assertEquals($rows[1]->getType(), Row::TYPE_CHORD);
+        $this->assertTrue($rows[1]->hasChords());
         $this->assertEquals(4, count($bars = $rows[1]->getBars()));
 
         // third row
-        $this->assertEquals($rows[2]->getType(), Row::TYPE_TEXT);
+        $this->assertTrue($rows[2]->hasText());
         $this->assertEquals(3, count($bars = $rows[2]->getBars()));
     }
     

@@ -22,7 +22,7 @@ class TimeSignature
   protected $beatsPerMeasure;
   protected $beatNoteValue;
 
-  public function __construct($beatsPerMeasure, $beatNoteValue)
+  public function __construct($beatsPerMeasure = 4, $beatNoteValue = 4)
   {
     $this->beatsPerMeasure = $beatsPerMeasure;
     $this->beatNoteValue   = $beatNoteValue;

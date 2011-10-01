@@ -34,7 +34,8 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
     const STATE_METADATA = 4;
 
     const REGEX_CHORD    = '/[a-gA-G1-7][A-G|m|M|b|#|+|2|7|9|11|13|sus|dim|add|\(|\)\/]*/';
-    const REGEX_METADATA = '/#*(.*):(.*)/';
+    const REGEX_METADATA = '/^#(.*):(.*)/';
+    const REGEX_TEXT     = '/^text:(.*)|^#(.*)/';
     const REGEX_RHYTHM   = '/\./';
     
     public function __construct(ChartDown_Environment $env, array $options = array())
@@ -83,32 +84,7 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
                 continue;
             }
 
-            $this->pushToken(ChartDown_Token::LINE_START, $this->state);
-
-            // dispatch to the lexing functions depending
-            // on the current state
-            switch ($this->state) {
-                case self::STATE_CHORD:
-                    $this->lexChord($line);
-                    $this->lineno++;
-                    break;
-
-                case self::STATE_TEXT:
-                    $this->lexText($line);
-                    $this->lineno++;
-                    break;
-
-                case self::STATE_METADATA:
-                    $this->lexMetadata($line);
-                    $this->lineno++;
-                    break;
-
-                default:
-                    throw new ChartDown_Error_Runtime(sprintf('Unsupported state "%s" - cannot tokenize', $this->state));
-
-            }
-
-            $this->pushToken(ChartDown_Token::LINE_END);
+            $this->lexByState($line);
         }
 
         $this->pushToken(ChartDown_Token::EOF_TYPE);
@@ -119,8 +95,37 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
 
         return new ChartDown_TokenStream($this->tokens, $this->filename);
     }
+    
+    private function lexByState($line)
+    {
+        // dispatch to the lexing functions depending
+        // on the current state
+        switch ($this->state) {
+            case self::STATE_CHORD:
+                $this->pushToken(ChartDown_Token::LINE_START, $this->state);
+                $this->lexChord($line);
+                $this->lineno++;
+                $this->pushToken(ChartDown_Token::LINE_END);
+                break;
 
-    public function lexChord($line)
+            case self::STATE_TEXT:
+                $this->pushToken(ChartDown_Token::LINE_START, $this->state);
+                $this->lexText($line);
+                $this->lineno++;
+                $this->pushToken(ChartDown_Token::LINE_END);
+                break;
+
+            case self::STATE_METADATA:
+                $this->lexMetadata($line);
+                $this->lineno++;
+                break;
+
+            default:
+                throw new ChartDown_Error_Runtime(sprintf('Unsupported state "%s" - cannot tokenize', $this->state));
+        }
+    }
+
+    private function lexChord($line)
     {
         foreach ($line->split($this->options['bar_delimiter']) as $i => $bar) {
             $bar->trim();
@@ -163,17 +168,14 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
         $this->popToken();
     }
 
-    protected function lexText($line)
+    private function lexText($line)
     {
-        $line->ltrim('text:');
+        $line->regexTrim(self::REGEX_TEXT);
         foreach ($line->split($this->options['bar_delimiter']) as $bar) {
             // trim one space off beginning and end (if it exists)
             $bar->ltrim(' ')->rtrim(' '); 
             
-            // don't push empty text
-            // if ($text = $bar->getText()) {
-                $this->pushToken(ChartDown_Token::TEXT_TYPE, $bar->getText());
-            // }
+            $this->pushToken(ChartDown_Token::TEXT_TYPE, $bar->getText());
 
             $this->pushToken(ChartDown_Token::BAR_LINE);
         }
@@ -182,17 +184,20 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
         $this->popToken();
     }
 
-    protected function lexMetadata($line)
+    private function lexMetadata($line)
     {
-        if ($matches = $line->match(self::REGEX_METADATA)) {
+        $matches = $line->match(self::REGEX_METADATA);
+        if ($matches && $this->env->chartHasSetter($matches[0])) {
             $this->pushToken(ChartDown_Token::METADATA_KEY_TYPE, trim($matches[0]));
             $this->pushToken(ChartDown_Token::METADATA_VALUE_TYPE, trim($matches[1]));
+            $line->moveToEnd();
+        } else {
+            $this->state = self::STATE_TEXT;
+            $this->lexByState($line);
         }
-
-        $line->moveToEnd();
     }
 
-    protected function determineState($line)
+    private function determineState($line)
     {
       $text = $line->getText();
 
@@ -201,12 +206,12 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
       }
 
       // Determine using the line itself
-      if(0 === strpos($text, '#')) {
-        return self::STATE_METADATA;
+      if ($line->matches(self::REGEX_METADATA)) {
+          return self::STATE_METADATA;
       }
-        
-      if(0 === strpos($text, 'text:')) {
-        return self::STATE_TEXT;
+
+      if ($line->matches(self::REGEX_TEXT)) {
+          return self::STATE_TEXT;
       }
       
       if (trim($text) == $this->options['row_delimiter']) {
@@ -217,12 +222,12 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
       return self::STATE_CHORD;
     }
     
-    protected function pushToken($type, $value = '')
+    private function pushToken($type, $value = '')
     {
         $this->tokens[] = new ChartDown_Token($type, $value, $this->lineno);
     }
 
-    protected function popToken($type = null)
+    private function popToken($type = null)
     {
         array_pop($this->tokens);
     }
