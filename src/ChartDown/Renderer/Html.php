@@ -19,6 +19,7 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
     {
         $this->options = array_merge(array(
             'template_dir' => dirname(__FILE__).'/../../../data/template',
+            'assets_path'  => dirname(__FILE__).'/../../../data/web',
         ), $options);
         
         $loader       = new sfTemplateLoaderFilesystem(array_merge(array(
@@ -31,7 +32,12 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
 
     public function render($chart, $outfile = null, $template = 'default')
     {
-        $html = $this->engine->render($template, array('chart' => $chart, 'renderer' => $this));
+        $parameters = array_merge($this->options, array(
+            'chart'     => $chart,
+            'renderer'  => $this,
+        ));
+
+        $html = $this->engine->render($template, $parameters);
 
         if (is_null($outfile)) {
             return $html;
