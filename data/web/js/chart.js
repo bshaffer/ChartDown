@@ -27,7 +27,7 @@ $(document).ready(function() {
 		index 	= row.find('.chord').index(fromChord);
 		toChord = row.find('.chord:eq('+(index+1)+')');
 
-	    radius = toChord ? ($(toChord).offset().left - $(fromChord).offset().left - 20) / 3.8 : 50;
+	    radius = toChord.length ? ($(toChord).offset().left - $(fromChord).offset().left - 20) / 3.8 : 50;
 
 	    left   = $(fromChord).offset().left + 20;
 	    bottom = $(fromChord).offset().top;

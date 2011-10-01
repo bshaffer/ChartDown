@@ -1,6 +1,7 @@
 <?php
 
 use ChartDown\Chart\Chart;
+use ChartDown\Chart\Row;
 
 class ChartDown_Tests_Chart_ChartTest extends PHPUnit_Framework_TestCase
 {
@@ -8,89 +9,74 @@ class ChartDown_Tests_Chart_ChartTest extends PHPUnit_Framework_TestCase
     {
         $chart = new Chart();
         $chart
-            ->addBar()
-                ->setText('h1. Chorus')
-                ->addChord('C')
-                ->setText('Thank God')
+            ->addRow()
+                ->setType(Row::TYPE_TEXT)
+                ->addBar()
+                    ->setText('h1. Chorus')
+                ->end()
             ->end()
-        ;
-
-        $chart
-            ->addBar()
-                ->addChord('D')
-                ->setText('I\'m a')
+            ->addRow()
+                ->setType(Row::TYPE_CHORD)
+                ->addBar()
+                    ->addChord('C')
+                ->end()
+                ->addBar()
+                    ->addChord('D')
+                ->end()
+                ->addBar()
+                    ->addChord('G')
+                ->end()
+                ->addBar()
+                    ->addChord('G')
+                ->end()
             ->end()
-            ->addBar()
-                ->addChord('G')
-                ->setText('country boy')
-            ->end()
-            ->addBar()
-                ->addChord('G')
-            ->end()
-        ;
-        
-        $this->assertEquals(1, count($rows = $chart->getRows()));
-
-        // the row
-        $this->assertTrue($rows[0]->hasTopText());
-        $this->assertEquals(4, count($bars = $rows[0]->getBars()));
-
-        // first bar
-        $this->assertTrue($bars[0]->hasTopText());
-        $this->assertTrue($bars[0]->hasBottomText());
-
-        // second bar
-        $this->assertFalse($bars[1]->hasTopText());
-        $this->assertTrue($bars[1]->hasBottomText());
-
-        // third bar
-        $this->assertFalse($bars[2]->hasTopText());
-        $this->assertTrue($bars[2]->hasBottomText());
-
-        // third bar
-        $this->assertFalse($bars[3]->hasTopText());
-        $this->assertFalse($bars[3]->hasBottomText());
-    }
-    
-    public function testMultilineTopText()
-    {
-        $chart = new Chart();
-        $chart
-            ->addBar()
-                ->setText('h1. Chorus')
-                ->setText('p. softer')
-                ->addChord('D')
+            ->addRow()
+                ->setType(Row::TYPE_TEXT)
+                ->addBar()
+                    ->setText('Thank God')
+                ->end()
+                ->addBar()
+                    ->setText('I\'m a')
+                ->end()
+                ->addBar()
+                    ->setText('country boy')
+                ->end()
             ->end()
         ;
         
-        $this->assertEquals(1, count($rows = $chart->getRows()));
+        $this->assertEquals(3, count($rows = $chart->getRows()));
 
-        // the row
-        $this->assertTrue($rows[0]->hasTopText());
+        // first row
+        $this->assertEquals($rows[0]->getType(), Row::TYPE_TEXT);
         $this->assertEquals(1, count($bars = $rows[0]->getBars()));
 
-        // check top text
-        $this->assertEquals("h1. Chorus\n\np. softer", (string) $bars[0]->getTopText());
+        // second row
+        $this->assertEquals($rows[1]->getType(), Row::TYPE_CHORD);
+        $this->assertEquals(4, count($bars = $rows[1]->getBars()));
+
+        // third row
+        $this->assertEquals($rows[2]->getType(), Row::TYPE_TEXT);
+        $this->assertEquals(3, count($bars = $rows[2]->getBars()));
     }
     
     public function testTextile()
     {
         $chart = new Chart();
         $chart
-            ->addBar()
-                ->setText('h1. Chorus')
-                ->setText('p. softer')
-                ->addChord('D')
+            ->addRow()
+                ->addBar()
+                    ->setText('h1. Chorus')
+                ->end()
             ->end()
         ;
         
         $this->assertEquals(1, count($rows = $chart->getRows()));
 
         // the row
-        $this->assertTrue($rows[0]->hasTopText());
+        // $this->assertTrue($rows[0]->hasText());
         $this->assertEquals(1, count($bars = $rows[0]->getBars()));
 
         // check top text
-        $this->assertEquals("\t<h1>Chorus</h1>\n\n\t<p>softer</p>", $bars[0]->getTopText()->getText());
+        $this->assertEquals("\t<h1>Chorus</h1>", $bars[0]->getText()->getText());
     }
 }

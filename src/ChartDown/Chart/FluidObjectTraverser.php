@@ -1,6 +1,6 @@
 <?php
 
-namespace ChartDown;
+namespace ChartDown\Chart;
 
 class FluidObjectTraverser
 {

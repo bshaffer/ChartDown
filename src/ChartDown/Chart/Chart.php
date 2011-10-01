@@ -25,12 +25,12 @@ class Chart implements \IteratorAggregate
     protected $raw;
     protected $timeSignature;
     protected $tempo;
-    protected $bars;
+    protected $rows;
 
     public function __construct($options = array())
     {
         $this->options = $options;
-        $this->bars   = array();
+        $this->rows    = array();
 
         $this->setup();
     }
@@ -111,53 +111,28 @@ class Chart implements \IteratorAggregate
         $this->artist = $artist;
     }
 
-    public function addBar(Bar $bar = null)
+    public function addRowBreak()
     {
-        if (is_null($bar)) {
-          $bar = new Bar();
+        $this->rows[] = new Row();
+    }
+
+    public function addRow(Row $row = null)
+    {
+        if (is_null($row)) {
+          $row = new Row();
         }
-        $this->bars[] = $bar;
+        $this->rows[] = $row;
         
-        return new \ChartDown\FluidObjectTraverser($bar, $this);
-    }
-
-    public function setBars($bars)
-    {
-        $this->bars = $bars;
-    }
-
-    public function getBars()
-    {
-        return $this->bars;
+        return new FluidObjectTraverser($row, $this);
     }
     
     public function getRows()
     {
-        $bars = array();
-        $rows = array();
-        foreach ($this->bars as $bar) {
-            if (is_null($bar)) {
-                $rows[] = new Row($bars);
-                $bars = array();
-            } else {
-                $bars[] = $bar;
-            }
-        }
-        
-        if (count($bars) > 0) {
-            $rows[] = new Row($bars);
-        }
-        
-        return $rows;
-    }
-
-    public function endRow()
-    {
-        $this->bars[] = null;
+        return $this->rows;
     }
 
     public function getIterator()
     {
-        return new \ArrayIterator($this->bars);
+        return new \ArrayIterator($this->rows);
     }
 }

@@ -36,9 +36,9 @@ class ChartDown_Tests_ParserTest extends PHPUnit_Framework_TestCase
     $node = $this->parser->parse($stream);
 
     $this->assertTrue($node->hasNode('body'));
-    $this->assertEquals($node->getNode('body')->count(), 4);
-    $this->assertEquals($node->getNode('body')->getNode(0)->count(), 2);
-    $this->assertEquals($node->getNode('body')->getNode(0)->getNode(1)->getAttribute('data'), 'That old dusty wind');
+    $this->assertEquals($node->getNode('body')->count(), 2);
+    $this->assertEquals($node->getNode('body')->getNode(0)->count(), 4);
+    $this->assertEquals($node->getNode('body')->getNode(1)->getNode(0)->getNode(0)->getAttribute('data'), 'That old dusty wind');
   }
 
   public function testParseTokenStreamMetadata()

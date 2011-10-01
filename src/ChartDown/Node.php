@@ -214,6 +214,11 @@ class ChartDown_Node implements ChartDown_NodeInterface, Countable, IteratorAggr
     {
         unset($this->nodes[$name]);
     }
+    
+    public function addNode($node)
+    {
+        $this->nodes[] = $node;
+    }
 
     public function count()
     {

@@ -99,92 +99,71 @@ class ChartDown_Parser implements ChartDown_ParserInterface
     public function subparse($test, $dropNeedle = false)
     {
         $lineno = $this->getCurrentToken()->getLine();
-        $elements = array();
-        $bars = array();
-        $group = null;
-        $barIndex = 0;
+        $rows = array();
+        $bar = array();
+        $barTmp = null;
 
         while (!$this->stream->isEOF()) {
             switch ($this->getCurrentToken()->getType()) {
                 case ChartDown_Token::LINE_START:
                     $token = $this->stream->next();
-                    $lineType = $token->getValue();
+                    $row = new ChartDown_Node_Row($token->getValue(), $token->getLine());
+                    $rows[] = $row;
                     break;
 
                 case ChartDown_Token::LINE_END:
+                    $row->addNode(new ChartDown_Node_Bar($bar));
+                    $bar = array();
                     $this->stream->next();
-                    $barIndex = 0;
                     break;
 
                 case ChartDown_Token::CHORD_TYPE:
                     $token = $this->stream->next();
-                    $chordNode = new ChartDown_Node_Chord($token->getValue(), $token->getLine());
-                    if ($group) {
-                        $group->addChordNode($chordNode);
-                    } else {
-                        $bars[$barIndex][] = $chordNode;
-                    }
+                    $bar[] = new ChartDown_Node_Chord($token->getValue(), $token->getLine());
                     break;
 
                 case ChartDown_Token::CHORD_GROUP_START_TYPE:
-                    $token = $this->stream->next();
-                    $group = new ChartDown_Node_ChordGroup(array(), $token->getLine());
+                    $token  = $this->stream->next();
+                    $barTmp = $bar;
+                    $bar    = array();
                     break;
 
                 case ChartDown_Token::CHORD_GROUP_END_TYPE:
-                    if ($group->getNumChords() == 0) {
-                        throw new ChartDown_Error_Syntax('Empty Chord Group');
-                    }
+                    $barTmp[] = new ChartDown_Node_ChordGroup($bar, $token->getLine());
+                    $bar = $barTmp;
                     $this->stream->next();
-                    $bars[$barIndex][] = $group;
-                    $group = null;
                     break;
 
                 case ChartDown_Token::RHYTHM_TYPE:
                     $token = $this->stream->next();
-                    $rhythmNode = new ChartDown_Node_Rhythm($token->getValue(), $token->getLine());
-                    if ($group) {
-                        $group->addRhythmNode($rhythmNode);
-                    } else {
-                        $bars[$barIndex][] = $rhythmNode;
-                    }
+                    $bar[] = new ChartDown_Node_Rhythm($token->getValue(), $token->getLine());
                     break;
 
                 case ChartDown_Token::EXPRESSION_TYPE:
                     $token = $this->stream->next();
-                    $expressionNode = new ChartDown_Node_Expression($token->getValue(), $token->getLine());
-                    if ($group) {
-                        $group->addExpressionNode($expressionNode);
-                    } else {
-                        $bars[$barIndex][] = $expressionNode;
-                    }
+                    $bar[] = new ChartDown_Node_Expression($token->getValue(), $token->getLine());
                     break;
 
                 case ChartDown_Token::TEXT_TYPE:
                     $token = $this->stream->next();
-                    $bars[$barIndex][] = new ChartDown_Node_Text($token->getValue(), $token->getLine());
+                    $bar[] = new ChartDown_Node_Text($token->getValue(), $token->getLine());
                     break;
 
                 case ChartDown_Token::METADATA_KEY_TYPE:
                     $key = $this->stream->next();
                     $value = $this->stream->expect(ChartDown_Token::METADATA_VALUE_TYPE);
-
-                    $elements[] = new ChartDown_Node_Metadata($key->getValue(), $value->getValue(), $key->getLine());
+                    $rows[] = new ChartDown_Node_Metadata($key->getValue(), $value->getValue(), $key->getLine());
                     break;
 
                 case ChartDown_Token::BAR_LINE:
-                    $barIndex++;
+                    $row->addNode(new ChartDown_Node_Bar($bar));
+                    $bar = array();
                     $this->stream->next();
                     break;
 
                 case ChartDown_Token::END_ROW_TYPE:
-                    foreach ($bars as $bar) {
-                        $elements[] = new ChartDown_Node_Bar($bar);
-                    }
-
-                    $elements[] = new ChartDown_Node_EndRow();
+                    $rows[] = new ChartDown_Node_RowBreak();
                     $this->stream->next();
-                    $bars = array();
                     break;
 
                 default:
@@ -192,13 +171,7 @@ class ChartDown_Parser implements ChartDown_ParserInterface
             }
         }
 
-        if (count($bars) > 0) {
-            foreach ($bars as $bar) {
-                $elements[] = new ChartDown_Node_Bar($bar);
-            }
-        }
-
-        return new ChartDown_Node($elements, array(), $lineno);
+        return new ChartDown_Node($rows, array(), $lineno);
     }
 
     public function addHandler($name, $class)

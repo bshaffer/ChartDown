@@ -36,36 +36,39 @@
 
     <table id="content">
       <?php foreach ($chart->getRows() as $row): ?>
-          <?php echo $this->render('text', array('row' => $row, 'position' => 'top', 'renderer' => $renderer, 'maxBars' => $renderer->getMaxBarsInChart($chart))) ?>
-          
-          <?php if ($renderer->rowHasTopExpression($row)): ?>
-              <tr class="expression-row">
-                  <td colspan="<?php echo $renderer->getMaxBarsInChart($chart) ?>">&nbsp;</td>
+          <?php if ($row->hasText()): ?>
+              <?php echo $this->render('text', array('row' => $row, 'position' => 'top', 'renderer' => $renderer, 'maxBars' => $renderer->getMaxBarsInChart($chart))) ?>            
+          <?php elseif ($row->hasChords()): ?>
+              <?php if ($renderer->rowHasTopExpression($row)): ?>
+                  <tr class="expression-row">
+                      <td colspan="<?php echo $renderer->getMaxBarsInChart($chart) ?>">&nbsp;</td>
+                  </tr>
+              <?php endif ?>
+
+             <?php if ($row->hasChords()): ?>
+             <tr class="chord-row">
+              <?php foreach ($row as $bar): ?>
+                 <td width="25%" class="chord-cell<?php echo $renderer->renderBarExpressions($bar) ?>" <?php echo $renderer->renderChartObjectAttributes($bar) ?>>
+                     <?php if (count($chords = $bar->getChords()) > 0): ?>
+                         <table style="width:100%">
+                             <tr>
+                         <?php foreach ($chords as $chord): ?>
+                             <?php echo $this->render('chord', array('chord' => $chord, 'percent' => $renderer->getPercentage($chord, $chords), 'renderer' => $renderer)) ?>
+                         <?php endforeach ?>
+                             </tr>
+                        </table>
+                     <?php else: ?>
+                         &nbsp;
+                     <?php endif ?>
+                 </td>
+              <?php endforeach ?>
+             </tr>
+            <?php endif ?>
+          <?php else: ?>
+              <tr class="row-break">
+                <td colspan="<?php echo $renderer->getMaxBarsInChart($chart) ?>">&nbsp;</td>
               </tr>
           <?php endif ?>
-
-         <?php if ($row->hasChords()): ?>
-         <tr class="chord-row">
-          <?php foreach ($row as $bar): ?>
-             <td width="25%" class="chord-cell<?php echo $renderer->renderBarExpressions($bar) ?>" <?php echo $renderer->renderChartObjectAttributes($bar) ?>>
-                 <?php if (count($chords = $bar->getChords()) > 0): ?>
-                     <table style="width:100%">
-                         <tr>
-                     <?php foreach ($chords as $chord): ?>
-                         <?php echo $this->render('chord', array('chord' => $chord, 'percent' => $renderer->getPercentage($chord, $chords), 'renderer' => $renderer)) ?>
-                     <?php endforeach ?>
-                         </tr>
-                    </table>
-                 <?php else: ?>
-                     &nbsp;
-                 <?php endif ?>
-             </td>
-          <?php endforeach ?>
-         </tr>
-            
-         <?php endif ?>
-
-          <?php echo $this->render('text', array('row' => $row, 'position' => 'bottom', 'renderer' => $renderer, 'maxBars' => $renderer->getMaxBarsInChart($chart))) ?>
       <?php endforeach ?>
     </table>
   </div>

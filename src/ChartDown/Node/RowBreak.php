@@ -14,9 +14,9 @@
  * Represents a text node.
  *
  * @package    chartdown
- * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
+ * @author     Brent Shaffer <bshafs@gmail.com>
  */
-class ChartDown_Node_EndRow extends ChartDown_Node implements ChartDown_NodeOutputInterface
+class ChartDown_Node_RowBreak extends ChartDown_Node implements ChartDown_NodeOutputInterface
 {
     /**
      * Compiles the node to PHP.
@@ -27,7 +27,7 @@ class ChartDown_Node_EndRow extends ChartDown_Node implements ChartDown_NodeOutp
     {
         $compiler
             ->addDebugInfo($this)
-            ->write("\$this->endRow();\n")
+            ->write("\$this->addRowBreak();\n");
         ;
     }
 }

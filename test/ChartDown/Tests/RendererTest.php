@@ -31,20 +31,33 @@ class ChartDown_Tests_RendererTest extends PHPUnit_Framework_TestCase
   }
 }
 
-class ChartDown_Chart_Test extends ChartDown\Chart\Chart
+use ChartDown\Chart\Chart;
+use ChartDown\Chart\Row;
+
+class ChartDown_Chart_Test extends Chart
 {
   public function setup()
   {
     $this
-      ->addBar()
-        ->addChord('G')
-        ->setText('My momma told me')
-      ->end()
-      ->addBar()
-        ->addChord('C')
-        ->addChord('D')
-        ->setText('You better shop around')
-      ->end()
+        ->addRow()
+            ->addBar()
+                ->addChord('G')
+            ->end()
+            ->addBar()
+                ->addChord('C')
+            ->end()   
+            ->addBar()         
+                ->addChord('D')
+            ->end()
+        ->end()
+        ->addRow()
+            ->addBar()
+                ->setText('My momma told me')
+            ->end()
+            ->addBar()
+                ->setText('You better shop around')
+            ->end()
+        ->end()
     ;
     
     $this->setTitle('Shop Around');

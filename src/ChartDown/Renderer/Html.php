@@ -129,7 +129,7 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
         return $barCount;
     }
     
-    public function getColspan(Row $row, Bar $bar, $position = 'top', $maxBars = null)
+    public function getColspan(Row $row, Bar $bar, $maxBars = null)
     {
         $barsInRow = count($row->getBars());
         $maxBars   = is_null($maxBars) ? $barsInRow : $maxBars;
@@ -141,7 +141,7 @@ class ChartDown_Renderer_Html implements ChartDown_RendererInterface
         foreach (array_reverse($row->getBars()) as $sibling) {
             if ($sibling == $bar) {
                 break;
-            } elseif ($sibling->hasText($position)) {
+            } elseif ($sibling->hasText()) {
                 // reset to 1
                 $colspan = 1;
                 $reset   = true;

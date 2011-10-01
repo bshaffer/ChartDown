@@ -27,11 +27,11 @@ class ChartDown_Node_Bar extends ChartDown_Node implements ChartDown_NodeOutputI
     {
         $compiler
             ->addDebugInfo($this)
-            ->write("\$this->addBar()\n")
+            ->write("->addBar()\n")
             ->indent()
             ->subcompile(new ChartDown_Node($this->nodes))
             ->outdent()
-            ->write("->end();\n")
+            ->write("->end()\n")
         ;
     }
 }

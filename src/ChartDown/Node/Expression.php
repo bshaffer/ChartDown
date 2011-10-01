@@ -14,7 +14,7 @@
  * Represents a text node.
  *
  * @package    chartdown
- * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
+ * @author     Brent Shaffer <bshafs@gmail.com>
  */
 class ChartDown_Node_Expression extends ChartDown_Node implements ChartDown_NodeOutputInterface
 {

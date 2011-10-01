@@ -21,8 +21,7 @@ use ChartDown\Chart\Rhythm\Rhythm;
  */
 class Bar extends ChordGroup
 {
-    private $bottomText;
-    private $topText;
+    private $text;
     private $options;
     private $rhythm;
 
@@ -33,92 +32,37 @@ class Bar extends ChordGroup
         $this->options = $options;
     }
 
-    public function getText($position = null)
+    public function getText()
     {
-        if (is_null($position) || $position == 'top') {
-            return $this->getTopText();
-        }
-
-        return $this->getBottomText();
+        return $this->text;
     }
     
-    public function setText($text, $position = null)
-    {
-        if (0 == count($this->getChords()) || $position == 'top') {
-            $this->setTopText($text);
-        } else {
-            $this->setBottomText($text);
-        }
-    }
-    
-    public function hasText($position = null)
-    {
-        if (0 == count($this->getChords()) || $position == 'top') {
-            return $this->hasTopText();
-        } 
-        
-        return $this->hasBottomText();
-    }
-    
-    public function renderText($position = null)
-    {
-        return $this->getText($position)->getText();
-    }
-
-    public function getTopText()
-    {
-        return $this->topText;
-    }
-    
-    public function setTopText($text)
+    public function setText($text)
     {
         if (is_string($text)) {
             $text = new Text($text);
         }
 
-        if (!empty($this->topText)) { 
-            $this->topText->addText($text->getRawText());
+        if (!empty($this->text)) { 
+            $this->text->addText($text->getRawText());
         } else { 
-            $this->topText = $text;
+            $this->text = $text;
         }
     }
     
-    public function hasTopText()
+    public function hasText()
     {
-        return !is_null($this->topText);
+        return !is_null($this->text);
     }
 
-    public function renderTopText()
+    public function renderText()
     {
-        return $this->topText->getText();
-    }
-
-    public function getBottomText()
-    {
-        return $this->bottomText;
+        return $this->text->getText();
     }
     
-    public function setBottomText($text)
+    public function hasChords()
     {
-        if (is_string($text)) {
-            $text = new Text($text);
-        }
-
-        if (!empty($this->bottomText)) { 
-            $this->bottomText->addText($text->getRawText());
-        } else { 
-            $this->bottomText = $text;
-        }
-    }
-
-    public function hasBottomText()
-    {
-        return !is_null($this->bottomText);
-    }
-
-    public function renderBottomText()
-    {
-        return $this->bottomText->getText();
+        return count($this->getChords()) > 0;
     }
 
     public function addChordGroup()
@@ -127,7 +71,7 @@ class Bar extends ChordGroup
 
         $this->addChord($group);
 
-        return new \ChartDown\FluidObjectTraverser($group, $this);
+        return new FluidObjectTraverser($group, $this);
     }
 
     public function getExpressions()
