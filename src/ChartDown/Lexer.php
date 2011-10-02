@@ -33,7 +33,7 @@ class ChartDown_Lexer implements ChartDown_LexerInterface
     const STATE_TEXT     = 1;
     const STATE_METADATA = 4;
 
-    const REGEX_CHORD    = '/[a-gA-G1-7][A-G|m|M|b|#|+|2|6|7|9|11|13|sus|dim|add|\(|\)\/]*/';
+    const REGEX_CHORD    = '/[a-gA-G1-7][A-G|m|M|b|#|+|°|2|6|7|9|11|13|sus|dim|add|\(|\)\/]*/';
     const REGEX_METADATA = '/^#(.*):(.*)/';
     const REGEX_TEXT     = '/^text:(.*)|^#(.*)/';
     const REGEX_RHYTHM   = '/\./';

@@ -137,9 +137,10 @@ Chords
  * **b**: flat
  * **#**: sharp
  * **-** (dash): minor
- * **dim**: diminished
- * **aug**: augmented
-
+ * **dim** and *°*: diminished
+ * **aug** and *+*: augmented
+ * **(**...**)**: Separates articulation from chord
+ * **2, 6, 7, 9, 11, 13, sus, dim, add**: Chord Extensions
 
 ToDo
 ----
@@ -156,7 +157,6 @@ Below is a list of possible future enhancements.
 **Additional Notation:**
 
  * **'** (apostrophe/singlequote) - Staccato
- * **(**...**)**: Separates articulation from chord
  * **x/o**: Rhythmic notation for beat subdivisions
  * **&lt;mod:C&gt;**: modulate to the key of C
  * **&lt;mod:+2&gt;**: modulate up two half steps
