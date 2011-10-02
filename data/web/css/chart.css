@@ -84,8 +84,13 @@ hr {
   height: 30px;
   padding:5px;
 }
+
 .chord-group table {
   border: 1px solid black;
+}
+
+.text-row .text{
+	white-space: pre;
 }
 
 .repeat-start .chord-row, .repeat-start .lyric-row{
