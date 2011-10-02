@@ -137,17 +137,13 @@ Chords
  * **b**: flat
  * **#**: sharp
  * **-** (dash): minor
- * **dim** and *°*: diminished
- * **aug** and *+*: augmented
+ * **dim** and **°**: diminished
+ * **aug** and **+**: augmented
  * **(**...**)**: Separates articulation from chord
  * **2, 6, 7, 9, 11, 13, sus, dim, add**: Chord Extensions
 
 ToDo
 ----
-
- - remove "text:" prefix, substitute with hash (#)
- - anything without a hash is a chord row
- - add support for charts without row separation (--), this is optional
 
 Please contact me with any suggestions or feature requests. My goal is for this to be as useful
 and usable as possible. All feedback is appreciated!
